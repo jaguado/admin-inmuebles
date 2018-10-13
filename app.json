@@ -1,0 +1,13 @@
+{
+  "name": "Admin Inmuebles",
+  "description": "ASP.NET Core 2.x with Heroku deployment support",
+  "website": "",
+  "repository": "https://github.com/jaguado/admin-inmuebles",
+  "logo": "",
+  "keywords": ["aspnet core", "aspnet core mvc"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/jaguado/dotnetcore2.main.buildpack.git"
+    }
+  ]
+}
