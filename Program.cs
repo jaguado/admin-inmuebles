@@ -1,26 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
+using AdminInmuebles.Helpers;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
-namespace WebApplication4
+namespace AdminInmuebles
 {
     public class Program
     {
+        public static bool isDev = false;
         public static void Main(string[] args)
         {
-
-            BuildWebHost(args).Run();
+            var url = "http://*:" + Environment.GetEnvironmentVariable("PORT") ?? throw new ApplicationException("'PORT' variable must be defined");
+            Console.WriteLine("Starting web server on " + url);
+            BuildWebHost(args, url).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHost BuildWebHost(string[] args, string url) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls(url)
                 .Build();
     }
 }
