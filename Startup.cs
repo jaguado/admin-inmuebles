@@ -205,12 +205,10 @@ namespace AdminInmuebles
             });
 
 
+            app.UseWebMarkupMin();
             app.UseDefaultFiles();
             if (!useMemCache)
                 app.UseStaticFiles();
-
-
-            app.UseWebMarkupMin();
             
             app.UseMvc();
             app.UseSwagger(c =>
