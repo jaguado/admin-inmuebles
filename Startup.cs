@@ -37,19 +37,19 @@ namespace WebApplication4
 
             //Get Database Connection 
             //Environment.SetEnvironmentVariable("DATABASE_URL", "postgres://ojunflcdtkendq:be88fc41989efe90fda30380a6dae8ec9259cc19f237f11135b68a52371a6ce5@ec2-54-235-146-51.compute-1.amazonaws.com:5432/d8lhbkcpmedcej");
-            string _connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
-            _connectionString.Replace("//", "");
+            //string _connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+            //_connectionString.Replace("//", "");
 
-            char[] delimiterChars = { '/', ':', '@', '?' };
-            string[] strConn = _connectionString.Split(delimiterChars);
-            strConn = strConn.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            //char[] delimiterChars = { '/', ':', '@', '?' };
+            //string[] strConn = _connectionString.Split(delimiterChars);
+            //strConn = strConn.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-            Config.User = strConn[1];
-            Config.Pass = strConn[2];
-            Config.Server = strConn[3];
-            Config.Database = strConn[5];
-            Config.Port = strConn[4];
-            Config.ConnectionString = "host=" + Config.Server + ";port=" + Config.Port + ";database=" + Config.Database + ";uid=" + Config.User + ";pwd=" + Config.Pass + ";sslmode=Require;Trust Server Certificate=true;Timeout=1000";
+            //Config.User = strConn[1];
+            //Config.Pass = strConn[2];
+            //Config.Server = strConn[3];
+            //Config.Database = strConn[5];
+            //Config.Port = strConn[4];
+            //Config.ConnectionString = "host=" + Config.Server + ";port=" + Config.Port + ";database=" + Config.Database + ";uid=" + Config.User + ";pwd=" + Config.Pass + ";sslmode=Require;Trust Server Certificate=true;Timeout=1000";
 
         }
 
