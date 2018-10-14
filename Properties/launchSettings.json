@@ -29,8 +29,10 @@
         "disableAuth": true,
         "minifyResponse": false,
         "CORS": "localhost",
-        "NEW_RELIC_LICENSE_KEY":"",
-        "NEW_RELIC_APP_NAME":""
+        "NEW_RELIC_LICENSE_KEY":"195cb6e62921d83376172a83bb2389a5c9bedaac",
+        "NEW_RELIC_APP_NAME":"AdminInmuebles localhost",
+        "CORECLR_ENABLE_PROFILING":1,
+        "CORECLR_PROFILER":"{36032161-FFC0-4B61-B559-F6C5D41BAE5A}"
       },
       "applicationUrl": "http://localhost:60209/"
     }
