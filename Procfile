@@ -1,1 +1,0 @@
-﻿web: cd $HOME/release && ASPNETCORE_URLS='http://+:$PORT' && $CORECLR_NEWRELIC_HOME/run.sh dotnet "./AdminInmuebles.dll"
