@@ -1,13 +1,13 @@
 {
   "name": "Admin Inmuebles",
-  "description": "ASP.NET Core 2.x with Heroku deployment support",
+  "description": "ASP.NET Core 2.x with Heroku and Newrelic support",
   "website": "",
   "repository": "https://github.com/jaguado/admin-inmuebles",
   "logo": "",
-  "keywords": ["aspnet core", "aspnet core mvc"],
+  "keywords": ["aspnet core", "aspnet core mvc", "netcore2", "netcore21", "newrelic"],
   "buildpacks": [
     {
-      "url": "https://github.com/jaguado/dotnetcore2.main.buildpack.git"
+      "url": "https://github.com/jaguado/dotnetcore2"
     }
   ]
 }
