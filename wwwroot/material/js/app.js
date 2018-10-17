@@ -1,2 +1,3 @@
 angular.module("app", [])
-       .controller("mainCtrl", mainCtrl);
+       .controller("mainCtrl", mainCtrl)
+       .controller("authCtrl", authCtrl);

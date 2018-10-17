@@ -36,7 +36,7 @@
 
 </head>
 
-<body class="fix-header fix-sidebar card-no-border" ng-controller="mainCtrl as ctrl">
+<body class="fix-header fix-sidebar card-no-border" ng-controller="authCtrl as auth">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -1124,7 +1124,7 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <!-- Row -->
-                <div class="row">
+                <div class="row" ng-controller="mainCtrl as ctrl">
                     <!-- Column -->
                     <div class="col-lg-8 col-md-7">
                         <div class="card">

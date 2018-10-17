@@ -1,3 +1,6 @@
+var authInterval = 30000;
+var authTimer = null;
+
 function mainCtrl() {
     this.text = "Angular funcionando!!";
 
@@ -22,4 +25,13 @@ function mainCtrl() {
     */
 
     this.listaConMeses = ["Enero", "Febrero", "Marzo", "Abril"];
+}
+
+function authCtrl($scope, $rootScope, $http, $interval, $location){
+    var checkAuth = function(){
+        console.log('checking auth....');
+        //TODO validar si el usuario esta logueado y si la sesion aún es valida
+    };
+    checkAuth();    
+    authTimer = $interval(checkAuth, authInterval);
 }
