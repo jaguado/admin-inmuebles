@@ -18,6 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\NetController.cs" />
+    <Compile Remove="Controllers\WebhookController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\GetData.aspx.cs" />
   </ItemGroup>
 
