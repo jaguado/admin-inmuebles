@@ -9,7 +9,7 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
@@ -21,16 +21,16 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "PORT" : "5000",
-        "useCache": "false",
-        "MONGODB_URI":"mongodb://heroku_rq3dg792:6l30qn9fvvon30dsj26ovm02pi@ds133622.mlab.com:33622/heroku_rq3dg792",
-        "zTorrentsCookie":"__cfduid=d9143bee98a245d97ac3dffe37e103cab1535342580; cf_clearance=5bbdf8df04a507312e8800b09ec225e30d06f3ed-1536283939-86400-150",
-        "disableAuth": true,
-        "minifyResponse": false,
+        "NEW_RELIC_LICENSE_KEY": "195cb6e62921d83376172a83bb2389a5c9bedaac",
+        "MONGODB_URI": "mongodb://heroku_js8hhkss:g5q0fl2n4oskurhmlcjtssiu5@ds037518.mlab.com:37518/heroku_js8hhkss",
+        "minifyResponse": "false",
         "CORS": "localhost",
-        "NEW_RELIC_LICENSE_KEY":"",
-        "NEW_RELIC_APP_NAME":""
+        "useCache": "false",
+        "NEW_RELIC_APP_NAME": "AdminInmuebles localhost",
+        "zTorrentsCookie": "__cfduid=d9143bee98a245d97ac3dffe37e103cab1535342580; cf_clearance=5bbdf8df04a507312e8800b09ec225e30d06f3ed-1536283939-86400-150",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PORT": "5000",
+        "disableAuth": "true"
       },
       "applicationUrl": "http://localhost:60209/"
     }
