@@ -247,7 +247,7 @@ $('#to-back-recover').on("click", function () {
 // redireccionamiento a formulario de contacto
 // ============================================================== 
 $('#to-contact').on("click", function () {
-    document.location = "../Contact/";
+    document.location = "../contact/";
 });
 
 
