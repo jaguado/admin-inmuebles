@@ -59,7 +59,7 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window){
         };
         localStorage.setItem('user', JSON.stringify(user));
         console.log('login', user);
-        $window.location.href = "../Index.html";
+        $window.location.href = "../index.html";
     };
 
     this.user =  user;
