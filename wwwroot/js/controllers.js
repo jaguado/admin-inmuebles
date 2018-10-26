@@ -38,8 +38,6 @@ function mainCtrl($http) {
             return false;
         });
     }
-    
-
 }
 
 function authCtrl($scope, $rootScope, $http, $interval, $location, $window){
@@ -54,13 +52,17 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window){
 
     $scope.login = function(){
         user = {
-            access_token: "blablabla",
+            name: "Jorge",
+            admin: true,
+            access_token: "ya29.Gl1CBsmK6mb2C6qiUyfF5mV2y5_gJAkWSxrSgNLxY4YJ0tWUH1uINqPKvJnP1Rg_oqQcSP-7gADzltBdjhLhX04xm0IAYSpq5cy6YTzs8d86okAPy7wn3KKrkmfFIgc",
             provider: "google"
         };
         localStorage.setItem('user', JSON.stringify(user));
         console.log('login', user);
         $window.location.href = "../Index.html";
     };
+
+    this.user =  user;
 
     checkAuth();    
     authTimer = $interval(checkAuth, authInterval);
