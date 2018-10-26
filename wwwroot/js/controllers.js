@@ -1,7 +1,7 @@
 var authInterval = 30000;
 var authTimer = null;
 
-function mainCtrl() {
+function mainCtrl($http) {
     this.text = "Angular funcionando!!";
 
     /*
@@ -25,6 +25,19 @@ function mainCtrl() {
     */
 
     this.listaConMeses = ["Enero", "Febrero", "Marzo", "Abril"];
+
+    this.testApi = function(){
+        console.log('testing API');
+        return $http.get("../js/app.js").then(function (response) {
+            console.log('status code', response.status);
+            return response.status == 200;
+        }, function (response) {
+            console.log('err', response);
+            return false;
+        });
+    }
+    
+
 }
 
 function authCtrl($scope, $rootScope, $http, $interval, $location){
