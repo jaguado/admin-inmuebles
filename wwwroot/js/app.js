@@ -2,11 +2,12 @@
 var httpInterceptor = function ($q, $location, $rootScope) {
     return {
         request: function (config) { 
+            console.log('config', config);
             //add access token if url is from the base api domain
-            if (!config.url.contains("access_token") && user != null) {
+            if (user != null && !config.url.includes("access_token")) {
                 console.log('httpInterceptor', 'request', 'adding access token for user', user);
-                config.url += config.url.contains("?") ? "&" : "?";
-                config.url += "access_token=" + user.token;
+                config.url += config.url.includes("?") ? "&" : "?";
+                config.url += "access_token=" + user.access_token;
                 config.url += "&provider=" + user.provider;
             }
             return config;

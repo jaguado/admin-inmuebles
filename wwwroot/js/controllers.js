@@ -1,5 +1,7 @@
 var authInterval = 30000;
 var authTimer = null;
+var loginPath = "/AdminInmuebles/material/login.html";
+var user = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')) : null;
 
 function mainCtrl($http) {
     this.text = "Angular funcionando!!";
@@ -40,11 +42,26 @@ function mainCtrl($http) {
 
 }
 
-function authCtrl($scope, $rootScope, $http, $interval, $location){
+function authCtrl($scope, $rootScope, $http, $interval, $location, $window){
     var checkAuth = function(){
         console.log('checking auth....');
-        //TODO validar si el usuario esta logueado y si la sesion aún es valida
+        if(user===null && $window.location.pathname !== loginPath) {
+            console.log($window);
+            //TODO check session state
+            $window.location.href = loginPath;
+        }
     };
+
+    $scope.login = function(){
+        user = {
+            access_token: "blablabla",
+            provider: "google"
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('login', user);
+        $window.location.href = "../Index.html";
+    };
+
     checkAuth();    
     authTimer = $interval(checkAuth, authInterval);
 }
