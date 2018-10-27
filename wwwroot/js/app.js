@@ -29,7 +29,7 @@ var httpInterceptor = function ($q, $location, $rootScope) {
     }
 };
 
-angular.module('app', ['socialLogin'])
+angular.module('app', ['socialLogin','angular-google-analytics'])
     .controller("mainCtrl", mainCtrl)
     .controller("authCtrl", authCtrl)
     .config(function ($httpProvider) {
@@ -42,4 +42,7 @@ angular.module('app', ['socialLogin'])
             appId: "2441599502533482",
             apiVersion: "v3.1"
         });
-    });
+    })
+    .config(['AnalyticsProvider', function (AnalyticsProvider) {
+        AnalyticsProvider.setAccount('UA-128167236-1');
+    }]);
