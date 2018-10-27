@@ -37,7 +37,7 @@ angular.module('app', ['socialLogin'])
     })
     .config(function (socialProvider) {
         socialProvider.setGoogleKey("543398518082-69trqsisjvb7kv5flta5qiho55e1fkbr.apps.googleusercontent.com");
-        //socialProvider.setLinkedInKey("77es90vl6bc7gi");
+        //socialProvider.setLinkedInKey("");
         socialProvider.setFbKey({
             appId: "2441599502533482",
             apiVersion: "v3.1"
