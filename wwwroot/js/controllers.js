@@ -1,6 +1,7 @@
 var authInterval = 30000;
 var authTimer = null;
 var loginPath = "/material/login.html";
+var homePath = "/index.html";
 var user = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')) : null;
 
 function mainCtrl($http) {
@@ -40,7 +41,7 @@ function mainCtrl($http) {
     }
 }
 
-function authCtrl($scope, $rootScope, $http, $interval, $location, $window){
+function authCtrl($scope, $rootScope, $http, $interval, $location, $window, socialLoginService){
     var checkAuth = function(){
         console.log('checking auth....');
         if(user===null && $window.location.pathname !== loginPath) {
@@ -51,19 +52,40 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window){
     };
 
     $scope.login = function(){
-        user = {
-            name: "Jorge",
-            admin: true,
-            access_token: "ya29.Gl1CBsmK6mb2C6qiUyfF5mV2y5_gJAkWSxrSgNLxY4YJ0tWUH1uINqPKvJnP1Rg_oqQcSP-7gADzltBdjhLhX04xm0IAYSpq5cy6YTzs8d86okAPy7wn3KKrkmfFIgc",
-            provider: "google"
-        };
-        localStorage.setItem('user', JSON.stringify(user));
+        //TODO check credentials
         console.log('login', user);
         $window.location.href = "../index.html";
     };
 
-    this.user =  user;
+    $scope.logoff = function(){
+        user = null;
+        localStorage.setItem('user', null);
+        $window.location.href = loginPath;
+    }
+    $rootScope.$on("logoff", function () {
+        $scope.logoff();
+    });
+    $rootScope.$on('event:social-sign-in-success', function (event, userDetails) {
+        /*  Login ok */
+        user = userDetails;
+        this.user = user;
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('social-sign-in-success');
+        if (user.provider == "google") {
+            $scope.$apply(function () {
+                $scope.user = user;
+            });
+        }
+        $window.location.href = homePath;
+    });
+    $rootScope.$on('event:social-sign-out-success', function (event, logoutStatus) {
+        //logout ok
+        console.log('social-sign-out-success');
+        $scope.logoff();
+    });
 
+
+    this.user =  user;
     checkAuth();    
     authTimer = $interval(checkAuth, authInterval);
 }

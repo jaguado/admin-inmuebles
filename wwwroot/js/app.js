@@ -1,7 +1,7 @@
 /* Intercept all http calls to add authorization headers with user token*/
 var httpInterceptor = function ($q, $location, $rootScope) {
     return {
-        request: function (config) { 
+        request: function (config) {
             console.log('config', config);
             //add access token if url is from the base api domain
             if (user != null && !config.url.includes("access_token")) {
@@ -22,16 +22,24 @@ var httpInterceptor = function ($q, $location, $rootScope) {
             console.log('Failed with', rejection.status);
             if (rejection.status == 401 || rejection.status == 403) {
                 //force logoff
-                $rootScope.$broadcast("logoff");             
+                $rootScope.$broadcast("logoff");
             }
             return $q.reject(rejection);
         }
     }
 };
 
-angular.module("app", [])
-       .controller("mainCtrl", mainCtrl)
-       .controller("authCtrl", authCtrl)
-       .config(function ($httpProvider) {
-            $httpProvider.interceptors.push(httpInterceptor);
+angular.module('app', ['socialLogin'])
+    .controller("mainCtrl", mainCtrl)
+    .controller("authCtrl", authCtrl)
+    .config(function ($httpProvider) {
+        $httpProvider.interceptors.push(httpInterceptor);
+    })
+    .config(function (socialProvider) {
+        socialProvider.setGoogleKey("543398518082-69trqsisjvb7kv5flta5qiho55e1fkbr.apps.googleusercontent.com");
+        //socialProvider.setLinkedInKey("77es90vl6bc7gi");
+        socialProvider.setFbKey({
+            appId: "2441599502533482",
+            apiVersion: "v3.1"
         });
+    });
