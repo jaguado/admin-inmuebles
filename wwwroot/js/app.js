@@ -29,7 +29,7 @@ var httpInterceptor = function ($q, $location, $rootScope) {
     }
 };
 
-angular.module('app', ['socialLogin'])
+angular.module('app', ['socialLogin','angular-google-analytics'])
     .controller("mainCtrl", mainCtrl)
     .controller("authCtrl", authCtrl)
     .config(function ($httpProvider) {
@@ -37,9 +37,12 @@ angular.module('app', ['socialLogin'])
     })
     .config(function (socialProvider) {
         socialProvider.setGoogleKey("543398518082-69trqsisjvb7kv5flta5qiho55e1fkbr.apps.googleusercontent.com");
-        //socialProvider.setLinkedInKey("77es90vl6bc7gi");
+        //socialProvider.setLinkedInKey("");
         socialProvider.setFbKey({
             appId: "2441599502533482",
             apiVersion: "v3.1"
         });
-    });
+    })
+    .config(['AnalyticsProvider', function (AnalyticsProvider) {
+        AnalyticsProvider.setAccount('UA-128167236-1');
+    }]);

@@ -41,7 +41,7 @@ function mainCtrl($http) {
     }
 }
 
-function authCtrl($scope, $rootScope, $http, $interval, $location, $window, socialLoginService){
+function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics){
     var checkAuth = function(){
         console.log('checking auth....');
         if(user===null && $window.location.pathname !== loginPath) {
@@ -70,6 +70,8 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, soci
         user = userDetails;
         this.user = user;
         localStorage.setItem('user', JSON.stringify(user));
+        Analytics.set('&uid', user.uid);
+        Analytics.trackEvent('auth', user.provider);
         console.log('social-sign-in-success');
         if (user.provider == "google") {
             $scope.$apply(function () {
