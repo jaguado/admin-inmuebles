@@ -9,85 +9,20 @@ namespace AdminInmuebles.Controllers
 {
     public class userViewController : Controller
     {
-        // GET: userView
-        public ActionResult Index()
+        public Models.User GetUser(string user)
         {
-            return View();
-        }
-
-        // GET: userView/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: userView/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: userView/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            return new Models.User
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: userView/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: userView/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: userView/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: userView/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Address = new Models.Address(),
+                Username = "usuario",
+                CreatedOn = DateTime.Now,
+                UpdatedOn = DateTime.Now,
+                Person = new Models.Person() {
+                    FirstName = "Primer Nombre",
+                    LastName = "Segundo Nombre",
+                    Nickname = "usuario",
+                    Gender = new Models.Gender() }
+            };
         }
     }
 }
