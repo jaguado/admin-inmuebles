@@ -210,10 +210,10 @@
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-img"><img ng-src="auth.user.imageUrl" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Nombre ApPterno</h4>
-                                                <p class="text-muted">correo@dominio.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfil</a>
+                                                <h4>{{ auth.user.name }}</h4>
+                                                <p class="text-muted">{{ auth.user.email}}</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfil</a>
                                             </div>
                                         </div>
                                     </li>
