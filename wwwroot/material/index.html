@@ -31,8 +31,10 @@
     <![endif]-->
     <!-- AngularJS dependencies -->
     <script src="js/angular.min.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/app.js"></script>
+    <script src="../js/angular-google-analytics.js"></script>
+    <script src="../js/angularjs-social-login.js"></script>
+    <script src="../js/controllers.js"></script>
+    <script src="../js/app.js"></script>
 
 </head>
 
@@ -1133,13 +1135,16 @@
                                     <div class="col-12">
                                         <div class="d-flex flex-wrap">
                                             <div>
-                                                <h3 class="card-title">{{ctrl.text}}</h3>
+                                                <h3 class="card-title">Hola {{auth.user.name}}, iniciaste sesi&oacute;n con {{auth.user.provider}}</h3>
                                                 <div class="form-group">
                                                     <label>Ejemplo combobox:</label>
                                                     <select class="form-control" ng-model="ctrl.mes">
                                                         <option ng-repeat="mes in ctrl.listaConMeses">{{mes}}</option>
                                                     </select>
                                                     <label>{{ctrl.mes}}</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button ng-click="ctrl.testApi()">Test API httpInterceptor</button>
                                                 </div>
                                             </div>
                                             <div class="ml-auto">
