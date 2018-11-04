@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,8 +22,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- AngularJS dependencies -->
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-google-analytics.js"></script>
+    <script src="/js/angularjs-social-login.js"></script>
+    <script src="/js/controllers.js"></script>
+    <script src="/js/app.js"></script>
 </head>
-<body>
+<body ng-controller="authCtrl as auth">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -71,8 +77,8 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
                                 <div class="social">
-                                    <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="Acceder con Facebook"> <i aria-hidden="true" class="fab fa-facebook"></i> </a>
-                                    <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="Acceder con Google"> <i aria-hidden="true" class="fab fa-google-plus"></i> </a>
+                                    <button fb-login class="btn  btn-facebook" data-toggle="tooltip" title="Acceder con Facebook"> <i aria-hidden="true" class="fab fa-facebook"></i> </button>
+                                    <button g-login class="btn btn-googleplus" data-toggle="tooltip" title="Acceder con Google"> <i aria-hidden="true" class="fab fa-google-plus"></i> </button>
                                 </div>
                             </div>
                         </div>
