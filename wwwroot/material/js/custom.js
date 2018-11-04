@@ -181,10 +181,10 @@ $(function () {
     // ============================================================== 
     // Login and Recover Password 
     // ============================================================== 
-    $('#to-recover').on("click", function () {
+    $('#to-recover').on("click", function () {       
         $("#loginform").slideUp();
         $("#recoverform").fadeIn();
-    });
+    });    
 
     // ============================================================== 
     // Collapsable cards
@@ -230,3 +230,27 @@ $(function () {
         
     
 });
+
+
+// segmento desarrollado por sebastian sepulveda
+
+
+// ============================================================== 
+// volver desde recuprar contraseña a ingreso de sistema
+// ============================================================== 
+$('#to-back-recover').on("click", function () {
+    $("#loginform").fadeIn();
+    $("#recoverform").slideUp();
+});
+
+// ============================================================== 
+// redireccionamiento a formulario de contacto
+// ============================================================== 
+$('#to-contact').on("click", function () {
+    document.location = "../contact/";
+});
+
+
+
+
+// fin segmento desarrollado por sebastian sepulveda

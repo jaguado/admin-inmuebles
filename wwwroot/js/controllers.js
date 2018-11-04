@@ -1,7 +1,7 @@
 var authInterval = 30000;
 var authTimer = null;
-var loginPath = "/material/login.html";
-var homePath = "/index.html";
+var loginPath = "/login/index.html";
+var homePath = "/_layout.html";
 var user = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')) : null;
 
 function mainCtrl($http) {
