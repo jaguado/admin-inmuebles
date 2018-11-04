@@ -1,0 +1,401 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Material Pro Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <!--This page css - Morris CSS -->
+    <link href="assets/plugins/c3-master/c3.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="material/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="material/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar card-no-border logo-center">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+
+                <div class="navbar-collapse">
+
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown mega-dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+                            <div class="dropdown-menu scale-up-left">
+                                <ul class="mega-dropdown-menu row">
+                                    <li class="col-lg-3 col-xlg-2 m-b-30">
+                                        <h4 class="m-b-20">Informacion 1</h4>
+                                    </li>
+                                    <li class="col-lg-3 m-b-30">
+                                        <h4 class="m-b-20">Informacion 2</h4>
+                                    </li>
+                                    <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">Informacion 3</h4>
+                                    </li>
+                                    <li class="col-lg-3 col-xlg-4 m-b-30">
+                                        <h4 class="m-b-20">Informacion 4</h4>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-message"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notificaciones</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="mail-contnet">
+                                                    <h5> notificacion 1</h5> <span class="mail-desc"> detalle notificacion 1</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="mail-contnet">
+                                                    <h5> notificacion 2</h5> <span class="mail-desc"> detalle notificacion 2</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="mail-contnet">
+                                                    <h5> notificacion 3</h5> <span class="mail-desc"> detalle notificacion 3</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="mail-contnet">
+                                                    <h5> notificacion 4</h5> <span class="mail-desc"> detalle notificacion 4</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Ver todas las notificaciones</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Tu tienes 4 nuevos mensajes</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Usuario 1</h5> <span class="mail-desc">Mensajes 1</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> <img src="../assets/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Usuario 2</h5> <span class="mail-desc">Mensaje 2</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> <img src="../assets/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Usuario 3</h5> <span class="mail-desc">Mensaje 3</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="#">
+                                                <div class="user-img"> <img src="../assets/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                                <div class="mail-contnet">
+                                                    <h5>Usuario 4</h5> <span class="mail-desc">Mensaje 4</span> <span class="time">00:00 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Leer todos los mensajes</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <ul class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box">
+                                            <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-text">
+                                                <h4>Nombre ApPterno</h4>
+                                                <p class="text-muted">correo@dominio.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfil</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
+                                    <li><a href="#"><i class="ti-email"></i> Mensajes</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-settings"></i> Configuracion de cuenta</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-power-off"></i> Salir</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">Menu 1</li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Sub Menu 1 </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">Item 1</a></li>
+                                <li><a href="#">Item 2</a></li>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                                <li><a href="#">Item 5</a></li>
+                                <li><a href="#">Item 6</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Sub Menu 1 </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">Item 1</a></li>
+                                <li><a href="#">Item 2</a></li>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                                <li><a href="#">Item 5</a></li>
+                                <li><a href="#">Item 6</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Sub Menu 1 </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">Item 1</a></li>
+                                <li><a href="#">Item 2</a></li>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                                <li><a href="#">Item 5</a></li>
+                                <li><a href="#">Item 6</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-devider"></li>
+                        <li class="nav-small-cap">Menu 1</li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Sub Menu 1 </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">Item 1</a></li>
+                                <li><a href="#">Item 2</a></li>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                                <li><a href="#">Item 5</a></li>
+                                <li><a href="#">Item 6</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Sub Menu 1 </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">Item 1</a></li>
+                                <li><a href="#">Item 2</a></li>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                                <li><a href="#">Item 5</a></li>
+                                <li><a href="#">Item 6</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Sub Menu 1 </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">Item 1</a></li>
+                                <li><a href="#">Item 2</a></li>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                                <li><a href="#">Item 5</a></li>
+                                <li><a href="#">Item 6</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 col-8 align-self-center">
+                        <h3 class="text-themecolor">Bienvenido</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Inicio</a></li>
+                            <li class="breadcrumb-item active">Resumen</li>
+                        </ol>
+                    </div>                  
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/plugins/popper/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="material/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="material/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="material/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="material/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    <script src="assets/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <!--c3 JavaScript -->
+    <script src="assets/plugins/d3/d3.min.js"></script>
+    <script src="assets/plugins/c3-master/c3.min.js"></script>
+    <!-- Chart JS -->
+    <script src="material/js/dashboard1.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+</body>
+
+</html>
