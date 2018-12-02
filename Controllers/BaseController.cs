@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using AdminInmuebles.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AdminInmuebles.Controllers
 {
@@ -35,7 +36,7 @@ namespace AdminInmuebles.Controllers
 
         internal void Log(Exception ex)
         {
-            var msg = $"{DateTime.Now.ToString()}|ERROR|{ex.Source}|{ex.Message}|{ex.StackTrace}";
+            var msg = $"{DateTime.Now.ToString()}|{JsonConvert.SerializeObject(ex)}";
             Console.Error.WriteLineAsync(msg);
         }
     }

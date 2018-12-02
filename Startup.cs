@@ -117,8 +117,8 @@ namespace AdminInmuebles
 
             services.AddMvc(options =>
             {
-                options.Filters.Add(typeof(SocialAuth)); // by type
-                options.Filters.Add(typeof(BaseResultFilter)); // by type
+                options.Filters.Add(typeof(SocialAuth)); 
+                options.Filters.Add(typeof(BaseResultFilter)); 
             })
             .AddJsonOptions(options =>
             {
