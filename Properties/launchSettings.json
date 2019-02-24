@@ -29,8 +29,8 @@
         "NEW_RELIC_APP_NAME": "AdminInmuebles localhost",
         "zTorrentsCookie": "__cfduid=d9143bee98a245d97ac3dffe37e103cab1535342580; cf_clearance=5bbdf8df04a507312e8800b09ec225e30d06f3ed-1536283939-86400-150",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "PORT": "8001",
-        "disableAuth": "true"
+        "PORT": "5000",
+        "disableAuth": "false"
       },
       "applicationUrl": "http://localhost:60209/"
     }

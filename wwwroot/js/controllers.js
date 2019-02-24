@@ -1,7 +1,7 @@
 var authInterval = 30000;
 var authTimer = null;
 var loginPath = "/login/index.html";
-var homePath = "/_layout.html";
+var homePath = "/material/index.html";
 var user = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')) : null;
 
 function mainCtrl($http) {
@@ -29,7 +29,7 @@ function mainCtrl($http) {
 
     this.listaConMeses = ["Enero", "Febrero", "Marzo", "Abril"];
 
-    this.testApi = function(){
+    this.testApi = function () {
         console.log('testing API');
         return $http.get("../js/app.js").then(function (response) {
             console.log('status code', response.status);
@@ -41,23 +41,28 @@ function mainCtrl($http) {
     }
 }
 
-function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics){
-    var checkAuth = function(){
+function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics) {
+    $scope.showMessages = false;
+    $scope.showNotifications = false;
+    $scope.showLanguage = false;
+
+    var checkAuth = function () {
         console.log('checking auth....');
-        if(user===null && $window.location.pathname !== loginPath) {
+        if (user === null && $window.location.pathname !== loginPath) {
             console.log($window);
             //TODO check session state
             $window.location.href = loginPath;
-        }
+        } else
+            console.log('login', user);
     };
 
-    $scope.login = function(){
+    $scope.login = function () {
         //TODO check credentials
         console.log('login', user);
         $window.location.href = "../index.html";
     };
 
-    $scope.logoff = function(){
+    $scope.logoff = function () {
         user = null;
         localStorage.setItem('user', null);
         $window.location.href = loginPath;
@@ -87,7 +92,61 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Anal
     });
 
 
-    this.user =  user;
-    checkAuth();    
+    this.user = user;
+    checkAuth();
     authTimer = $interval(checkAuth, authInterval);
+
+
+    console.log('loading menu');
+    $scope.menu = [{
+            "Section": "Personal",
+            "Menus": [{
+                    "Name": "Dashboard",
+                    "IconClass": "mdi mdi-gauge",
+                    "Options": [{
+                            "Title": "Dashboard 1",
+                            "Href": "index2.html",
+                            "Options": null
+                        },
+                        {
+                            "Title": "Dashboard 2",
+                            "Href": "index3.html",
+                            "Options": [{
+                                "Title": "Dashboard 2.1",
+                                "Href": "index3.html"
+                            }]
+                        }
+                    ]
+                },
+                {
+                    "Name": "Templates",
+                    "IconClass": "mdi mdi-laptop-windows",
+                    "Options": [{
+                            "Title": "Template 1",
+                            "Href": "index2.html",
+                            "Options": null
+                        },
+                        {
+                            "Title": "Template 2",
+                            "Href": "index3.html",
+                            "Options": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Section": "Options",
+            "Menus": [{
+                "Name": "Configuration",
+                "IconClass": "ti-settings",
+                "Options": [{
+                    "Title": "Account",
+                    "Href": "index3.html",
+                    "Options": null
+                }]
+            }]
+        }
+    ];
+
 }
