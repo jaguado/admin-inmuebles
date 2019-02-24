@@ -42,6 +42,10 @@ function mainCtrl($http) {
 }
 
 function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics){
+    $scope.showMessages=false;
+    $scope.showNotifications=false;
+    $scope.showLanguage=false;
+
     var checkAuth = function(){
         console.log('checking auth....');
         if(user===null && $window.location.pathname !== loginPath) {
