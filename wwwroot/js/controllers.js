@@ -1,7 +1,7 @@
 var authInterval = 30000;
 var authTimer = null;
 var loginPath = "/login/index.html";
-var homePath = "/_layout.html";
+var homePath = "/material/index.html";
 var user = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')) : null;
 
 function mainCtrl($http) {
@@ -49,6 +49,8 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Anal
             //TODO check session state
             $window.location.href = loginPath;
         }
+        else
+            console.log('login', user);
     };
 
     $scope.login = function(){
