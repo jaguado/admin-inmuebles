@@ -41,10 +41,15 @@ function mainCtrl($http) {
     }
 }
 
+/// Este controlador se va a encargar de todo lo que tiene que ver con autenticación
+/// Además de la información personal del usuario se encargará de administrar menus, permisos y roles
 function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics) {
     $scope.showMessages = false;
     $scope.showNotifications = false;
     $scope.showLanguage = false;
+    $scope.showSearch=false;
+
+    $scope.currentPage = 'index2.html';
 
     var checkAuth = function () {
         console.log('checking auth....');
@@ -106,15 +111,13 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Anal
                     "Options": [{
                             "Title": "Dashboard 1",
                             "Href": "index2.html",
+                            "BreadcrumbLabel" : "Personal / Dashboard",
                             "Options": null
                         },
                         {
-                            "Title": "Dashboard 2",
-                            "Href": "index3.html",
-                            "Options": [{
-                                "Title": "Dashboard 2.1",
-                                "Href": "index3.html"
-                            }]
+                            "Title": "Test Page",
+                            "Href": "/Views/testPage.html",
+                            "Options": null
                         }
                     ]
                 },
@@ -148,5 +151,9 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Anal
             }]
         }
     ];
-
+    $scope.openMenu = function(option){
+        console.log('openMenu', option);
+        $scope.currentPage = option.Href;
+        //TODO refresh breadcrumb
+    };
 }

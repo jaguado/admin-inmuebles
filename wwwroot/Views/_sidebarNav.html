@@ -10,10 +10,10 @@
                 <ul aria-expanded="false" class="collapse" ng-show="m.Options">
                     <li ng-repeat="option in m.Options">
                         <!-- 3 levels -->
-                        <a ng-class="option.Options ? 'has-arrow' : ''" ng-href="option.Href" aria-expanded="false">{{option.Title}}</a>
+                        <a ng-class="option.Options ? 'has-arrow' : ''" href="#" ng-click="openMenu(option)" aria-expanded="false">{{option.Title}}</a>
                         <ul aria-expanded="false" class="collapse" ng-show="option.Options">
                             <li ng-repeat="o in option.Options">
-                                <a ng-href="o.Href">{{o.Title}}</a>
+                                <a href="#" ng-click="openMenu(o)">{{o.Title}}</a>
                             </li>
                         </ul>
                     </li>
