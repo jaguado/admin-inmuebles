@@ -2,6 +2,8 @@
 # Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
 ################################################################################
 
-/Tests/AdminInmueblesTests/obj
-/Tests/AdminInmueblesTests/bin/Debug/netcoreapp2.2
-/.vs/AdminInmuebles/v15
+/.vs
+/bin
+/obj
+*.user
+/*.sln

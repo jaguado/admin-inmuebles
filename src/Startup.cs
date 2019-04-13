@@ -105,7 +105,7 @@ namespace AdminInmuebles
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
-                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<Providers.BrotliCompressionProvider>();
                 options.MimeTypes = new[] { "application/json" };
             });
 
