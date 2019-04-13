@@ -23,6 +23,7 @@
       "environmentVariables": {
         "NEW_RELIC_LICENSE_KEY": "195cb6e62921d83376172a83bb2389a5c9bedaac",
         "MONGODB_URI": "mongodb://heroku_js8hhkss:g5q0fl2n4oskurhmlcjtssiu5@ds037518.mlab.com:37518/heroku_js8hhkss",
+        "SQL_CONN": "Data Source=50.97.128.140;Database=desoincl_adm_inmueble;Integrated Security=false;User ID=desoincl_inmueble;Password=Carito20.",
         "minifyResponse": "false",
         "CORS": "localhost",
         "useCache": "false",
