@@ -7,7 +7,7 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet test
+RUN dotnet test -c Release --collect "Code coverage"
 RUN dotnet build -c Release -o out
 RUN dotnet publish -c Release -o out
 
