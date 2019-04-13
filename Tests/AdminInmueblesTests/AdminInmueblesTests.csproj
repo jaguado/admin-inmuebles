@@ -16,4 +16,9 @@
     <ProjectReference Include="..\..\src\AdminInmuebles.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

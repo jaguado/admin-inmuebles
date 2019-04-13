@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AdminInmueblesTests
 {
     [TestClass]
-    public class AppTest
+    public class AppTests
     {
         [TestMethod]
         public void AlwaysTrue()
