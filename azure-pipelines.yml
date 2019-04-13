@@ -16,7 +16,7 @@ variables:
 
 
 steps:
-- script: dotnet test --configuration $(buildConfiguration) --collect "Code coverage"
+- script: dotnet test --configuration $(buildConfiguration) /p:CollectCoverage=true
   displayName: 'dotnet test $(buildConfiguration)'
 
 steps:

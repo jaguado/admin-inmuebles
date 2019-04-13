@@ -7,9 +7,9 @@ namespace AdminInmueblesTests
     public class NetTests
     {
         [TestMethod(), Description("Check internet access")]
-        public void Ping()
+        public void CheckInternetAccess()
         {
-            var result = AdminInmuebles.Helpers.Net.Ping("www.google.cl").Result;
+            var result = AdminInmuebles.Helpers.Net.Curl("http://www.google.cl", "GET", "", "").Result;
             Assert.IsNotNull(result);
         }
     }
