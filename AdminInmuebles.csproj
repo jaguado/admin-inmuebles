@@ -32,6 +32,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
     <PackageReference Include="MimeMapping" Version="1.0.1.12" />
+    <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.18" />
     <PackageReference Include="WebMarkupMin.AspNetCore2" Version="2.4.2" />
