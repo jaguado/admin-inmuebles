@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminInmuebles", "src\Admin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CDF5F185-841C-452B-A02A-75FD22565442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminInmuebles.Tests", "AdminInmuebles.Tests\AdminInmuebles.Tests.csproj", "{23D83E4E-5278-48E2-A101-C25F0CE69227}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminInmueblesTests", "Tests\AdminInmueblesTests\AdminInmueblesTests.csproj", "{C41B4E51-3745-415E-A250-4335C6F703A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,16 @@ Global
 		{A97E8759-9F67-4274-94B6-1E27FC38DE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A97E8759-9F67-4274-94B6-1E27FC38DE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A97E8759-9F67-4274-94B6-1E27FC38DE3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23D83E4E-5278-48E2-A101-C25F0CE69227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23D83E4E-5278-48E2-A101-C25F0CE69227}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23D83E4E-5278-48E2-A101-C25F0CE69227}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23D83E4E-5278-48E2-A101-C25F0CE69227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C41B4E51-3745-415E-A250-4335C6F703A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C41B4E51-3745-415E-A250-4335C6F703A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C41B4E51-3745-415E-A250-4335C6F703A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C41B4E51-3745-415E-A250-4335C6F703A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{23D83E4E-5278-48E2-A101-C25F0CE69227} = {CDF5F185-841C-452B-A02A-75FD22565442}
+		{C41B4E51-3745-415E-A250-4335C6F703A9} = {CDF5F185-841C-452B-A02A-75FD22565442}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {606B6C8C-D478-465E-8CD2-8107E539345F}
