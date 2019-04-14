@@ -7,7 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminInmuebles", "src\Admin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CDF5F185-841C-452B-A02A-75FD22565442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminInmueblesTests", "Tests\AdminInmueblesTests\AdminInmueblesTests.csproj", "{C41B4E51-3745-415E-A250-4335C6F703A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminInmueblesTests", "Tests\AdminInmueblesTests\AdminInmueblesTests.csproj", "{C41B4E51-3745-415E-A250-4335C6F703A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8CDADF18-1A26-4D82-92D3-069D864410CC}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

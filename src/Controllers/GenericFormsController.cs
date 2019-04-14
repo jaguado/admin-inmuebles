@@ -31,12 +31,12 @@ namespace AdminInmuebles.Controllers
         }
 
         [HttpPost("{tableName}")]
-        public async Task<IActionResult> AddData(string tableName)
+        public Task<IActionResult> AddData(string tableName)
         {
             throw new NotImplementedException();
         }
         [HttpPut("{nombre}")]
-        public async Task<IActionResult> UpdateData(string nombre)
+        public Task<IActionResult> UpdateData(string nombre)
         {
             throw new NotImplementedException();
         }
