@@ -20,8 +20,7 @@ CORECLR_NEWRELIC_HOME=/usr/local/newrelic-netcore20-agent \
 CORECLR_PROFILER_PATH=/usr/local/newrelic-netcore20-agent/libNewRelicProfiler.so \
 NEW_RELIC_LICENSE_KEY=195cb6e62921d83376172a83bb2389a5c9bedaac \
 NEW_RELIC_APP_NAME=AdminInmuebles.Docker
-# install newrelic with apt
-#RUN apt-get install -y newrelic-netcore20-agent
+RUN dpkg -i ./newrelic/newrelic-netcore20-agent_*.deb
 ENV TZ America/Santiago
 WORKDIR /app
 COPY --from=build-env /app/out .
