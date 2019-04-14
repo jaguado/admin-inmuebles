@@ -2,6 +2,7 @@ using AdminInmuebles;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AdminInmueblesTests
@@ -16,7 +17,8 @@ namespace AdminInmueblesTests
             var controller = new AdminInmuebles.Controllers.GenericFormsController();
             var result = await controller.GetTypesTables() as OkObjectResult;
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Value as DataSet);
+            var value = result.Value;
+            Assert.IsNotNull(value);
         }
 
         [TestMethod]
@@ -26,7 +28,8 @@ namespace AdminInmueblesTests
             var controller = new AdminInmuebles.Controllers.GenericFormsController();
             var result = await controller.GetTableDetail("TIPO_CARGO_COMITE") as OkObjectResult;
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Value as DataSet);
+            var value = result.Value;
+            Assert.IsNotNull(value);
         }
     }
 }

@@ -7,3 +7,4 @@
 /.vs/AdminInmuebles/v15
 /Tests/AdminInmueblesTests/bin/Release/netcoreapp2.2
 /Tests/AdminInmueblesTests/coverage.json
+/.vs/config
