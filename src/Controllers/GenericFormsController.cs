@@ -16,6 +16,7 @@ namespace AdminInmuebles.Controllers
     public class GenericFormsController : BaseController
     {
         [HttpGet()]
+        [Produces(typeof(IEnumerable<Models.Tabla>))]
         public async Task<IActionResult> GetTypesTables()
         {
             const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
@@ -23,17 +24,18 @@ namespace AdminInmuebles.Controllers
             var rows = tables.Tables[0].Select().ToList();
             var output = rows.Select(row =>
             {
-                return new
+                return new Models.Tabla
                 {
-                    BD = row["TABLE_CATALOG"],
-                    Esquema = row["TABLE_SCHEMA"],
-                    Tabla = row["TABLE_NAME"]
+                    BD = row["TABLE_CATALOG"].ToString(),
+                    Esquema = row["TABLE_SCHEMA"].ToString(),
+                    Nombre = row["TABLE_NAME"].ToString()
                 };
             });
             return new OkObjectResult(output);
         }
 
         [HttpGet("{tableName}")]
+        [Produces(typeof(IEnumerable<Models.Campo>))]
         public async Task<IActionResult> GetTableDetail(string tableName)
         {
             var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
@@ -41,10 +43,10 @@ namespace AdminInmuebles.Controllers
             var rows = tables.Tables[0].Select().ToList();
             var output = rows.Select(row =>
             {
-                return new
+                return new Models.Campo
                 {
-                    Nombre = row["COLUMN_NAME"],
-                    Tipo = row["DATA_TYPE"],
+                    Nombre = row["COLUMN_NAME"].ToString(),
+                    Tipo = row["DATA_TYPE"].ToString(),
                     Opcional = row["DATA_TYPE"] != null && row["DATA_TYPE"].ToString() == "NO"
                 };
             });
