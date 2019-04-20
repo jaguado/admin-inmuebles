@@ -21,6 +21,8 @@ namespace AdminInmuebles.Controllers
         {
             const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
             var tables = await Helpers.Sql.GetData(queryMantenedores);
+            if (tables == null || tables.Tables[0].Rows.Count == 0)
+                return new NotFoundResult();
             var rows = tables.Tables[0].Select().ToList();
             var output = rows.Select(row =>
             {
@@ -40,13 +42,15 @@ namespace AdminInmuebles.Controllers
         {
             var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
             var tables = await Helpers.Sql.GetData(queryTabla);
+            if (tables == null || tables.Tables[0].Rows.Count == 0)
+                return new NotFoundResult();
             var rows = tables.Tables[0].Select().ToList();
             var output = rows.Select(row =>
             {
                 return new Models.Campo
                 {
                     Nombre = row["COLUMN_NAME"].ToString(),
-                    Tipo = row["DATA_TYPE"].ToString(),
+                    Tipo = row["DATA_TYPE"].ToString(), 
                     Opcional = row["DATA_TYPE"] != null && row["DATA_TYPE"].ToString() == "NO"
                 };
             });
