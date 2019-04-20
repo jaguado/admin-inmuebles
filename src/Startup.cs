@@ -34,8 +34,7 @@ namespace AdminInmuebles
         /// useCache=false to disable mem cache
         /// </summary>
         internal static bool useMemCache = Environment.GetEnvironmentVariable("useCache") != null && Environment.GetEnvironmentVariable("useCache") == "true" ? true : false; //default false
-
-        internal static string[] corsWhitelist = Environment.GetEnvironmentVariable("CORS") != null ? Environment.GetEnvironmentVariable("CORS").Split(",") : null;
+        internal static string[] corsWhitelist = Environment.GetEnvironmentVariable("CORS")?.Split(",");
 
         public Startup(IConfiguration configuration)
         {
@@ -49,7 +48,6 @@ namespace AdminInmuebles
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             // Add WebMarkupMin services.
             services.AddWebMarkupMin(options =>
             {
@@ -83,13 +81,8 @@ namespace AdminInmuebles
             })
             .AddHttpCompression(options =>
             {
-
                 options.CompressorFactories = new List<ICompressorFactory>
                 {
-                    new BrotliCompressorFactory(new BrotliCompressionSettings
-                    {
-                        Level = CompressionLevel.Fastest
-                    }),
                     new DeflateCompressorFactory(new DeflateCompressionSettings
                     {
                         Level = CompressionLevel.Fastest
