@@ -20,6 +20,7 @@ namespace AdminInmueblesTests
             Assert.IsNotNull(result);
             var data = result.Value as dynamic;
             Assert.IsNotNull(data);
+
         }
     }
 }
