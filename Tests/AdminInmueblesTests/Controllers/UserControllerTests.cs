@@ -12,13 +12,14 @@ namespace AdminInmueblesTests
     public class UserControllerTests
     {
         [TestMethod]
-        public async Task BuildDefaultMenu()
+        public async Task GetDefautMenu()
         {
             AppTests.LoadTestVariables();
             var controller = new AdminInmuebles.Controllers.UserController();
-            var result = await controller.GetDefaultMenu();
+            var result = await controller.GetAuthUser("","") as OkObjectResult;
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Any());
+            var data = result.Value as dynamic;
+            Assert.IsNotNull(data);
         }
     }
 }

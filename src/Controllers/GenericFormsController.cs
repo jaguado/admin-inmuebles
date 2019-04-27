@@ -22,34 +22,27 @@ namespace AdminInmuebles.Controllers
         {
             try
             {
-                var tables = await GetTypeTables();
-                if (tables == null)
-                    return new NotFoundResult();
-                return new OkObjectResult(tables);
+                const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
+                var tables = await Helpers.Sql.GetData(queryMantenedores);
+                if (tables == null || tables.Tables[0].Rows.Count == 0)
+                    return null;
+                var rows = tables.Tables[0].Select().ToList();
+                var output = rows.Select(row =>
+                {
+                    return new Models.Tabla
+                    {
+                        BD = row["TABLE_CATALOG"].ToString(),
+                        Esquema = row["TABLE_SCHEMA"].ToString(),
+                        Nombre = row["TABLE_NAME"].ToString()
+                    };
+                }).ToList();
+                return new OkObjectResult(output);
             }
             catch (Exception ex)
             {
                 await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
                 return StatusCode(500, ex.Message);
             }
-        }
-
-        internal static async Task<List<Models.Tabla>> GetTypeTables()
-        {
-            const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
-            var tables = await Helpers.Sql.GetData(queryMantenedores);
-            if (tables == null || tables.Tables[0].Rows.Count == 0)
-                return null;
-            var rows = tables.Tables[0].Select().ToList();
-            return rows.Select(row =>
-            {
-                return new Models.Tabla
-                {
-                    BD = row["TABLE_CATALOG"].ToString(),
-                    Esquema = row["TABLE_SCHEMA"].ToString(),
-                    Nombre = row["TABLE_NAME"].ToString()
-                };
-            }).ToList();
         }
 
         [HttpGet("{tableName}")]

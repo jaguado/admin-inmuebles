@@ -42,7 +42,7 @@ namespace AdminInmuebles.Controllers
             });
         }
 
-        public async Task<List<Models.Section>> GetDefaultMenu()
+        private async Task<List<Models.Section>> GetDefaultMenu()
         {
             return new List<Models.Section>
             {
@@ -56,7 +56,8 @@ namespace AdminInmuebles.Controllers
 
         private async Task<Models.Menu> GetMantenedores()
         {
-            var tablas = await GenericFormsController.GetTypeTables();
+            var result = await new GenericFormsController().GetTypesTables() as OkObjectResult;
+            var tablas = result.Value as IList<Models.Tabla>;
             var menu = new Models.Menu
             {
                 Name = "Mantenedores",
