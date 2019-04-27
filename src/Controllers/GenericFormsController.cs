@@ -1,6 +1,7 @@
 ﻿using AdminInmuebles.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,31 @@ namespace AdminInmuebles.Controllers
     public class GenericFormsController : BaseController
     {
         [HttpGet()]
-        [Produces(typeof(IEnumerable<Models.Tabla>))]
+        [Produces(typeof(IList<Models.Tabla>))]
         public async Task<IActionResult> GetTypesTables()
+        {
+            try
+            {
+                var tables = await GetTypeTables();
+                if (tables == null)
+                    return new NotFoundResult();
+                return new OkObjectResult(tables);
+            }
+            catch (Exception ex)
+            {
+                await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        internal static async Task<List<Models.Tabla>> GetTypeTables()
         {
             const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
             var tables = await Helpers.Sql.GetData(queryMantenedores);
             if (tables == null || tables.Tables[0].Rows.Count == 0)
-                return new NotFoundResult();
+                return null;
             var rows = tables.Tables[0].Select().ToList();
-            var output = rows.Select(row =>
+            return rows.Select(row =>
             {
                 return new Models.Tabla
                 {
@@ -32,40 +49,72 @@ namespace AdminInmuebles.Controllers
                     Esquema = row["TABLE_SCHEMA"].ToString(),
                     Nombre = row["TABLE_NAME"].ToString()
                 };
-            });
-            return new OkObjectResult(output);
+            }).ToList();
         }
 
         [HttpGet("{tableName}")]
         [Produces(typeof(IEnumerable<Models.Campo>))]
         public async Task<IActionResult> GetTableDetail(string tableName)
         {
-            var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
-            var tables = await Helpers.Sql.GetData(queryTabla);
-            if (tables == null || tables.Tables[0].Rows.Count == 0)
-                return new NotFoundResult();
-            var rows = tables.Tables[0].Select().ToList();
-            var output = rows.Select(row =>
+            try
             {
-                return new Models.Campo
+                var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
+                var tables = await Helpers.Sql.GetData(queryTabla);
+                if (tables == null || tables.Tables[0].Rows.Count == 0)
+                    return new NotFoundResult();
+                var rows = tables.Tables[0].Select().ToList();
+                var output = rows.Select(row =>
                 {
-                    Nombre = row["COLUMN_NAME"].ToString(),
-                    Tipo = row["DATA_TYPE"].ToString(), 
-                    Opcional = row["DATA_TYPE"] != null && row["DATA_TYPE"].ToString() == "NO"
-                };
-            });
-            return new OkObjectResult(output);
+                    return new Models.Campo
+                    {
+                        Nombre = row["COLUMN_NAME"].ToString(),
+                        Tipo = row["DATA_TYPE"].ToString(),
+                        Opcional = row["DATA_TYPE"] != null && row["DATA_TYPE"].ToString() == "NO"
+                    };
+                });
+                return new OkObjectResult(output);
+            }
+            catch (Exception ex)
+            {
+                await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("{tableName}")]
-        public Task<IActionResult> AddData(string tableName)
+        public async Task<IActionResult> AddData(string tableName)
         {
-            throw new NotImplementedException();
+            if(!Request.HasFormContentType)
+                return StatusCode(500, "Request has not FormContentType");
+
+            var payload = await Request.ReadFormAsync();
+            Console.WriteLine($"AddData payload:");
+            payload.Keys.ToList().ForEach(key =>
+            {
+                if(payload.TryGetValue(key, out StringValues value))
+                    Console.WriteLine($"{key}: {value}");
+                else
+                    Console.WriteLine($"{key}:  error getting value");
+            });
+            return new OkObjectResult(payload.Keys);
         }
+
         [HttpPut("{nombre}")]
-        public Task<IActionResult> UpdateData(string nombre)
+        public async Task<IActionResult> UpdateData(string nombre)
         {
-            throw new NotImplementedException();
+            if (!Request.HasFormContentType)
+                return StatusCode(500, "Request has not FormContentType");
+
+            var payload = await Request.ReadFormAsync();
+            Console.WriteLine($"UpdateData payload:");
+            payload.Keys.ToList().ForEach(key =>
+            {
+                if (payload.TryGetValue(key, out StringValues value))
+                    Console.WriteLine($"{key}: {value}");
+                else
+                    Console.WriteLine($"{key}:  error getting value");
+            });
+            return new OkObjectResult(payload.Keys);
         }
     }
 }
