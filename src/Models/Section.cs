@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace AdminInmuebles.Models
 {
-    public class Section
+    public class MenuSection
     {
-        public string Name { get; set; }
+        public string Section { get; set; }
         public List<Menu> Menus { get; set; }
     }
 }

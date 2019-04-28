@@ -8,6 +8,6 @@ namespace AdminInmuebles.Models
     public class AuthenticatedUser: BaseModel
     {
         public User User { get; set; }
-        public List<Section> Menu { get; set; }
+        public List<MenuSection> Menu { get; set; }
     }
 }

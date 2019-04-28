@@ -43,13 +43,39 @@ namespace AdminInmuebles.Controllers
             });
         }
 
-        private async Task<List<Models.Section>> GetDefaultMenu()
+        private async Task<List<Models.MenuSection>> GetDefaultMenu()
         {
-            return new List<Models.Section>
+            return new List<Models.MenuSection>
             {
-                new Models.Section
+                new Models.MenuSection
                 {
-                    Name="Opciones",
+                    Section="Personal",
+                    Menus = new List<Models.Menu>
+                    {
+                        new Models.Menu
+                        {
+                            Name="Dashboard",
+                            IconClass="mdi mdi-gauge",
+                            Options = new List<Models.Menu.Option>
+                            {
+                                new Models.Menu.Option
+                                {
+                                    Title="Dashboard 1",
+                                    Href="index2.html",
+                                    BreadcrumbLabel="Personal / Dashboard"
+                                },
+                                new Models.Menu.Option
+                                {
+                                    Title="Test Page",
+                                    Href="/Views/testPage.html"
+                                }
+                            }
+                        }
+                    }
+                },
+                new Models.MenuSection
+                {
+                    Section="Opciones",
                     Menus = new List<Models.Menu>{await GetMantenedores() }
                 }
             };
@@ -65,10 +91,11 @@ namespace AdminInmuebles.Controllers
                 IconClass = "ti-settings",
                 Options = tablas!=null ? tablas.Select(tabla =>
                 {
+                    var nombre = tabla.Nombre.Replace("TIPO_", "");
                     return new Models.Menu.Option
                     {
-                        Title = tabla.Nombre,
-                        Href = "GenericFormTest.html?id=" + tabla.Nombre
+                        Title = nombre,
+                        Href = "GenericFormTest.html?id=" + nombre
                     };
                 }).ToList(): new List<Models.Menu.Option>()
             };
