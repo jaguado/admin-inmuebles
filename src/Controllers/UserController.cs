@@ -30,15 +30,16 @@ namespace AdminInmuebles.Controllers
         }
 
         [HttpGet("me")]
+        [Produces(typeof(Models.AuthenticatedUser))]
         public async Task<IActionResult> GetAuthUser(string forUser, string userInfo)
         {
             //TODO get real condos, menus and roles info
-            return new OkObjectResult(new
+            return new OkObjectResult(new Models.AuthenticatedUser
             {
-                User = JsonConvert.DeserializeObject(userInfo),
-                Condos = new List<object>(5),
-                Roles = new List<object>(5),
-                Menus = await GetDefaultMenu()
+                User = new Models.User {
+                    Info = userInfo!=null ? JsonConvert.DeserializeObject(userInfo): null
+                },
+                Menu = await GetDefaultMenu()
             });
         }
 
