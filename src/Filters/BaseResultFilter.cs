@@ -17,7 +17,7 @@ namespace AdminInmuebles.Filters
     {
         const int defaultLimit = 50;
         public static string[] Operators = new[] { "==", "!=", "<", ">", "<>", "<=", ">=" };
-        private static readonly bool _minifyResponse = Environment.GetEnvironmentVariable("minifyResponse") =="false" ? false : true;
+        private static readonly bool _minifyResponse = Environment.GetEnvironmentVariable("minifyResponse") =="true" ? true : false;
 
         private static WebMarkupMin.Core.CrockfordJsMinifier minifyJs = new WebMarkupMin.Core.CrockfordJsMinifier();
         private void FilterOrderLimitResult<T>(ActionExecutedContext context, HttpRequest request, OkObjectResult resultResponse)
@@ -30,10 +30,11 @@ namespace AdminInmuebles.Filters
                     if (result.Any())
                     {
                         var newObject = result;
-                        newObject = FilterResult(result, request);
-                        newObject = OrderResult(newObject, request);
-                        newObject = LimitObjectResult(newObject, request);
-                        //minify dynamic content
+                        var controller = context.Controller as Controller;
+                        newObject = FilterResult(result, controller.Request);
+                        newObject = OrderResult(newObject, controller.Request);
+                        newObject = LimitObjectResult(newObject, controller.Request);
+                        //FIXME minify dynamic content, problems with int[]
                         if (_minifyResponse)
                         {
                             var json = JsonConvert.SerializeObject(newObject, Startup.jsonSettings);
@@ -116,7 +117,23 @@ namespace AdminInmuebles.Filters
             // do something after the action executes
             var request = resultContext.HttpContext.Request;
             var resultResponse = resultContext.Result as OkObjectResult;
-            FilterOrderLimitResult<dynamic>(resultContext, request, resultResponse);
+            //TODO identify type!!
+            switch (resultResponse.Value)
+            {
+                case IEnumerable<int> t:
+                    FilterOrderLimitResult<int>(resultContext, request, resultResponse);
+                    break;
+                case IEnumerable<string> t:
+                    FilterOrderLimitResult<string>(resultContext, request, resultResponse);
+                    break;
+                case IEnumerable<DateTime> t:
+                    FilterOrderLimitResult<DateTime>(resultContext, request, resultResponse);
+                    break;
+                case IEnumerable<object> t:
+                    FilterOrderLimitResult<object>(resultContext, request, resultResponse);
+                    break;
+            }
+            context.Result = resultContext.Result;
         }
     }
 }

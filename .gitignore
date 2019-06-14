@@ -8,3 +8,4 @@
 /Tests/AdminInmueblesTests/bin/Release/netcoreapp2.2
 /Tests/AdminInmueblesTests/coverage.json
 /.vs/config
+/Tests/AdminInmueblesTests/coverage.opencover.xml
