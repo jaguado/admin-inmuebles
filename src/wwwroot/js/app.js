@@ -7,7 +7,7 @@ var httpInterceptor = function ($q, $location, $rootScope) {
             if (user != null && !config.url.includes("access_token")) {
                 console.log('httpInterceptor', 'request', 'adding access token for user', user);
                 config.url += config.url.includes("?") ? "&" : "?";
-                config.url += "access_token=" + user.access_token;
+                config.url += "access_token=" + user.token;
                 config.url += "&provider=" + user.provider;
             }
             return config;
@@ -29,7 +29,18 @@ var httpInterceptor = function ($q, $location, $rootScope) {
     }
 };
 
-angular.module('app', ['socialLogin','angular-google-analytics'])
+var app = angular.module('app', ['socialLogin', 'angular-google-analytics'])
+    .factory('authService', function ($http) {
+        var authService = {};
+        authService.getUser = function () {
+            $http.get(baseUrl + "User/me")
+                .then(function (data) {
+                    console.log('ddd', data.data);
+                    return data.data;
+                });
+        };
+        return authService;
+    })
     .controller("mainCtrl", mainCtrl)
     .controller("authCtrl", authCtrl)
     .config(function ($httpProvider) {
@@ -46,3 +57,4 @@ angular.module('app', ['socialLogin','angular-google-analytics'])
     .config(['AnalyticsProvider', function (AnalyticsProvider) {
         AnalyticsProvider.setAccount('UA-128167236-1');
     }]);
+    

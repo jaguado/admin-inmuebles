@@ -3,6 +3,7 @@ var authTimer = null;
 var loginPath = "/login/index.html";
 var homePath = "/material/index.html";
 var user = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')) : null;
+var baseUrl = "/v1/";
 
 function mainCtrl($http) {
     this.text = "Angular funcionando!!";
@@ -29,6 +30,16 @@ function mainCtrl($http) {
 
     this.listaConMeses = ["Enero", "Febrero", "Marzo", "Abril"];
 
+
+    this.loadMenu = function () {
+        return $http.get(baseUrl + "User/me").then(function (response) {
+            console.log('user me', response.data);
+            return response.status == 200;
+        }, function (response) {
+            console.log('err user me', response);
+            return null;
+        });
+    }
     this.testApi = function () {
         console.log('testing API');
         return $http.get("../js/app.js").then(function (response) {
@@ -39,26 +50,32 @@ function mainCtrl($http) {
             return false;
         });
     }
+
+
 }
 
 /// Este controlador se va a encargar de todo lo que tiene que ver con autenticación
 /// Además de la información personal del usuario se encargará de administrar menus, permisos y roles
-function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics) {
+function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Analytics, authService) {
     $scope.showMessages = false;
     $scope.showNotifications = false;
     $scope.showLanguage = false;
-    $scope.showSearch=false;
-
+    $scope.showSearch = false;
     $scope.currentPage = 'index2.html';
+
+    console.log('authService', authService);
+    $scope.menu = authService.getUser();
+    console.log('menu', $scope.menu);    
 
     var checkAuth = function () {
         console.log('checking auth....');
         if (user === null && $window.location.pathname !== loginPath) {
-            console.log($window);
+            console.log('Path', $window.location.pathname);
             //TODO check session state
             $window.location.href = loginPath;
-        } else
+        } else {
             console.log('login', user);
+        }
     };
 
     $scope.login = function () {
@@ -70,7 +87,8 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Anal
     $scope.logoff = function () {
         user = null;
         localStorage.setItem('user', null);
-        $window.location.href = loginPath;
+        if ($window.location.pathname !== loginPath)
+            $window.location.href = loginPath;
     }
     $rootScope.$on("logoff", function () {
         $scope.logoff();
@@ -101,59 +119,11 @@ function authCtrl($scope, $rootScope, $http, $interval, $location, $window, Anal
     checkAuth();
     authTimer = $interval(checkAuth, authInterval);
 
-
-    console.log('loading menu');
-    $scope.menu = [{
-            "Section": "Personal",
-            "Menus": [{
-                    "Name": "Dashboard",
-                    "IconClass": "mdi mdi-gauge",
-                    "Options": [{
-                            "Title": "Dashboard 1",
-                            "Href": "index2.html",
-                            "BreadcrumbLabel" : "Personal / Dashboard",
-                            "Options": null
-                        },
-                        {
-                            "Title": "Test Page",
-                            "Href": "/Views/testPage.html",
-                            "Options": null
-                        }
-                    ]
-                },
-                {
-                    "Name": "Templates",
-                    "IconClass": "mdi mdi-laptop-windows",
-                    "Options": [{
-                            "Title": "Template 1",
-                            "Href": "index2.html",
-                            "Options": null
-                        },
-                        {
-                            "Title": "Template 2",
-                            "Href": "index3.html",
-                            "Options": null
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Section": "Options",
-            "Menus": [{
-                "Name": "Configuration",
-                "IconClass": "ti-settings",
-                "Options": [{
-                    "Title": "Account",
-                    "Href": "index3.html",
-                    "Options": null
-                }]
-            }]
-        }
-    ];
-    $scope.openMenu = function(option){
+    $scope.openMenu = function (option) {
         console.log('openMenu', option);
         $scope.currentPage = option.Href;
         //TODO refresh breadcrumb
     };
+
+
 }
