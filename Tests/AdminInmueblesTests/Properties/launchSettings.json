@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AdminInmueblesTests": {
+      "commandName": "Project",
+      "commandLineArgs": "/p:CollectCoverage=true"
+    }
+  }
+}

@@ -6,3 +6,10 @@
 /Tests/AdminInmueblesTests/bin/Debug/netcoreapp2.2
 /.vs/AdminInmuebles/v15
 /Tests/AdminInmueblesTests/bin/Release/netcoreapp2.2
+/Tests/AdminInmueblesTests/coverage.json
+/.vs/config
+/Tests/AdminInmueblesTests/coverage.opencover.xml
+
+# wwwroot folder will be use to publish angular files
+wwwroot
+/.history

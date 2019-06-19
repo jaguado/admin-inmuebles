@@ -6,7 +6,7 @@ namespace AdminInmuebles.Models
 {
     public class User : BaseModel
     {
-        public  string Username { get; set; }
+        public string Username { get; set; }
         public Person Person { get; set; }
         public Address Address { get; set; }
         public RoleTypes[] Roles { get; set; }
@@ -14,5 +14,6 @@ namespace AdminInmuebles.Models
         {
             Other, Admin, Owner, OwnerFamily, Lessee, LesseeFamily, Worker
         }
+        public dynamic Info { get; set; }
     }
 }

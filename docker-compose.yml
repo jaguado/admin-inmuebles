@@ -17,6 +17,6 @@ services:
        - "CORS=localhost,aio.jamtech.cl,localhost:5000"
        - "SENDGRID_API_KEY="
     ports:
-       - "8080:5000"
+       - "5000:5000"
     mem_limit: 256m
     mem_reservation: 128m

@@ -48,7 +48,8 @@ namespace AdminInmuebles.Filters
 
         private static async Task ValidateAccessTokenWithGoogleAsync(ActionExecutingContext context, string token, string uid)
         {
-            //check if token is valid
+            //check if token is valid FIXME validate without call google api
+
             const string baseUrl = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=";
             using (var response = await Helpers.Net.GetResponse(baseUrl + token))
             {
