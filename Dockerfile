@@ -4,7 +4,7 @@ COPY template/package.json template/package-lock.json ./
 RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
 WORKDIR /ng-app
 COPY template/. .
-RUN npm run build
+RUN npm run dockerbuild
 
 # BUILD NETCORE APP
 FROM microsoft/dotnet:sdk AS build-env

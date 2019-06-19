@@ -5,7 +5,7 @@
         "ng": "ng",
         "start": "ng serve --progress --port 5000",
         "build": "ng build --prod",
-        "gitbuild": "ng build --prod --base-href /start-javascript/sb-admin-material/master/dist/",
+        "dockerbuild": "ng build --prod --output-path wwwroot",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
