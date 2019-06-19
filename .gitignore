@@ -9,3 +9,7 @@
 /Tests/AdminInmueblesTests/coverage.json
 /.vs/config
 /Tests/AdminInmueblesTests/coverage.opencover.xml
+
+# wwwroot folder will be use to publish angular files
+wwwroot
+/.history
