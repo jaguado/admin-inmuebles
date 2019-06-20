@@ -149,6 +149,9 @@ namespace AdminInmuebles
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
+            else{
+                app.UseHttpsRedirection();
+            }
 
             //cors
             if (corsWhitelist != null)
