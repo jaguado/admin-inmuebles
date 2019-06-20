@@ -150,7 +150,7 @@ namespace AdminInmuebles
                 app.UseBrowserLink();
             }
             else{
-                app.UseHttpsRedirection();
+                app.UseHttpsRedirection(); //Enforce HTTPS for production
             }
 
             //cors
