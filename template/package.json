@@ -8,7 +8,8 @@
         "dockerbuild": "ng build --prod --output-path wwwroot",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "clean": "rm -rf node_modules"
     },
     "private": true,
     "dependencies": {
