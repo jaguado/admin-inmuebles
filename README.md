@@ -4,9 +4,12 @@ TODO complete the description of AdmInmuebles Stack
 
 ### Introduction
 
-Include the following features:
+Includes the following features:
 
-*   TODO Complete with features list
+* Social Login
+* 
+
+TODO Complete with features list
 
 ### How to start
 

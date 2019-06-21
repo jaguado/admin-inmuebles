@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
@@ -11,36 +10,34 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  private user: SocialUser = null;
   email = new FormControl('');
   loginForm: FormGroup;
   errorMessage: String;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private socialAuthService: SocialAuthService
+    private authService: AuthService
   ) {}
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.authService.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   signOut(): void {}
 
   ngOnInit() {
-    console.log('login ngOnInit, logged user:', this.user);
+    console.log('login ngOnInit, logged user:', this.authService.user);
     // window.localStorage.removeItem('token');
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.socialAuthService.authState.subscribe(user => {
-      this.user = user;
+    this.authService.socialAuthService.authState.subscribe(user => {
+      this.authService.user = user;
       if (user) {
         localStorage.setItem('authorization', JSON.stringify(user));
         this.router.navigate(['/dashboard']);
