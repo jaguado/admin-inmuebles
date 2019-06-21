@@ -10,7 +10,14 @@ export class AuthService {
   baseUrl: String = 'https://reqres.in/api/';
   constructor(private http: HttpClient, public socialAuthService: SocialAuthService) { }
 
-  checkCredentials(credentials: object) {
-    return this.http.post(this.baseUrl + 'login', credentials).toPromise();
+  checkCredentials(credentials: any) {
+    return this.http.post(this.baseUrl + 'login', credentials)
+    .toPromise<any>()
+    .then(token => {
+      this.user = new SocialUser();
+      this.user.email = credentials.email;
+      this.user.authToken = token.token;
+      return this.user;
+    });
   }
 }
