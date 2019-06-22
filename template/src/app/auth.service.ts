@@ -12,28 +12,25 @@ export class AuthService {
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
   signIn(credentials: any) {
-    this.authService.authState.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.router.navigate(['/dashboard']);
-      }
-    });
-
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(token => {
       this.user = new SocialUser();
       this.user.email = credentials.email;
+      this.user.firstName = credentials.firstName;
+      this.user.lastName = credentials.lastName;
+      this.user.photoUrl = credentials.photoUrl;
+      this.user.id = credentials.id;
       this.user.authToken = token.token;
+      this.user.provider = 'internal';
       return this.user;
     });
   }
 
   signOut() {
-    // TODO identify social or internal and logout
-    if (!this.authService) {
+    if (this.user && this.user.provider !== 'internal') {
       this.authService.signOut();
-      this.user = null;
     }
+    this.user = null;
   }
 }

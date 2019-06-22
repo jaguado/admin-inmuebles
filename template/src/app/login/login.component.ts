@@ -19,11 +19,22 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  suscribe(){
+    this.authService.authService.authState.subscribe(user => {
+      console.log('authState', 'subscribe', user);
+      this.authService.user = user;
+      if (user) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
   signInWithGoogle(): void {
+    this.suscribe();
     this.authService.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   signInWithFB(): void {
+    this.suscribe();
     this.authService.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
