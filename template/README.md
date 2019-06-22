@@ -66,6 +66,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ### Next features
 
+* Google Tag Manager
+* NewRelic browsers
 * Customer on boarding
 * Condos selection screen - Section already declared but empty
 * Common menu and user profile
