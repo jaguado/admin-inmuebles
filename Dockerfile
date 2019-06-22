@@ -4,7 +4,9 @@ COPY template/package.json template/package-lock.json ./
 RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
 WORKDIR /ng-app
 COPY template/. .
-RUN npm run dockerbuild
+ENV environment=${ASPNETCORE_ENVIRONMENT:-Production}
+RUN npm run dockerbuild_${environment}
+RUN if [ "$environment" = "Production" ] ; then npm run dockerbuild_Production; else npm run dockerbuild_Dev; fi
 
 # BUILD NETCORE APP
 FROM microsoft/dotnet:sdk AS build-env
