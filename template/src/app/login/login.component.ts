@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: String;
   successMessage: String;
+  condoSelection: Boolean = false;
+  NonProduction: Boolean = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,

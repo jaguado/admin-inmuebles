@@ -67,6 +67,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Next features
 
 * Customer on boarding
-* Condos selection screen
+* Condos selection screen - Section already declared but empty
 * Common menu and user profile
 

@@ -1,7 +1,11 @@
 <div class="login-page">
   <div class="content">
+    <!-- 
+      TODO:  
+      * Change hardcoded texts and replace it with translate service directive
+    -->
     <!-- <h1 class="app-name">Sb Admin Material</h1> -->
-    <form [formGroup]="loginForm" class="login-form" fxFlex>
+    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="!condoSelection">
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
         <img class="logo-img" src="../../assets/images/logo.png" />
       </div>
@@ -48,6 +52,18 @@
           <button class="btn btn-social-icon btn-facebook mx-1" (click)="signInWithFB()"><span class="fa fa-facebook"></span></button>
         </div>
       </div>
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="!NonProduction">
+          <div fxFlexFill class="w-100" fxLayoutAlign="center">
+              <mat-label>This is not a production environment !!</mat-label>
+          </div>
+        </div>
     </form>
-  </div>
+    <!-- Condo selection for logged users-->
+    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="condoSelection">
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+          <img class="logo-img" src="../../assets/images/logo.png" />
+          <!-- TODO finish condo selection component-->
+        </div>
+    </form>
+    </div>
 </div>
