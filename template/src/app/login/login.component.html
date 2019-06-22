@@ -19,22 +19,27 @@
           </mat-form-field>
         </div>
       </div>
-      <div fxFlex fxLayout="row" fxLayout.lt-md="column" ng-show="errorMessage">
+      <div fxFlex fxLayout="row" fxLayout.lt-md="column" *ngIf="errorMessage">
         <div fxFlexFill class="w-100 error-text" fxLayoutAlign="center center">
           {{ errorMessage }}
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
         <div fxFlex>
-          <mat-checkbox color="primary">Recuerdame</mat-checkbox>
+            <button mat-button color="primary" (click)="onPasswordRecovery()">Quiero registrarme</button>
         </div>
         <div fxFlex fxLayoutAlign="end">
-          <a href="javascript:void(0)">Recuperar Contraseña</a>
+            <button mat-button color="primary" (click)="onPasswordRecovery()">Olvid&eacute; mi contraseña</button>
         </div>
       </div>
+      <div fxFlex fxLayout="row" fxLayout.lt-md="column" *ngIf="successMessage">
+          <div fxFlexFill class="w-100 success-text" fxLayoutAlign="center center">
+            <p>{{ successMessage }}</p>
+          </div>
+        </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
-          <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">Login</button>
+          <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">Iniciar Sesi&oacute;n</button>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px">

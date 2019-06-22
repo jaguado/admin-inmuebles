@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
-import { AuthService as SocialAuthService } from 'angularx-social-login';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -11,10 +11,11 @@ import { AuthService as SocialAuthService } from 'angularx-social-login';
 })
 export class NavComponent {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private socialAuthService: SocialAuthService) {}
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService) {}
 
   signOut(): void {
-    this.socialAuthService
+    this.authService
+      .authService
       .signOut(true)
       .catch(e => console.log('error on signOut', e))
       .finally(() => {

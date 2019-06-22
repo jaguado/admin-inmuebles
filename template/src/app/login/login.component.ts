@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -11,48 +11,53 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  private user: SocialUser = null;
   email = new FormControl('');
   loginForm: FormGroup;
   errorMessage: String;
+  successMessage: String;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private socialAuthService: SocialAuthService
-  ) {}
+    private translate: TranslateService
+  ) { }
 
+  suscribe() {
+    this.authService.authService.authState.subscribe(user => {
+      console.log('authState', 'subscribe', user);
+      this.authService.user = user;
+      if (user) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.suscribe();
+    this.authService.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.suscribe();
+    this.authService.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   signOut(): void {}
 
   ngOnInit() {
-    console.log('login ngOnInit, logged user:', this.user);
+    console.log('login ngOnInit, logged user:', this.authService.user);
     // window.localStorage.removeItem('token');
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-    this.socialAuthService.authState.subscribe(user => {
-      this.user = user;
-      if (user) {
-        localStorage.setItem('authorization', JSON.stringify(user));
-        this.router.navigate(['/dashboard']);
-      } else {
-        localStorage.removeItem('authorization');
-      }
+      password: []
     });
   }
 
   onLogin() {
+    this.clearFields();
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Favor completar todos los campos';
+      this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
+        this.errorMessage = res;
+      });
       return;
     } else {
       let creds = this.loginForm.value;
@@ -63,17 +68,36 @@ export class LoginComponent implements OnInit {
         password: 'cityslicka'
       };
       this.authService
-        .checkCredentials(creds)
+        .signIn(creds)
         .then(res => {
           console.log('userService.checkUser', res);
-          localStorage.setItem('authorization', JSON.stringify(res));
           this.router.navigate(['/dashboard']);
         })
         .catch(err => {
           console.log('checkCredentials error', err.error);
           this.errorMessage = 'Error: ' + err.error.error;
-          localStorage.removeItem('authorization');
         });
     }
+  }
+
+  onPasswordRecovery() {
+    this.clearFields();
+    if (this.loginForm.valid) {
+      this.errorMessage = '';
+      // TODO check if customer exists and start on boarding process
+      console.log('onNewCustomer', 'not implemented yet');
+      this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
+        this.successMessage = res;
+      });
+    } else {
+      this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+        this.errorMessage = res;
+      });
+    }
+  }
+
+  clearFields() {
+    this.successMessage = null;
+    this.errorMessage = null;
   }
 }

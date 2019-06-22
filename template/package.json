@@ -1,6 +1,6 @@
 {
-    "name": "sb-admin-material",
-    "version": "7.0.0",
+    "name": "admin-inmuebles",
+    "version": "1.0.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve --progress --port 5000",
@@ -8,7 +8,8 @@
         "dockerbuild": "ng build --prod --output-path wwwroot",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "clean": "rm -rf node_modules"
     },
     "private": true,
     "dependencies": {
@@ -19,7 +20,6 @@
         "@angular/core": "7.1.0",
         "@angular/flex-layout": "7.0.0-beta.19",
         "@angular/forms": "7.1.0",
-        "@angular/http": "7.1.0",
         "@angular/material": "7.1.0",
         "@angular/platform-browser": "7.1.0",
         "@angular/platform-browser-dynamic": "7.1.0",
@@ -31,6 +31,7 @@
         "core-js": "2.5.7",
         "hammerjs": "2.0.8",
         "ng2-charts": "1.6.0",
+        "nyc": "^14.1.1",
         "rxjs": "6.3.3",
         "web-animations-js": "2.3.1",
         "zone.js": "0.8.26"

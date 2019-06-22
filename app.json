@@ -1,0 +1,13 @@
+{
+  "name": "AdmInmuebles.cl",
+  "description": "AdmInmuebles Netcore 2.2 API with Angular7 and Material2 Web App",
+  "website": "https://admin-inmuebles-dev.herokuapp.com",
+  "repository": "https://github.com/jaguado/admin-inmuebles",
+  "logo": "https://raw.githubusercontent.com/jaguado/admin-inmuebles/new-front/template/src/assets/images/logo.png",
+  "keywords": ["aspnet core", "aspnet core mvc", "netcore2", "netcore21", "newrelic", "angular", "angular7", "material"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/jaguado/dotnetcore2"
+    }
+  ]
+}
