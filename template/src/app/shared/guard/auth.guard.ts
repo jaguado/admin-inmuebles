@@ -13,10 +13,6 @@ export class AuthGuard implements CanActivate {
             return true;
         }
         console.log('authService.user null', this.authService);
-        // if (localStorage.getItem('authorization')) {
-        //    return true;
-        // }
-        // this.socialAuthService.signOut();
         this.router.navigate(['/login']);
         return false;
     }

@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   email = new FormControl('');
   loginForm: FormGroup;
   errorMessage: String;
+  successMessage: String;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -45,13 +46,14 @@ export class LoginComponent implements OnInit {
     // window.localStorage.removeItem('token');
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: []
     });
   }
 
   onLogin() {
+    this.clearFields();
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Favor completar todos los campos';
+      this.errorMessage = 'Favor completar los campos destacados';
       return;
     } else {
       let creds = this.loginForm.value;
@@ -72,5 +74,22 @@ export class LoginComponent implements OnInit {
           this.errorMessage = 'Error: ' + err.error.error;
         });
     }
+  }
+
+  onPasswordRecovery() {
+    this.clearFields();
+    if (this.loginForm.valid) {
+      this.errorMessage = '';
+      // TODO check if customer exists and start on boarding process
+      console.log('onNewCustomer', 'not implemented yet');
+      this.successMessage  = 'Gracias, pronto te contactaremos';
+    } else {
+      this.errorMessage = 'Ingresa tu dirección de correo y nos pondremos en contacto.';
+    }
+  }
+
+  clearFields() {
+    this.successMessage = null;
+    this.errorMessage = null;
   }
 }
