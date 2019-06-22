@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   errorMessage: String;
   successMessage: String;
   condoSelection: Boolean = false;
-  NonProduction: Boolean = false;
+  NonProduction: Boolean = !environment.production;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
