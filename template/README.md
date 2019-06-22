@@ -62,3 +62,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * User session will be stored in auth.service and will use the same user object for social and for integrated login
 * Docker ready
 * Heroku ready
+* Multilanguage feature enabled so all text must be on 'template\src\assets\i18n' folder
+
+### Next features
+
+* Customer on boarding
+* Condos selection screen
+* Common menu and user profile
+
