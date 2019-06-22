@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  suscribe(){
+  suscribe() {
     this.authService.authService.authState.subscribe(user => {
       console.log('authState', 'subscribe', user);
       this.authService.user = user;
