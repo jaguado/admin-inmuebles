@@ -15,7 +15,7 @@ export class NavComponent {
 
   signOut(): void {
     this.authService
-      .socialAuthService
+      .authService
       .signOut(true)
       .catch(e => console.log('error on signOut', e))
       .finally(() => {

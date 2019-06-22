@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
   ) {}
 
   signInWithGoogle(): void {
-    this.authService.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   signInWithFB(): void {
-    this.authService.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.authService.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   signOut(): void {}
@@ -35,15 +35,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
-    });
-    this.authService.socialAuthService.authState.subscribe(user => {
-      this.authService.user = user;
-      if (user) {
-        localStorage.setItem('authorization', JSON.stringify(user));
-        this.router.navigate(['/dashboard']);
-      } else {
-        localStorage.removeItem('authorization');
-      }
     });
   }
 
@@ -60,16 +51,14 @@ export class LoginComponent implements OnInit {
         password: 'cityslicka'
       };
       this.authService
-        .checkCredentials(creds)
+        .signIn(creds)
         .then(res => {
           console.log('userService.checkUser', res);
-          localStorage.setItem('authorization', JSON.stringify(res));
           this.router.navigate(['/dashboard']);
         })
         .catch(err => {
           console.log('checkCredentials error', err.error);
           this.errorMessage = 'Error: ' + err.error.error;
-          localStorage.removeItem('authorization');
         });
     }
   }
