@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private translate: TranslateService
+  ) { }
 
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
@@ -53,7 +55,9 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.clearFields();
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Favor completar los campos destacados';
+      this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
+        this.errorMessage = res;
+      });
       return;
     } else {
       let creds = this.loginForm.value;
@@ -82,9 +86,13 @@ export class LoginComponent implements OnInit {
       this.errorMessage = '';
       // TODO check if customer exists and start on boarding process
       console.log('onNewCustomer', 'not implemented yet');
-      this.successMessage  = 'Gracias, pronto te contactaremos';
+      this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
+        this.successMessage = res;
+      });
     } else {
-      this.errorMessage = 'Ingresa tu dirección de correo y nos pondremos en contacto.';
+      this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+        this.errorMessage = res;
+      });
     }
   }
 

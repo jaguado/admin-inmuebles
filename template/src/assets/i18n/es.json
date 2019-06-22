@@ -27,5 +27,8 @@
     "Pending Task": "Tarea pendiente",
     "In queue": "En Cola",
     "Mail": "Correo",
-    "View All": "Ver Todo"
+    "View All": "Ver Todo",
+    "CompleteAllHighlightFields": "Completa los campos destacados",
+    "EnterYourEmailToContactYou": "Ingresa tu correo y nos pondremos en contacto.",
+    "ThanksWillContactYou": "Gracias, pronto te contactaremos"
 }
