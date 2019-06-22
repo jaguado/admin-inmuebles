@@ -52,7 +52,7 @@
           <button class="btn btn-social-icon btn-facebook mx-1" (click)="signInWithFB()"><span class="fa fa-facebook"></span></button>
         </div>
       </div>
-      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="!NonProduction">
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction">
           <div fxFlexFill class="w-100" fxLayoutAlign="center">
               <mat-label>This is not a production environment !!</mat-label>
           </div>
