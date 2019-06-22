@@ -6,7 +6,7 @@ WORKDIR /ng-app
 COPY template/. .
 ENV environment=${ASPNETCORE_ENVIRONMENT:-Production}
 RUN npm run dockerbuild_${environment}
-RUN if [ "$environment" = "Production" ] ; then npm run dockerbuild_Production; else npm run dockerbuild_Dev; fi
+RUN if [ "$environment" = "Production" ] ; then npm run dockerbuild_production; else npm run dockerbuild_dev; fi
 
 # BUILD NETCORE APP
 FROM microsoft/dotnet:sdk AS build-env
