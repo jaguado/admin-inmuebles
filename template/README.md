@@ -18,6 +18,8 @@ Include the following features:
 *   Official Angular i18n support.
 *   Production and development builds.
 *   Tree-Shaking production builds.
+*   Google Tag Manager
+*   NewRelic browsers
 
 ### How to start
 
@@ -56,19 +58,17 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 
-
 ## Developer notes
 
 * User session will be stored in auth.service and will use the same user object for social and for integrated login
 * Docker ready
 * Heroku ready
 * Multilanguage feature enabled so all text must be on 'template\src\assets\i18n' folder
+* Google Tag Manager
+* NewRelic browsers
 
 ### Next features
 
-* Google Tag Manager
-* NewRelic browsers
 * Customer on boarding
 * Condos selection screen - Section already declared but empty
 * Common menu and user profile
-
