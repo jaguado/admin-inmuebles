@@ -42,9 +42,6 @@ export class TopnavComponent implements OnInit {
   }
 
   condoInformation(): String {
-    if(!this.authService || !this.authService.selectedCondo){
-      return "";
-    }
     return " | " + this.authService.selectedCondo.name;
   }
 }
