@@ -8,6 +8,24 @@ import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-lo
 })
 export class AuthService {
   public user: SocialUser = null;
+  public condos: any = [
+    {
+      "id": 1,
+      "name": "Condominio Principal",
+      "menu": []
+    },
+    {
+      "id": 2,
+      "name": "Edificio Vacaciones",
+      "menu": []
+    }
+  ];
+  public selectedCondo : any = null;
+
+  public showCondoSelection(): Boolean {
+    return this.user && this.condos && !this.selectedCondo;
+  };
+
   baseUrl: String = 'https://reqres.in/api/';
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
@@ -32,5 +50,7 @@ export class AuthService {
       this.authService.signOut();
     }
     this.user = null;
+    this.selectedCondo = null;
+    this.router.navigate(['/login']);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService as SocialAuthService } from 'angularx-social-login';
+import { AuthService } from '../../../auth.service';
 
 @Component({
   selector: 'app-topnav',
@@ -11,7 +11,7 @@ import { AuthService as SocialAuthService } from 'angularx-social-login';
 export class TopnavComponent implements OnInit {
   public pushRightClass: string;
 
-  constructor(public router: Router, private translate: TranslateService, private socialAuthService: SocialAuthService) {
+  constructor(public router: Router, private translate: TranslateService, private authService: AuthService) {
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
         this.toggleSidebar();
@@ -38,12 +38,13 @@ export class TopnavComponent implements OnInit {
   }
 
   signOut(): void {
-    this.socialAuthService
-      .signOut(true)
-      .catch(e => console.log('error on signOut', e))
-      .finally(() => {
-        localStorage.removeItem('authorization');
-        this.router.navigate(['/login']);
-      });
+    this.authService.signOut();
+  }
+
+  condoInformation(): String {
+    if(!this.authService || !this.authService.selectedCondo){
+      return "";
+    }
+    return " | " + this.authService.selectedCondo.name;
   }
 }

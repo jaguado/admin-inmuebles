@@ -5,7 +5,7 @@
       * Change hardcoded texts and replace it with translate service directive
     -->
     <!-- <h1 class="app-name">Sb Admin Material</h1> -->
-    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="!condoSelection">
+    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="!showCondoSelection()">
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
         <img class="logo-img" src="../../assets/images/logo.png" />
       </div>
@@ -40,7 +40,7 @@
           <div fxFlexFill class="w-100 success-text" fxLayoutAlign="center center">
             <p>{{ successMessage }}</p>
           </div>
-        </div>
+      </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
           <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">Iniciar Sesi&oacute;n</button>
@@ -53,16 +53,25 @@
         </div>
       </div>
       <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction">
-          <div fxFlexFill class="w-100" fxLayoutAlign="center">
-              <mat-label>This is not a production environment !!</mat-label>
-          </div>
+        <div fxFlexFill class="w-100" fxLayoutAlign="center">
+            <mat-label>This is not a production environment !!</mat-label>
         </div>
+      </div>
     </form>
     <!-- Condo selection for logged users-->
-    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="condoSelection">
+    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="showCondoSelection()">
         <div fxFlex fxlayout="row" fxlayout.lt-md="column">
-          <img class="logo-img" src="../../assets/images/logo.png" />
-          <!-- TODO finish condo selection component-->
+            <img class="logo-img" src="../../assets/images/logo.png" />
+        </div>
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px">
+          <h3 fxLayoutAlign="center">Elige un condominio</h3>  
+        </div>
+        <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
+            <div fxFlexFill class="w-100" fxLayoutAlign="center">
+              <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)">
+                  {{item.name}}
+              </button>
+            </div>
         </div>
     </form>
     </div>
