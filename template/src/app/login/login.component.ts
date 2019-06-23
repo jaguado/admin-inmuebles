@@ -128,4 +128,8 @@ export class LoginComponent implements OnInit {
     this.successMessage = null;
     this.errorMessage = null;
   }
+
+  changeLang(language: string) {
+    this.translate.use(language);
+  }
 }

@@ -47,10 +47,16 @@
           <button class="btn btn-social-icon btn-facebook mx-1" (click)="signInWithFB()"><span class="fa fa-facebook"></span></button>
         </div>
       </div>
-      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction">
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction" style="margin: 20px">
         <div fxFlexFill class="w-100" fxLayoutAlign="center">
             <mat-label>{{ 'NonProductionLabel' | translate }} !!</mat-label>
         </div>
+      </div>
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+          <div fxFlexFill class="w-100" fxLayoutAlign="center">
+              <span class="flag-icon flag-icon-es mx-1" (click)="changeLang('es')"></span>
+              <span class="flag-icon flag-icon-us mx-1" (click)="changeLang('en')"></span>
+          </div>
       </div>
     </form>
     <!-- Condo selection for logged users-->
@@ -69,5 +75,5 @@
             </div>
         </div>
     </form>
-    </div>
+  </div>
 </div>
