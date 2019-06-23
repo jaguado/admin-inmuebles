@@ -85,12 +85,13 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       let creds = this.loginForm.value;
-      // TODO remove this for other environments
-      // Using mock data
-      creds = {
-        email: 'eve.holt@reqres.in',
-        password: 'cityslicka'
-      };
+      // Using mock data for dev
+      if(!environment.production){
+        creds = {
+          email: 'eve.holt@reqres.in',
+          password: 'cityslicka'
+        };
+      }
       this.authService
         .signIn(creds)
         .then(res => {

@@ -2,24 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
+import { DefaultCondos } from './shared/mockdata'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public user: SocialUser = null;
-  public condos: any = [
-    {
-      "id": 1,
-      "name": "Condominio Principal",
-      "menu": []
-    },
-    {
-      "id": 2,
-      "name": "Edificio Vacaciones",
-      "menu": []
-    }
-  ];
+  public condos: any = DefaultCondos;
   public selectedCondo : any = null;
 
   public showCondoSelection(): Boolean {
