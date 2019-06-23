@@ -23,7 +23,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService
-  ) { }
+  ) 
+  {
+    translate.setDefaultLang(environment.defaultLanguage);
+  }
   
   selectCondo(condo: any){
     console.log('selectCondo', condo);

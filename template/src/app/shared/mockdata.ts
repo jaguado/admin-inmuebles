@@ -10,3 +10,9 @@ export const DefaultCondos: any = [
     "menu": []
   }
 ];
+
+export const DefaultMenu: any = [
+  {
+    
+  }
+]

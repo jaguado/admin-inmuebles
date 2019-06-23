@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { DefaultCondos } from './shared/mockdata'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { DefaultCondos } from './shared/mockdata'
 export class AuthService {
   public user: SocialUser = null;
   public condos: any = DefaultCondos;
-  public selectedCondo : any = null;
+  public selectedCondo: any = null;
 
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
@@ -43,4 +44,5 @@ export class AuthService {
     this.selectedCondo = null;
     this.router.navigate(['/login']);
   }
+  
 }
