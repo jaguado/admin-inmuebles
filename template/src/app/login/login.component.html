@@ -1,25 +1,20 @@
 <div class="login-page">
   <div class="content">
-    <!-- 
-      TODO:  
-      * Change hardcoded texts and replace it with translate service directive
-    -->
-    <!-- <h1 class="app-name">Sb Admin Material</h1> -->
-    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="!condoSelection">
+    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="!showCondoSelection()">
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
         <img class="logo-img" src="../../assets/images/logo.png" />
       </div>
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput placeholder="Correo" formControlName="email">
+            <input matInput placeholder="{{ 'Email' | translate }}" formControlName="email">
           </mat-form-field>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput type="password" placeholder="Contraseña" formControlName="password">
+            <input matInput type="password" placeholder="{{ 'Password' | translate }}" formControlName="password">
           </mat-form-field>
         </div>
       </div>
@@ -30,20 +25,20 @@
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
         <div fxFlex>
-            <button mat-button color="primary" (click)="onPasswordRecovery()">Quiero registrarme</button>
+            <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'CustomerRegister' | translate }}</button>
         </div>
         <div fxFlex fxLayoutAlign="end">
-            <button mat-button color="primary" (click)="onPasswordRecovery()">Olvid&eacute; mi contraseña</button>
+            <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'ForgotPassword' | translate }}</button>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" *ngIf="successMessage">
           <div fxFlexFill class="w-100 success-text" fxLayoutAlign="center center">
             <p>{{ successMessage }}</p>
           </div>
-        </div>
+      </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
-          <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">Iniciar Sesi&oacute;n</button>
+          <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">{{ 'LogIn' | translate }}</button>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px">
@@ -52,18 +47,33 @@
           <button class="btn btn-social-icon btn-facebook mx-1" (click)="signInWithFB()"><span class="fa fa-facebook"></span></button>
         </div>
       </div>
-      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction">
-          <div fxFlexFill class="w-100" fxLayoutAlign="center">
-              <mat-label>This is not a production environment !!</mat-label>
-          </div>
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction" style="margin: 20px">
+        <div fxFlexFill class="w-100" fxLayoutAlign="center">
+            <mat-label>{{ 'NonProductionLabel' | translate }} !!</mat-label>
         </div>
+      </div>
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+          <div fxFlexFill class="w-100" fxLayoutAlign="center">
+              <span class="flag-icon flag-icon-es mx-1" (click)="changeLang('es')"></span>
+              <span class="flag-icon flag-icon-us mx-1" (click)="changeLang('en')"></span>
+          </div>
+      </div>
     </form>
     <!-- Condo selection for logged users-->
-    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="condoSelection">
+    <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="showCondoSelection()">
         <div fxFlex fxlayout="row" fxlayout.lt-md="column">
-          <img class="logo-img" src="../../assets/images/logo.png" />
-          <!-- TODO finish condo selection component-->
+            <img class="logo-img" src="../../assets/images/logo.png" />
+        </div>
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px">
+          <h3 fxLayoutAlign="center">{{ 'ChooseCondo' | translate }}</h3>  
+        </div>
+        <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
+            <div fxFlexFill class="w-100" fxLayoutAlign="center">
+              <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)">
+                  {{item.name}}
+              </button>
+            </div>
         </div>
     </form>
-    </div>
+  </div>
 </div>

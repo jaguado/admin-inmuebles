@@ -17,35 +17,58 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: String;
   successMessage: String;
-  condoSelection: Boolean = false;
   NonProduction: Boolean = !environment.production;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService
-  ) { }
+  ) 
+  {
+    translate.setDefaultLang(environment.defaultLanguage);
+  }
+  
+  selectCondo(condo: any){
+    console.log('selectCondo', condo);
+    this.authService.selectedCondo = condo;
+    this.userRedir();
+  }
 
+  showCondoSelection(): Boolean {
+    //console.log('login','showCondoSelection', this.authService.user, this.authService.showCondoSelection());
+    return this.authService.showCondoSelection();
+  }
+
+  availableCondos(): any{
+    return this.authService.condos;
+  }
+
+  userRedir(){
+    if (this.authService.user && !this.showCondoSelection()) {
+      console.log('userRedir', this.authService)
+      this.router.navigate(['/dashboard']);
+    }
+  }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
       console.log('authState', 'subscribe', user);
       this.authService.user = user;
-      if (user) {
-        this.router.navigate(['/dashboard']);
-      }
+      this.userRedir();
     });
   }
   signInWithGoogle(): void {
-    this.suscribe();
-    this.authService.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    if(!this.authService.user){
+      this.suscribe();
+      this.authService.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    }
   }
 
   signInWithFB(): void {
-    this.suscribe();
-    this.authService.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    if(!this.authService.user){
+      this.suscribe();
+      this.authService.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    }
   }
-
-  signOut(): void {}
 
   ngOnInit() {
     console.log('login ngOnInit, logged user:', this.authService.user);
@@ -65,17 +88,18 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       let creds = this.loginForm.value;
-      // TODO remove this for other environments
-      // Using mock data
-      creds = {
-        email: 'eve.holt@reqres.in',
-        password: 'cityslicka'
-      };
+      // Using mock data for dev
+      if(!environment.production){
+        creds = {
+          email: 'eve.holt@reqres.in',
+          password: 'cityslicka'
+        };
+      }
       this.authService
         .signIn(creds)
         .then(res => {
           console.log('userService.checkUser', res);
-          this.router.navigate(['/dashboard']);
+          this.userRedir();
         })
         .catch(err => {
           console.log('checkCredentials error', err.error);
@@ -103,5 +127,9 @@ export class LoginComponent implements OnInit {
   clearFields() {
     this.successMessage = null;
     this.errorMessage = null;
+  }
+
+  changeLang(language: string) {
+    this.translate.use(language);
   }
 }
