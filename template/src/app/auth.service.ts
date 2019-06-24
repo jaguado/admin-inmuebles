@@ -43,6 +43,5 @@ export class AuthService {
     this.user = null;
     this.selectedCondo = null;
     this.router.navigate(['/login']);
-  }
-  
+  }  
 }
