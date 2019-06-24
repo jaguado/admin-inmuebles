@@ -6,9 +6,12 @@ TODO complete the description of AdmInmuebles Stack
 
 Includes the following features:
 
-* Social Login
-* 
+* Social Login (Google and Facebook)
+* Google Tag Manager
+* NewRelic APM and Browsers
+* Multi lenguages support
 
+  
 TODO Complete with features list
 
 ### How to start

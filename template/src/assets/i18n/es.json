@@ -30,5 +30,12 @@
     "View All": "Ver Todo",
     "CompleteAllHighlightFields": "Completa los campos destacados",
     "EnterYourEmailToContactYou": "Ingresa tu correo y nos pondremos en contacto.",
-    "ThanksWillContactYou": "Gracias, pronto te contactaremos"
+    "ThanksWillContactYou": "Gracias, pronto te contactaremos",
+    "ChooseCondo": "Elige un condominio",
+    "NonProductionLabel": "Este no es un ambiente productivo",
+    "CustomerRegister": "Quiero registrarme",
+    "ForgotPassword": "Olvidé mi contraseña",
+    "LogIn": "Iniciar Sesión",
+    "Password": "Contraseña",
+    "Email": "Correo"
 }

@@ -2,12 +2,21 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
+import { DefaultCondos } from './shared/mockdata'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public user: SocialUser = null;
+  public condos: any = DefaultCondos;
+  public selectedCondo: any = null;
+
+  public showCondoSelection(): Boolean {
+    return this.user && this.condos && !this.selectedCondo;
+  };
+
   baseUrl: String = 'https://reqres.in/api/';
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
@@ -32,5 +41,7 @@ export class AuthService {
       this.authService.signOut();
     }
     this.user = null;
-  }
+    this.selectedCondo = null;
+    this.router.navigate(['/login']);
+  }  
 }

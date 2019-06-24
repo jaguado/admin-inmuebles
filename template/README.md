@@ -66,6 +66,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * Multilanguage feature enabled so all text must be on 'template\src\assets\i18n' folder
 * Google Tag Manager
 * NewRelic browsers
+* HttpInterceptor to manage authorization codes inclusion and error handling.
 
 ### Next features
 
