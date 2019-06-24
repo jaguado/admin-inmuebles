@@ -38,5 +38,6 @@
     "ForgotPassword": "Forgot my password",
     "LogIn": "Log In",
     "Password": "Password",
-    "Email": "Email"
+    "Email": "Email",
+    "WelcomeMessage": "<h4>Hello {{ name }}, Welcome to AdmInmuebles</h4>"
 }

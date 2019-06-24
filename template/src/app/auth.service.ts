@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   public user: SocialUser = null;
   public condos: any = DefaultCondos;
@@ -45,3 +46,5 @@ export class AuthService {
     this.router.navigate(['/login']);
   }  
 }
+
+export type SocialUser = SocialUser;
