@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
     public showMenu: string;
-    constructor() {}
+    constructor(private authService: AuthService) {}
 
     ngOnInit() {
         this.showMenu = '';
@@ -19,5 +20,12 @@ export class SidebarComponent implements OnInit {
         } else {
             this.showMenu = element;
         }
+    }
+
+    getMenu(){
+        if(!this.authService.selectedCondo){
+          return [];
+        }
+        return this.authService.selectedCondo.menu;
     }
 }
