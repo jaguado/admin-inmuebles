@@ -10,7 +10,7 @@ import { AuthService, SocialUser } from '../../auth.service';
 export class HomeComponent implements OnInit, OnChanges {
     public welcomeMessage: string = '';
     public warningMessage: string = '';
-    public showWarningMessage: boolean = false;
+    public showWarningMessage: boolean = !this.authService.isUserActive();
     public user: SocialUser = this.authService.user;
     constructor(private authService: AuthService, private translate: TranslateService) { }
 
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, OnChanges {
         this.translate.get('WelcomeMessage').toPromise<string>().then(result =>
             this.welcomeMessage = result.replace('{{ name }}', this.user.name)   
         );
-        this.translate.get('warningMessage').toPromise<string>().then(result =>
+        this.translate.get('WarningMessage').toPromise<string>().then(result =>
             this.warningMessage = result 
         );
     }

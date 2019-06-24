@@ -2,21 +2,28 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
+import { User } from './shared/user';
 import { DefaultCondos } from './shared/mockdata'
 import { environment } from 'src/environments/environment';
+import { invoke } from 'q';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  public user: SocialUser = null;
+  public user: User = null;
   public condos: any = DefaultCondos;
   public selectedCondo: any = null;
 
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
   };
+
+  public isUserActive(): boolean {
+    return this.user.state == 1;
+  }
 
   baseUrl: String = 'https://reqres.in/api/';
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
@@ -25,7 +32,7 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(token => {
-      this.user = new SocialUser();
+      this.user = new User();
       this.user.email = credentials.email;
       this.user.firstName = credentials.firstName;
       this.user.lastName = credentials.lastName;
@@ -33,6 +40,7 @@ export class AuthService {
       this.user.id = credentials.id;
       this.user.authToken = token.token;
       this.user.provider = 'internal';
+      this.user.state = 1; //by default active user
       return this.user;
     });
   }
@@ -47,4 +55,4 @@ export class AuthService {
   }  
 }
 
-export type SocialUser = SocialUser;
+export type SocialUser = User;

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService, SocialUser } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
+import { User } from '../shared/user';
 
 
 @Component({
@@ -51,8 +52,10 @@ export class LoginComponent implements OnInit {
   }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
-      console.log('authState', 'subscribe', user);
-      this.authService.user = user;
+      console.log('authState', 'subscribe', user);   
+      var newUser = new User();
+      this.authService.user = Object.assign(newUser, user);
+      this.authService.user.state = 2; //by default initial state user
       this.userRedir();
     });
   }
