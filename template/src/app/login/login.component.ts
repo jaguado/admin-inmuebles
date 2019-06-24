@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   userRedir(){
     if (this.authService.user && !this.showCondoSelection()) {
       console.log('userRedir', this.authService)
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/']);
     }
   }
   suscribe() {

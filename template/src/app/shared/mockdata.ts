@@ -1,5 +1,10 @@
 export const DefaultMenu: any = [
   {
+    "icon": "home",
+    "label": "Home",
+    "link": "/home"
+  },
+  {
     "icon": "dashboard",
     "label": "Dashboard",
     "link": "/dashboard"
