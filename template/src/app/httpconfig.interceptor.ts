@@ -30,6 +30,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
         request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
 
+        /* Enable this for request interception and error handling
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
@@ -45,8 +46,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     status: error.status
                 };
                 //this.errorDialogService.openDialog(data);
-                console.log('HttpConfigInterceptor', 'error', error);
+                console.log('HttpConfigInterceptor', 'error', error, data);
                 return throwError(error);
             }));
+        */
+        return next.handle(request);
     }
 }
