@@ -39,6 +39,7 @@ export class AuthService {
     .then(result => {
       this.user = new User();
       this.user.email = result.email;
+      this.user.name = result.name;
       this.user.firstName = result.firstName;
       this.user.lastName = result.lastName;
       this.user.photoUrl = result.photoUrl;
