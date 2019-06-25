@@ -118,20 +118,23 @@ namespace AdminInmuebles.Filters
             var request = resultContext.HttpContext.Request;
             var resultResponse = resultContext.Result as OkObjectResult;
             //TODO identify type!!
-            switch (resultResponse.Value)
+            if (resultResponse != null && resultResponse.Value != null)
             {
-                case IEnumerable<int> t:
-                    FilterOrderLimitResult<int>(resultContext, request, resultResponse);
-                    break;
-                case IEnumerable<string> t:
-                    FilterOrderLimitResult<string>(resultContext, request, resultResponse);
-                    break;
-                case IEnumerable<DateTime> t:
-                    FilterOrderLimitResult<DateTime>(resultContext, request, resultResponse);
-                    break;
-                case IEnumerable<object> t:
-                    FilterOrderLimitResult<object>(resultContext, request, resultResponse);
-                    break;
+                switch (resultResponse.Value)
+                {
+                    case IEnumerable<int> t:
+                        FilterOrderLimitResult<int>(resultContext, request, resultResponse);
+                        break;
+                    case IEnumerable<string> t:
+                        FilterOrderLimitResult<string>(resultContext, request, resultResponse);
+                        break;
+                    case IEnumerable<DateTime> t:
+                        FilterOrderLimitResult<DateTime>(resultContext, request, resultResponse);
+                        break;
+                    case IEnumerable<object> t:
+                        FilterOrderLimitResult<object>(resultContext, request, resultResponse);
+                        break;
+                }
             }
             context.Result = resultContext.Result;
         }

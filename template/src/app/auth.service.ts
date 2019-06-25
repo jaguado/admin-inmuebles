@@ -32,22 +32,22 @@ export class AuthService {
     return this.selectedCondo.menu.filter(m => m.enabled);
   }
 
-  baseUrl: String = 'https://reqres.in/api/';
+  baseUrl: String = '/';
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
   signIn(credentials: any) {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
-    .then(token => {
+    .then(result => {
       this.user = new User();
-      this.user.email = credentials.email;
-      this.user.firstName = credentials.firstName;
-      this.user.lastName = credentials.lastName;
-      this.user.photoUrl = credentials.photoUrl;
-      this.user.id = credentials.id;
-      this.user.authToken = token.token;
-      this.user.provider = 'internal';
-      this.user.state = 1; //by default active user
+      this.user.email = result.email;
+      this.user.firstName = result.firstName;
+      this.user.lastName = result.lastName;
+      this.user.photoUrl = result.photoUrl;
+      this.user.id = result.id;
+      this.user.authToken = result.authToken;
+      this.user.provider = result.provider;
+      this.user.state = result.state;
       return this.user;
     });
   }
