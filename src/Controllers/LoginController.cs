@@ -11,12 +11,24 @@ namespace AdminInmuebles.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+
+
         /// <summary>
         /// Health check endpoint
         /// </summary>
         /// <returns></returns>
         [HttpGet("/health")]
         public IActionResult Get()
+        {
+            return new OkResult();
+        }
+
+        /// <summary>
+        /// CORS support
+        /// </summary>
+        /// <returns></returns>
+        [HttpOptions("/login")]
+        public IActionResult Options()
         {
             return new OkResult();
         }
