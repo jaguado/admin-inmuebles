@@ -33,7 +33,7 @@ namespace AdminInmuebles.Controllers
             return new OkObjectResult(new
             {
                 authToken = "ya29.GlwyB9JcWBQCIkq0SHHzWRZpS8ozvdZ1i1AyLh_LgqOlIhJHgJ6aL3iHFJ0LUbV2ACOoqpNfmAh36Pjs31DMvxazvkGOCg4KRcJwjTrUvR-wK8Mmvce5nifhp_cLKA",
-                email = credentials.email,
+                credentials.email,
                 firstName = "Jorge",
                 id = "105560751972558300957",
                 idToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjExOGRmMjU0YjgzNzE4OWQxYmMyYmU5NjUwYTgyMTEyYzAwZGY1YTQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTQzMzk4NTE4MDgyLTY5dHJxc2lzanZiN2t2NWZsdGE1cWlobzU1ZTFma2JyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTQzMzk4NTE4MDgyLTY5dHJxc2lzanZiN2t2NWZsdGE1cWlobzU1ZTFma2JyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA1NTYwNzUxOTcyNTU4MzAwOTU3IiwiZW1haWwiOiJqYWd1YWRvbUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Ik5vNHZXYUM5UnpkTk8tWHFjRXU2QmciLCJuYW1lIjoiSm9yZ2UgWFIiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1EYXpjTVNBNGlSNC9BQUFBQUFBQUFBSS9BQUFBQUFBQUF5TS9EWEVHUlBFTHU4OC9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSm9yZ2UiLCJmYW1pbHlfbmFtZSI6IlhSIiwibG9jYWxlIjoiZXMiLCJpYXQiOjE1NjE0Mzc1MDQsImV4cCI6MTU2MTQ0MTEwNCwianRpIjoiNTllZGJlODY5M2FmMjU3ZDA0MTg4ZDRkYjRhOWMyZmNlOTdjMjQ0OCJ9.d-c7nzy4K82OhxrvX7NZn_VKQ32VoDCqfajYm0diixzDtoB5LRC0n7DqhJBhUhPxq4bkyeq7Kmzqf3Dqx9nohWrSWUg9VGlhLX7URSHsYZSzGUM9gxyoi0mco2z9vvmBJL63QVHY6ZFwT6SRYO4j7kvzl2TgJnpXicAofaVDV822bLcuZ1YA6205YiznYfAKJO8Zgd2USs3y4XvAQ9mYDpXNAoscyr56-lHNr6QOEM56Glex1Wi701ovq69YUNKp9ew3-mRxJPDUVlfMAqMYzoMYq-oRsoyLZz1V0l55qnAf_jRCOfbKzXlRl04VtMEgXtB_A1qKo-wLCp7LiKJWsA",
