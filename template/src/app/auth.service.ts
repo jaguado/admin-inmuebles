@@ -58,6 +58,7 @@ export class AuthService {
       this.condos = DefaultCondos;
     }
     else{
+      this.condos = [];
       data.forEach(condo => {
         this.condos.push( 
           {
