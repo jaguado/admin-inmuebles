@@ -52,11 +52,13 @@ export class LoginComponent implements OnInit {
   }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
-      console.log('authState', 'subscribe', user);   
-      var newUser = new User();
-      this.authService.user = Object.assign(newUser, user);
-      this.authService.user.state = 2; //by default initial state user
-      this.userRedir();
+      console.log('authState', 'subscribe', user);
+      if(user){   
+        this.authService.user = new User();
+        this.authService.user = Object.assign(this.authService.user, user);
+        this.authService.user.state = 2; //by default initial state user
+        this.userRedir();
+      }
     });
   }
   signInWithGoogle(): void {
