@@ -73,7 +73,7 @@ namespace AdminInmuebles.Controllers
                 name = userInfo["NOMBRE"].ToString(),
                 photoUrl = "https://lh4.googleusercontent.com/-DazcMSA4iR4/AAAAAAAAAAI/AAAAAAAAAyM/DXEGRPELu88/s96-c/photo.jpg",
                 provider = "internal",
-                state = 1, 
+                state = userInfo["ESTADO"], 
                 data = userData
             });
         }
