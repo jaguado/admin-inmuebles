@@ -2,42 +2,50 @@ export const DefaultMenu: any = [
   {
     "icon": "home",
     "label": "Home",
-    "link": "/home"
+    "link": "/home",
+    "enabled": true
   },
   {
     "icon": "dashboard",
     "label": "Dashboard",
-    "link": "/dashboard"
+    "link": "/dashboard",
+    "enabled": false
   },
   {
     "icon": "bar_chart",
     "label": "Charts",
-    "link": "/charts"
+    "link": "/charts",
+    "enabled": false
   },
   {
     "icon": "table_chart",
     "label": "Tables",
-    "link": "/tables"
+    "link": "/tables",
+    "enabled": false
   },
   {
     "icon": "input",
     "label": "Forms",
-    "link": "/forms"
+    "link": "/forms",
+    "enabled": false
   },
   {
     "icon": "grid_on",
     "label": "Grid",
-    "link": "/grid"
+    "link": "/grid",
+    "enabled": false
   },
   {
     "icon": "code",
     "label": "Components",
-    "link": "/components"
+    "link": "/components",
+    "enabled": false
   },
   {
     "icon": "insert_drive_file",
     "label": "Blank page",
-    "link": "/blank-page"
+    "link": "/blank-page",
+    "enabled": false
   }
 ]
 

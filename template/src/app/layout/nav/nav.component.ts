@@ -23,10 +23,7 @@ export class NavComponent {
       });
   }
 
-  getMenu(){
-    if(!this.authService.selectedCondo){
-      return [];
-    }
-    return this.authService.selectedCondo.menu;
+  getMenu() {
+    return this.authService.getMenu();
   }
 }

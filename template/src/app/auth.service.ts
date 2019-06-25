@@ -25,6 +25,13 @@ export class AuthService {
     return this.user.state == 1;
   }
 
+  public getMenu(): any {
+    if(!this.selectedCondo){
+      return [];
+    }
+    return this.selectedCondo.menu.filter(m => m.enabled);
+  }
+
   baseUrl: String = 'https://reqres.in/api/';
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
