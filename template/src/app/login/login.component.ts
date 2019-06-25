@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService, SocialUser } from '../auth.service';
+import { AuthService } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         this.authService.user = new User();
         this.authService.user = Object.assign(this.authService.user, user);
         this.authService.user.state = 2; //by default initial state user
+        this.authService.loadCondos(null);
         this.userRedir();
       }
     });

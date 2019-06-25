@@ -16,4 +16,5 @@ export class User implements SocialUser {
   
     // Other fields
     state: any;
+    data: any;
   }

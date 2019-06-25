@@ -4,9 +4,7 @@ import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User } from './shared/user';
 import { DefaultCondos, DefaultMenu } from './shared/mockdata'
-import { environment } from 'src/environments/environment';
-import { invoke } from 'q';
-import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,7 @@ import { Observable } from 'rxjs';
 
 export class AuthService {
   public user: User = null;
-  public condos: any = null;
+  public condos: any = [];
   public selectedCondo: any = null;
 
   public showCondoSelection(): Boolean {
@@ -48,24 +46,28 @@ export class AuthService {
       this.user.authToken = result.authToken;
       this.user.provider = result.provider;
       this.user.state = result.state;
-      //load condos information from response
-      if(!result.data){
-        //user dummy data for new users
-        this.condos = DefaultCondos;
-      }
-      else{
-        result.data.forEach(condo => {
-          this.condos.push( 
-            {
-            "id": condo.Rut,
-            "name": condo.RazonSocial,
-            "menu": DefaultMenu
-            });
-        });
-      }
-
+      this.loadCondos(result.data);
       return this.user;
     });
+  }
+
+  loadCondos(data){
+    //load condos information from response
+    if(!data){
+      //user dummy data for new users
+      this.condos = DefaultCondos;
+    }
+    else{
+      data.forEach(condo => {
+        this.condos.push( 
+          {
+          "id": condo.Rut,
+          "name": condo.RazonSocial,
+          "menu": DefaultMenu
+          });
+      });
+    }
+    console.log('loadCondos', this.condos);
   }
 
   signOut() {
