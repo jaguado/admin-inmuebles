@@ -53,11 +53,13 @@ export const DefaultCondos: any = [
   {
     "id": 1,
     "name": "Condominio Principal",
-    "menu": DefaultMenu
+    "menu": DefaultMenu,
+    "enabled": true
   },
   {
     "id": 2,
     "name": "Edificio Vacaciones",
-    "menu": DefaultMenu
+    "menu": DefaultMenu,
+    "enabled": false
   }
 ];

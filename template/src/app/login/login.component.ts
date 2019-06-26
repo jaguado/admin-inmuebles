@@ -88,14 +88,14 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.clearFields();
-    if (this.loginForm.invalid) {
+    let creds = this.loginForm.value;
+    if (this.loginForm.invalid || !creds.password) {
       this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
         this.errorMessage = res;
       });
       return;
     } else {
-      this.lockButton = true;
-      let creds = this.loginForm.value;
+      this.lockButton = true;  
       this.authService
         .signIn(creds)
         .then(res => {

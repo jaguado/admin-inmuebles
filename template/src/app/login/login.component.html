@@ -7,14 +7,14 @@
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput placeholder="{{ 'Email' | translate }}" formControlName="email">
+            <input matInput placeholder="{{ 'Email' | translate }}" formControlName="email" (keyup.enter)="onLogin()">
           </mat-form-field>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput type="password" placeholder="{{ 'Password' | translate }}" formControlName="password">
+            <input matInput type="password" placeholder="{{ 'Password' | translate }}" formControlName="password" (keyup.enter)="onLogin()">
           </mat-form-field>
         </div>
       </div>
@@ -69,7 +69,7 @@
         </div>
         <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
             <div fxFlexFill class="w-100" fxLayoutAlign="center">
-              <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)">
+              <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)" [disabled]="!item.enabled">
                   {{ item.name }}
               </button>
             </div>

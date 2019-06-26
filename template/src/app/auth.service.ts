@@ -64,13 +64,18 @@ export class AuthService {
       data.forEach(condo => {
         this.condos.push( 
           {
-          "id": condo.Rut,
-          "name": condo.RazonSocial,
-          "menu": DefaultMenu
+            "id": condo.Rut,
+            "name": condo.RazonSocial,
+            "menu": DefaultMenu,
+            "enabled": condo.Vigencia == 1
           });
       });
     }
-    console.log('loadCondos', this.condos);
+    //if only exists one skip selection screen
+    if(this.condos.length<2){
+      this.selectedCondo = this.condos[0];
+    }
+    console.log('loadCondos', this.condos, this.selectedCondo);
   }
 
   signOut() {
