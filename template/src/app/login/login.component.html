@@ -70,7 +70,7 @@
         <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
             <div fxFlexFill class="w-100" fxLayoutAlign="center">
               <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)">
-                  {{item.name}}
+                  {{ item.name }}
               </button>
             </div>
         </div>
