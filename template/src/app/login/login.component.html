@@ -23,11 +23,9 @@
           {{ errorMessage }}
         </div>
       </div>
-      <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
-        <div fxFlex>
+      <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 10px">
+        <div fxFlexFill class="w-100" fxLayoutAlign="center">
             <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'CustomerRegister' | translate }}</button>
-        </div>
-        <div fxFlex fxLayoutAlign="end">
             <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'ForgotPassword' | translate }}</button>
         </div>
       </div>
