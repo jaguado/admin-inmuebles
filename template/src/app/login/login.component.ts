@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   errorMessage: String;
   successMessage: String;
   NonProduction: Boolean = !environment.production;
+  lockButton: Boolean = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -93,6 +94,7 @@ export class LoginComponent implements OnInit {
       });
       return;
     } else {
+      this.lockButton = true;
       let creds = this.loginForm.value;
       this.authService
         .signIn(creds)
@@ -103,6 +105,9 @@ export class LoginComponent implements OnInit {
         .catch(err => {
           console.log('checkCredentials error', err.error);
           this.errorMessage = 'Error: ' + err.error.error;
+        })
+        .finally(()=>{
+          this.lockButton = false;
         });
     }
   }
