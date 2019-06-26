@@ -9,31 +9,71 @@ namespace AdminInmuebles.Helpers
 {
     public static class Sql
     {
+        private static readonly string sqlConn = Environment.GetEnvironmentVariable("SQL_CONN") ?? throw new ArgumentNullException("ENV SQL_CONN");
+
         private async static Task<SqlConnection> GetConnection()
         {
-            var conn = new SqlConnection(Environment.GetEnvironmentVariable("SQL_CONN"));
+            var conn = new SqlConnection(sqlConn);
             await conn.OpenAsync();
             return conn;
         }
         public static async Task<DataSet> GetData(string query)
         {
-            var cmd = (await GetConnection()).CreateCommand();
-            cmd.CommandText = query;
-            cmd.CommandType = CommandType.Text;
-            var result = new DataSet();
-            new SqlDataAdapter(cmd).Fill(result);
-            return result;
+            SqlConnection conn = null;
+            try
+            {
+                conn = await GetConnection();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                var result = new DataSet();
+                new SqlDataAdapter(cmd).Fill(result);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error on 'Sql.GetData': {0}", ex.ToString());
+                return null;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                    conn.Dispose();
+                }
+            }
         }
 
         public static async Task<DataSet> Execute(string storedProcedure, IDictionary<string, string> args)
         {
-            var cmd = (await GetConnection()).CreateCommand();
-            cmd.CommandText = storedProcedure;
-            cmd.CommandType = CommandType.StoredProcedure;
-            args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
-            var result = new DataSet();
-            new SqlDataAdapter(cmd).Fill(result);
-            return result;
+            SqlConnection conn = null;
+            try
+            {
+                conn = await GetConnection();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = storedProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
+                args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
+                var result = new DataSet();
+                new SqlDataAdapter(cmd).Fill(result);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on 'Sql.Execute': {0}", ex.ToString());
+                return null;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                    conn.Dispose();
+                }
+            }
         }
     }
 }
