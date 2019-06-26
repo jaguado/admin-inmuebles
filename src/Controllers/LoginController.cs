@@ -49,8 +49,11 @@ namespace AdminInmuebles.Controllers
             var getUserInfo = await Helpers.Sql.Execute("[desoincl_inmueble].[SP_USUARIO_VALIDA_CREDENCIALES]", args);
             if (getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0)
                 return new UnauthorizedResult();
-            //check credentials and TODO return a valid response
+
             var userInfo = getUserInfo.Tables[0].Select()[0];
+            if ((int)userInfo["ESTADO"] > 2)
+                return new ForbidResult(); //user disabled
+
             var userData = new List<dynamic>();
             getUserInfo.Tables[0].Select().ToList().ForEach(row =>
             {
@@ -62,6 +65,7 @@ namespace AdminInmuebles.Controllers
                     Vigencia = row["VIGENTE"]
                 });
             });
+            //TODO return real JWT
             return new OkObjectResult(new
             {
                 authToken = "ya29.GlwyB9JcWBQCIkq0SHHzWRZpS8ozvdZ1i1AyLh_LgqOlIhJHgJ6aL3iHFJ0LUbV2ACOoqpNfmAh36Pjs31DMvxazvkGOCg4KRcJwjTrUvR-wK8Mmvce5nifhp_cLKA",
