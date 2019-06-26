@@ -1,4 +1,5 @@
 {
+    "Home": "Home",
     "Dashboard": "Dashboard",
     "Charts": "Charts",
     "Tables": "Tables",
@@ -37,5 +38,7 @@
     "ForgotPassword": "Forgot my password",
     "LogIn": "Log In",
     "Password": "Password",
-    "Email": "Email"
+    "Email": "Email",
+    "WelcomeMessage": "<h4>Hello {{ name }}, Welcome to AdmInmuebles</h4>",
+    "WarningMessage": "Inactive user, please go to settings and complete all missing information"
 }

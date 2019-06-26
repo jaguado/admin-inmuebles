@@ -7,14 +7,14 @@
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput placeholder="{{ 'Email' | translate }}" formControlName="email">
+            <input matInput placeholder="{{ 'Email' | translate }}" formControlName="email" (keyup.enter)="onLogin()">
           </mat-form-field>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput type="password" placeholder="{{ 'Password' | translate }}" formControlName="password">
+            <input matInput type="password" placeholder="{{ 'Password' | translate }}" formControlName="password" (keyup.enter)="onLogin()">
           </mat-form-field>
         </div>
       </div>
@@ -23,11 +23,9 @@
           {{ errorMessage }}
         </div>
       </div>
-      <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
-        <div fxFlex>
+      <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 10px">
+        <div fxFlexFill class="w-100" fxLayoutAlign="center">
             <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'CustomerRegister' | translate }}</button>
-        </div>
-        <div fxFlex fxLayoutAlign="end">
             <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'ForgotPassword' | translate }}</button>
         </div>
       </div>
@@ -38,7 +36,7 @@
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column">
         <div fxFlexFill>
-          <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">{{ 'LogIn' | translate }}</button>
+          <button mat-raised-button color="primary" class="w-100" [disabled]="lockButton" (click)="onLogin()">{{ 'LogIn' | translate }}</button>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 20px">
@@ -69,8 +67,8 @@
         </div>
         <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
             <div fxFlexFill class="w-100" fxLayoutAlign="center">
-              <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)">
-                  {{item.name}}
+              <button mat-raised-button color="primary" class="w-100" (click)="selectCondo(item)" [disabled]="!item.enabled">
+                  {{ item.name }}
               </button>
             </div>
         </div>

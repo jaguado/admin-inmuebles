@@ -19,8 +19,11 @@ export class NavComponent {
       .signOut(true)
       .catch(e => console.log('error on signOut', e))
       .finally(() => {
-        localStorage.removeItem('authorization');
         this.router.navigate(['/login']);
       });
+  }
+
+  getMenu() {
+    return this.authService.getMenu();
   }
 }

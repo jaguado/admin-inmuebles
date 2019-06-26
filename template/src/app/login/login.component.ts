@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
+import { User } from '../shared/user';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   errorMessage: String;
   successMessage: String;
   NonProduction: Boolean = !environment.production;
+  lockButton: Boolean = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -46,14 +48,19 @@ export class LoginComponent implements OnInit {
   userRedir(){
     if (this.authService.user && !this.showCondoSelection()) {
       console.log('userRedir', this.authService)
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/']);
     }
   }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
       console.log('authState', 'subscribe', user);
-      this.authService.user = user;
-      this.userRedir();
+      if(user){   
+        this.authService.user = new User();
+        this.authService.user = Object.assign(this.authService.user, user);
+        this.authService.user.state = 2; //by default initial state user
+        this.authService.loadCondos(null);
+        this.userRedir();
+      }
     });
   }
   signInWithGoogle(): void {
@@ -81,20 +88,14 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.clearFields();
-    if (this.loginForm.invalid) {
+    let creds = this.loginForm.value;
+    if (this.loginForm.invalid || !creds.password) {
       this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
         this.errorMessage = res;
       });
       return;
     } else {
-      let creds = this.loginForm.value;
-      // Using mock data for dev
-      if(!environment.production){
-        creds = {
-          email: 'eve.holt@reqres.in',
-          password: 'cityslicka'
-        };
-      }
+      this.lockButton = true;  
       this.authService
         .signIn(creds)
         .then(res => {
@@ -104,6 +105,9 @@ export class LoginComponent implements OnInit {
         .catch(err => {
           console.log('checkCredentials error', err.error);
           this.errorMessage = 'Error: ' + err.error.error;
+        })
+        .finally(()=>{
+          this.lockButton = false;
         });
     }
   }

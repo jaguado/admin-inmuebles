@@ -1,4 +1,5 @@
 {
+    "Home": "Inicio",
     "Dashboard": "Panel",
     "Charts": "Graficos",
     "Tables": "Tablas",
@@ -37,5 +38,7 @@
     "ForgotPassword": "Olvidé mi contraseña",
     "LogIn": "Iniciar Sesión",
     "Password": "Contraseña",
-    "Email": "Correo"
+    "Email": "Correo",
+    "WelcomeMessage": "<h4>Hola {{ name }}, Bienvenido a AdmInmuebles</h4>",
+    "WarningMessage": "Usuario inactivo, debes ir a tú perfil y completar los datos faltantes"
 }
