@@ -2,38 +2,80 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
-import { DefaultCondos } from './shared/mockdata'
-import { environment } from 'src/environments/environment';
+import { User } from './shared/user';
+import { DefaultCondos, DefaultMenu } from './shared/mockdata'
+import { environment } from '../environments/environment'
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  public user: SocialUser = null;
-  public condos: any = DefaultCondos;
+  public user: User = null;
+  public condos: any = [];
   public selectedCondo: any = null;
 
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
   };
 
-  baseUrl: String = 'https://reqres.in/api/';
+  public isUserActive(): boolean {
+    return this.user.state == 1;
+  }
+
+  public getMenu(): any {
+    if(!this.selectedCondo){
+      return [];
+    }
+    return this.selectedCondo.menu.filter(m => m.enabled);
+  }
+
+  baseUrl: String = environment.baseUrl;
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
   signIn(credentials: any) {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
-    .then(token => {
-      this.user = new SocialUser();
-      this.user.email = credentials.email;
-      this.user.firstName = credentials.firstName;
-      this.user.lastName = credentials.lastName;
-      this.user.photoUrl = credentials.photoUrl;
-      this.user.id = credentials.id;
-      this.user.authToken = token.token;
-      this.user.provider = 'internal';
+    .then(result => {
+      this.user = new User();
+      this.user.email = result.email;
+      this.user.name = result.name;
+      this.user.firstName = result.firstName;
+      this.user.lastName = result.lastName;
+      this.user.photoUrl = result.photoUrl;
+      this.user.id = result.id;
+      this.user.authToken = result.authToken;
+      this.user.provider = result.provider;
+      this.user.state = result.state;
+      this.loadCondos(result.data);
       return this.user;
     });
+  }
+
+  loadCondos(data){
+    //load condos information from response
+    if(!data){
+      //user dummy data for new users
+      this.condos = DefaultCondos;
+    }
+    else{
+      this.condos = [];
+      data.forEach(condo => {
+        this.condos.push( 
+          {
+            "id": condo.Rut,
+            "name": condo.RazonSocial,
+            "menu": DefaultMenu,
+            "enabled": condo.Vigencia == 1
+          });
+      });
+    }
+    //if only exists one skip selection screen
+    if(this.condos.length<2){
+      this.selectedCondo = this.condos[0];
+    }
+    console.log('loadCondos', this.condos, this.selectedCondo);
   }
 
   signOut() {
@@ -45,3 +87,5 @@ export class AuthService {
     this.router.navigate(['/login']);
   }  
 }
+
+export type SocialUser = User;

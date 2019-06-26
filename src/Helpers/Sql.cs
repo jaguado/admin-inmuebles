@@ -24,5 +24,16 @@ namespace AdminInmuebles.Helpers
             new SqlDataAdapter(cmd).Fill(result);
             return result;
         }
+
+        public static async Task<DataSet> Execute(string storedProcedure, IDictionary<string, string> args)
+        {
+            var cmd = (await GetConnection()).CreateCommand();
+            cmd.CommandText = storedProcedure;
+            cmd.CommandType = CommandType.StoredProcedure;
+            args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
+            var result = new DataSet();
+            new SqlDataAdapter(cmd).Fill(result);
+            return result;
+        }
     }
 }

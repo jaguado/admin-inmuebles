@@ -10,10 +10,9 @@ Includes the following features:
 * Google Tag Manager
 * NewRelic APM and Browsers
 * Multi lenguages support
+* Multi domain CORS
 
   
-TODO Complete with features list
-
 ### How to start
 
 ```bash
@@ -22,3 +21,11 @@ TODO Complete with features list
 #### Start Web App
 > docker-compose up -d
 ```
+  
+### CI / CD
+  
+The process is fully automated based on the following branches mapping:
+  
+> Develop or feature branches -> Local environment
+> Staging -> Develop (https://admin-inmuebles-dev.herokuapp.com)
+> Released -> Production (https://admin-inmuebles.herokuapp.com)

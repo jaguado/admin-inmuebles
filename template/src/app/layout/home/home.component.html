@@ -1,0 +1,8 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title [innerHTML]="welcomeMessage"></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <button mat-button color="warn" *ngIf="showWarningMessage" [innerHTML]="warningMessage"></button>
+    </mat-card-content>
+</mat-card>
