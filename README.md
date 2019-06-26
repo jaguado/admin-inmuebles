@@ -29,3 +29,11 @@ The process is fully automated based on the following branches mapping:
 > Develop or feature branches -> Local environment  
 > Staging -> Develop (https://admin-inmuebles-dev.herokuapp.com)  
 > Released -> Production (https://admin-inmuebles.herokuapp.com)  
+
+
+
+### Load test
+
+Includes the following k6 scripts:  
+  
+> loginTest.js  -> Load test /login endpoint  
