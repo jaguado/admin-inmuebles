@@ -4,6 +4,7 @@ import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User } from './shared/user';
 import { DefaultCondos, DefaultMenu } from './shared/mockdata'
+import { environment } from '../environments/environment'
 
 
 @Injectable({
@@ -30,7 +31,7 @@ export class AuthService {
     return this.selectedCondo.menu.filter(m => m.enabled);
   }
 
-  baseUrl: String = '/';
+  baseUrl: String = environment.baseUrl;
   constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
 
   signIn(credentials: any) {
