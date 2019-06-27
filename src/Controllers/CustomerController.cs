@@ -68,7 +68,7 @@ namespace AdminInmuebles.Controllers
             var result = await _customerRepository.UpdatePassword(new Models.Credentials { email = loggedCustomer.Mail, password = newPassword });
             if(result)
                 return new OkObjectResult(newPassword); //TODO change this 
-            return new StatusCodeResult(304);
+            return new NotFoundResult();
         }
 
         private Models.Customer getLoggedCustomer()
