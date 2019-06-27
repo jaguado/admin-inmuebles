@@ -13,24 +13,73 @@ namespace AdminInmuebles.Controllers
     [Route("v1/[controller]")]
     public class CustomerController : BaseController
     {
+        private readonly Repository.CustomerRepository _customerRepository = new Repository.CustomerRepository();
+
+
         [HttpGet()]
+        [Produces(typeof(Models.Customer))]
         public async Task<IActionResult> Get()
         {
-            if (this.AuthenticatedToken == null)
-                return new ForbidResult();
+            var loggedCustomer = getLoggedCustomer();
+            if (loggedCustomer == null)
+                return new UnauthorizedResult();
 
-            //get logged user information
-            throw new NotImplementedException();
+            //complete customer data
+            var result = await _customerRepository.Get(loggedCustomer.Mail);
+            if (result == null)
+                return new NotFoundResult();
+            return new OkObjectResult(result);
         }
         [HttpPost()]
+        [Produces(typeof(Models.Customer))]
         public async Task<IActionResult> Create([FromBody] Models.Customer customer)
-        {
-            throw new NotImplementedException();
+        { 
+            if(customer==null)
+                return new BadRequestResult();
+            var loggedCustomer = getLoggedCustomer();
+            if (loggedCustomer == null)
+                return new UnauthorizedResult();
+
+            if (!loggedCustomer.Mail.ToLower().Equals(customer.Mail.ToLower()))
+                return new ForbidResult();
+
+            //create customer on DB
+            var result = await _customerRepository.Create(customer);
+            if (result)
+            {
+                customer.Password = null;
+                return new OkObjectResult(customer);
+            }
+
+            return new StatusCodeResult(304);
         }
-        [HttpPut()]
-        public async Task<IActionResult> Update([FromBody] Models.Customer customer)
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword()
         {
-            throw new NotImplementedException();
+            var loggedCustomer = getLoggedCustomer();
+            if (loggedCustomer == null)
+                return new UnauthorizedResult();
+
+            if (string.IsNullOrEmpty(loggedCustomer.Mail))
+                return new NotFoundObjectResult(loggedCustomer);
+
+            //create password, save on db and send email
+            var newPassword = Helpers.Password.CreateWithRandomLength();
+            var result = await _customerRepository.UpdatePassword(new Models.Credentials { email = loggedCustomer.Mail, password = newPassword });
+            if(result)
+                return new OkObjectResult(newPassword); //TODO change this 
+            return new StatusCodeResult(304);
+        }
+
+        private Models.Customer getLoggedCustomer()
+        {
+            if (AuthenticatedToken == null || !AuthenticatedToken.Payload.ContainsKey("email"))
+                return null;
+
+            return new Models.Customer
+            {
+                Mail = AuthenticatedToken.Payload["email"].ToString()
+            };
         }
     }
 }

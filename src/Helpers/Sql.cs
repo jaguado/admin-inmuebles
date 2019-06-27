@@ -58,6 +58,8 @@ namespace AdminInmuebles.Helpers
                 args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
                 var result = new DataSet();
                 new SqlDataAdapter(cmd).Fill(result);
+                if (result == null || result.Tables.Count == 0 || result.Tables[0].Rows.Count == 0)
+                    return null;
                 return result;
             }
             catch (Exception ex)
@@ -74,6 +76,42 @@ namespace AdminInmuebles.Helpers
                     conn.Dispose();
                 }
             }
+        }
+
+        public static async Task<int> ExecuteScalar(string storedProcedure, IDictionary<string, string> args)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = await GetConnection();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = storedProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
+                args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
+                var result = new DataSet();
+                new SqlDataAdapter(cmd).Fill(result);
+                if (result == null || result.Tables.Count == 0 || result.Tables[0].Rows.Count == 0)
+                    return 0;
+
+                if (int.TryParse(result.Tables[0].Rows[0][0].ToString(), out int res))
+                    return res;
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on 'Sql.Execute': {0}", ex.ToString());
+                return -1;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                    conn.Dispose();
+                }
+            } 
         }
     }
 }

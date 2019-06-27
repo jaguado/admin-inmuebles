@@ -32,7 +32,7 @@ namespace AdminInmuebles.Filters
 
         private async Task CheckGoogleAsync(ActionExecutingContext context, string accessToken, string uid)
         {
-            if (GetFromRequest(context, "provider") == "facebook") return;
+            if (GetFromRequest(context, "provider") != "google") return;
             try
             {
                 await ValidateAccessTokenWithGoogleAsync(context, accessToken, uid);
@@ -86,7 +86,7 @@ namespace AdminInmuebles.Filters
 
         private async Task CheckFacebookAsync(ActionExecutingContext context, string accessToken, string uid)
         {
-            if (GetFromRequest(context, "provider") == "google") return;
+            if (GetFromRequest(context, "provider") != "facebook") return;
             try
             {
                 await ValidateAccessTokenWithFacebookAsync(context, accessToken, uid);
@@ -240,6 +240,7 @@ namespace AdminInmuebles.Filters
                 else
                 {
                     var uid = GetFromRequest(context, uidFieldName);
+                    //FIXME enable jwt stateless validation
                     await CheckGoogleAsync(context, accessToken, uid);
                     await CheckFacebookAsync(context, accessToken, uid);
                     if (context.Controller is BaseController controller)

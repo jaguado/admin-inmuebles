@@ -11,7 +11,7 @@ namespace AdminInmuebles.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
+        private readonly Repository.CustomerRepository _customerRepository = new Repository.CustomerRepository();
 
         /// <summary>
         /// Health check endpoint
@@ -41,12 +41,7 @@ namespace AdminInmuebles.Controllers
         [HttpPost("/login")]
         public async Task<IActionResult> PostAsync([FromBody] Models.Credentials credentials)
         {
-            var args = new Dictionary<string, string>
-            {
-                { "MAIL", credentials.email },
-                { "PASS", credentials.password }
-            };
-            var getUserInfo = await Helpers.Sql.Execute("[desoincl_inmueble].[SP_USUARIO_VALIDA_CREDENCIALES]", args);
+            var getUserInfo = await _customerRepository.CheckPassword(credentials);
             if (getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0)
                 return new UnauthorizedResult();
 
