@@ -15,7 +15,14 @@ namespace AdminInmuebles.Extensions
         /// <returns></returns>
         public static JwtSecurityToken ToJwt(this string jwt)
         {
-            return new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+            try
+            {
+                return new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
