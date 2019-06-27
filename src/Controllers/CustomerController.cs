@@ -14,8 +14,6 @@ namespace AdminInmuebles.Controllers
     public class CustomerController : BaseController
     {
         private readonly Repository.CustomerRepository _customerRepository = new Repository.CustomerRepository();
-
-
         [HttpGet()]
         [Produces(typeof(Models.Customer))]
         public async Task<IActionResult> Get()
