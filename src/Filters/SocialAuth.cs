@@ -12,7 +12,8 @@ using System.Collections;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Authorization;
-
+using AdminInmuebles.Controllers;
+using AdminInmuebles.Extensions;
 namespace AdminInmuebles.Filters
 {
     /// <summary>
@@ -241,6 +242,8 @@ namespace AdminInmuebles.Filters
                     var uid = GetFromRequest(context, uidFieldName);
                     await CheckGoogleAsync(context, accessToken, uid);
                     await CheckFacebookAsync(context, accessToken, uid);
+                    if (context.Controller is BaseController controller)
+                        controller.AuthenticatedToken = accessToken.ToString().ToJwt();
                 }
             }
 

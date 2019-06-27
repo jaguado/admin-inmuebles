@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Net;
@@ -39,5 +40,9 @@ namespace AdminInmuebles.Controllers
             var msg = $"{DateTime.Now.ToString()}|{JsonConvert.SerializeObject(ex)}";
             Console.Error.WriteLineAsync(msg);
         }
+
+
+        //TODO Return validated jwt object
+        public JwtSecurityToken AuthenticatedToken { get; set; }
     }
 }

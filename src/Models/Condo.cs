@@ -11,6 +11,6 @@ namespace AdminInmuebles.Models
         public Address Address { get; set; }
         public Property[] Properties { get; set; }
         public Service[] Services { get; set; }
-        public User[] Persons { get; set; }
+        public Customer[] Persons { get; set; }
     }
 }

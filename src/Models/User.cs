@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdminInmuebles.Models
 {
-    public class User : BaseModel
+    public class Customer : BaseModel
     {
         public string Username { get; set; }
         public Person Person { get; set; }
