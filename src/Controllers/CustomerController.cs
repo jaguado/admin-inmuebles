@@ -1,4 +1,5 @@
 ﻿using AdminInmuebles.Extensions;
+using AdminInmuebles.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -49,7 +50,7 @@ namespace AdminInmuebles.Controllers
                 return new OkObjectResult(customer);
             }
 
-            return new StatusCodeResult(304);
+            return new StatusCodeResult(304); //not modified
         }
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword()
@@ -61,12 +62,23 @@ namespace AdminInmuebles.Controllers
             if (string.IsNullOrEmpty(loggedCustomer.Mail))
                 return new NotFoundObjectResult(loggedCustomer);
 
-            //create password, save on db and send email
-            var newPassword = Helpers.Password.CreateWithRandomLength();
+            var newPassword = Password.CreateWithRandomLength();
+            var destination = new List<SendGrid.Helpers.Mail.EmailAddress> { new SendGrid.Helpers.Mail.EmailAddress(loggedCustomer.Mail, loggedCustomer.Nombre) };
+            var payload = new
+            {
+                name = loggedCustomer.Nombre,
+                password = newPassword
+            };
             var result = await _customerRepository.UpdatePassword(new Models.Credentials { email = loggedCustomer.Mail, password = newPassword });
-            if(result)
-                return new OkObjectResult(newPassword); //TODO change this 
-            return new NotFoundResult();
+            if (result)
+            {
+                var mail = await Email.SendTransactional(destination, Email.Templates.Transactional.PasswordReset , payload);
+                if (mail.StatusCode == System.Net.HttpStatusCode.Accepted)
+                    return new OkResult();
+                else
+                    return new StatusCodeResult((int)mail.StatusCode);
+            }
+            return new StatusCodeResult(304); //not modified        
         }
 
         private Models.Customer getLoggedCustomer()
@@ -76,7 +88,8 @@ namespace AdminInmuebles.Controllers
 
             return new Models.Customer
             {
-                Mail = AuthenticatedToken.Payload["email"].ToString()
+                Mail = AuthenticatedToken.Payload["email"].ToString(),
+                Nombre = AuthenticatedToken.Payload["name"].ToString()
             };
         }
     }

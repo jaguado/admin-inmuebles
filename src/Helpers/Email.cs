@@ -13,7 +13,7 @@ namespace AdminInmuebles.Helpers
         private static readonly string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? throw new ApplicationException("SENDGRID_API_KEY variable not found");
         private static readonly SendGridClient _client = new SendGridClient(_apiKey);
 
-        public static readonly EmailAddress defaultFrom = new EmailAddress("contacto@sodein.cl", "Contacto Sodein");
+        public static readonly EmailAddress defaultFrom = new EmailAddress("no-reply@sodein.cl", "Contacto AdmInmuebles");
         public static readonly EmailAddress defaultTo = new EmailAddress("test@sodein.cl", "Sodein Test");
         
         public static async Task<Response> Send(SendGridMessage msg)
@@ -39,12 +39,13 @@ namespace AdminInmuebles.Helpers
                 msg.AddAttachment(attachmentName, attachmentBase64String);
             return await Send(msg);
         }
-        public static async Task<Response> SendTransactional(EmailAddress from, List<EmailAddress> to, string subject, string templateId, object templateData, string attachmentName = "", string attachmentBase64String = "")
+        public static async Task<Response> SendTransactional(List<EmailAddress> to, string templateId, object templateData, string subject = "", string attachmentName = "", string attachmentBase64String = "")
         {
             var msg = new SendGridMessage();
-            msg.SetFrom(from);
+            msg.SetFrom(defaultFrom);
             msg.AddTos(to);
-            msg.SetSubject(subject);
+            if(subject!="")
+                msg.SetSubject(subject);
             msg.SetTemplateId(templateId);
             msg.SetTemplateData(templateData);
             if (attachmentName != string.Empty && attachmentBase64String != string.Empty)
@@ -62,6 +63,14 @@ namespace AdminInmuebles.Helpers
                 msg.AddAttachment(attachmentName, attachmentBase64String);
             substitutions.ToList().ForEach(sub => msg.AddSubstitution(sub.Key, sub.Value));
             return await Send(msg);
+        }
+
+        public static class Templates
+        {
+            public static class Transactional
+            {
+                public const string PasswordReset = "d-72242796a07347eebe4d2f581470365b";
+            } 
         }
     }
 }
