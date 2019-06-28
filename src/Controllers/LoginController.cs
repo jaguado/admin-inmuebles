@@ -32,16 +32,6 @@ namespace AdminInmuebles.Controllers
         }
 
         /// <summary>
-        /// CORS support
-        /// </summary>
-        /// <returns></returns>
-        [HttpOptions("/login")]
-        public IActionResult Options()
-        {
-            return new OkResult();
-        }
-
-        /// <summary>
         /// Login endpoint (doesn't check auth headers)
         /// </summary>
         /// <param name="credentials"></param>
