@@ -17,7 +17,7 @@ namespace AdminInmuebles.Controllers
     [AllowAnonymous]
     [Route("v1/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginController : BaseController
     {
         private readonly Repository.CustomerRepository _customerRepository = new Repository.CustomerRepository();
 
@@ -49,14 +49,21 @@ namespace AdminInmuebles.Controllers
         [HttpPost("/login")]
         public async Task<IActionResult> PostAsync([FromBody] Models.Credentials credentials)
         {
-            var getUserInfo = await _customerRepository.CheckPassword(credentials);
-            if (getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0)
-                return new UnauthorizedResult();
+            Models.Customer customer;
+            if (AuthenticatedToken != null) //social auth
+            {
+                customer = await _customerRepository.Get(AuthenticatedToken.Payload["email"].ToString());
+            }
+            else
+            {
+                var getUserInfo = await _customerRepository.CheckPassword(credentials);
+                if ((getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0))
+                    return new UnauthorizedResult();
+                customer = getUserInfo.Tables[0].Select()[0].ToCustomer();
+            }
 
-            var customer = getUserInfo.Tables[0].Select()[0].ToCustomer();
             if (customer.Estado > 2)
                 return new ForbidResult(); //user disabled
-
 
             //TODO return real JWT
             var jwt = GetJWT(customer);

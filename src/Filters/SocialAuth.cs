@@ -256,7 +256,7 @@ namespace AdminInmuebles.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             //remove auth when method is OPTIONS , ONLY WORKS WITH BASECONTROLLER!! 
-            if (checkAuth && context.HttpContext.Request.Method != "OPTIONS" && context.Controller as Controllers.BaseController != null)
+            if (context.HttpContext.Request.Method != "OPTIONS")
             {
                 //Get access token and check state
                 var accessToken = GetFromHeader(context, authHeader) ?? string.Empty;
@@ -269,7 +269,7 @@ namespace AdminInmuebles.Filters
                 {
                     //throw new SecurityTokenException("Access token missing");
                     // Check for authorization
-                    if (!context.Filters.Any(a=> a is AllowAnonymousFilter))
+                    if (!context.Filters.Any(a=> a is AllowAnonymousFilter) && checkAuth)
                     {
                         context.Result = new ContentResult()
                         {
