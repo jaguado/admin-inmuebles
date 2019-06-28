@@ -18,7 +18,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token: string = this.authService && this.authService.user ? this.authService.user.idToken : null;
-        //console.log('HttpConfigInterceptor', token, this.authService.user);
+        // console.log('HttpConfigInterceptor', token, this.authService.user);
         if (token && !request.headers.has('Authorization')) {
             request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
             request = request.clone({ params: request.params.set('provider', this.authService.user.provider.toLowerCase()) });
@@ -33,10 +33,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         /* Enable this for request interception and error handling */
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
-                //if (event instanceof HttpResponse) {
-                    //console.log('HttpConfigInterceptor', request, event, token);
+                // if (event instanceof HttpResponse) {
+                    // console.log('HttpConfigInterceptor', request, event, token);
                     // this.errorDialogService.openDialog(event);
-                //}
+                // }
                 return event;
             }),
                 catchError((error: HttpErrorResponse) => {
@@ -45,7 +45,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     reason: error && error.error && error.error.reason ? error.error.reason : '',
                     status: error.status
                 };
-                //this.errorDialogService.openDialog(data);
+                // this.errorDialogService.openDialog(data);
                 console.log('HttpConfigInterceptor', 'error', error, data);
                 return throwError(error);
             }));
