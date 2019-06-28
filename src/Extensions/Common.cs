@@ -24,5 +24,14 @@ namespace AdminInmuebles.Extensions
                 return null;
             }
         }
+
+        public static string StringOrEmpty(this object value)
+        {
+            return value.ToString() ?? string.Empty;
+        }
+        public static int IntOrDefault(this object value)
+        {
+            return value != null && !string.IsNullOrEmpty(value.ToString()) ? int.Parse(value.ToString()) : 0;
+        }
     }
 }

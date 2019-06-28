@@ -49,13 +49,13 @@ namespace AdminInmuebles.Filters
                     var expDeltaDurationMinutes = 5;
                     var jwt = accessToken.ToJwt();
                     var validJwt = true; //TODO check jwt signature
-                    var expiredJwt = (jwt.ValidFrom == DateTime.MinValue ? false : jwt.ValidFrom.AddMinutes(-1 * expDeltaDurationMinutes) > DateTime.Now) && jwt.ValidTo.AddMinutes(expDeltaDurationMinutes) > DateTime.Now;
+                    var expiredJwt = (jwt.ValidFrom == DateTime.MinValue ? false : jwt.ValidFrom.AddMinutes(-1 * expDeltaDurationMinutes) > DateTime.Now.ToUniversalTime()) || jwt.ValidTo.AddMinutes(expDeltaDurationMinutes) < DateTime.Now.ToUniversalTime();
                     if (!anony && !validJwt || expiredJwt)
                     {
                         context.Result = new ContentResult()
                         {
                             StatusCode = StatusCodes.Status401Unauthorized,
-                            Content = "Invalid JWT"
+                            Content = "Invalid or expired token"
                         };
                     }
                 }
@@ -66,7 +66,7 @@ namespace AdminInmuebles.Filters
                 context.Result = new ContentResult()
                 {
                     StatusCode = StatusCodes.Status401Unauthorized,
-                    Content = "JWT check failed. " + ex.Message
+                    Content = "Token check failed. " + ex.Message
                 };
             }
         }

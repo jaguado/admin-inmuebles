@@ -88,15 +88,8 @@ namespace AdminInmuebles.Helpers
                 cmd.CommandText = storedProcedure;
                 cmd.CommandType = CommandType.StoredProcedure;
                 args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
-                var result = new DataSet();
-                new SqlDataAdapter(cmd).Fill(result);
-                if (result == null || result.Tables.Count == 0 || result.Tables[0].Rows.Count == 0)
-                    return 0;
-
-                if (int.TryParse(result.Tables[0].Rows[0][0].ToString(), out int res))
-                    return res;
-
-                return 0;
+                var result = await cmd.ExecuteScalarAsync();
+                return (int)result;
             }
             catch (Exception ex)
             {

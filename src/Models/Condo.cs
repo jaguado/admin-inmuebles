@@ -6,11 +6,9 @@ namespace AdminInmuebles.Models
 {
     public class Condo : BaseModel
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-
-        public Address Address { get; set; }
-        public Property[] Properties { get; set; }
-        public Service[] Services { get; set; }
-        public Customer[] Persons { get; set; }
+        public int Rut { get; set; }
+        public string RazonSocial { get; set; }
+        public int Tipo { get; set; }
+        public int Vigencia { get; set; }
     }
 }

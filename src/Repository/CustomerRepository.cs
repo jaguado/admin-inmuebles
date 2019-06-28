@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdminInmuebles.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -17,18 +18,7 @@ namespace AdminInmuebles.Repository
             //TODO map to entity
             var dsResult = await Helpers.Sql.Execute("[desoincl_inmueble].[SP_TRAER_USUARIO]", args);
             if (dsResult != null)
-            {
-                var userData = dsResult.Tables[0].Select()[0];
-                return new Models.Customer
-                {
-                    Rut= int.Parse(userData["RUT"].ToString()),
-                    Nombre= userData["NOMBRE"].ToString(),
-                    Mail= userData["EMAIL"].ToString(),
-                    Icono = userData["ICONO"].ToString(),
-                    Estado = int.Parse(userData["ID_TIPO_ESTADO_USUARIO"].ToString()),
-                    Tipo = int.Parse(userData["ID_TIPO_USUARIO_INGRESO"].ToString())
-                };
-            }
+                return dsResult.Tables[0].Select()[0].ToCustomer();
             return null;
         }
         public async Task<bool> Create(Models.Customer customer)
@@ -65,7 +55,8 @@ namespace AdminInmuebles.Repository
                 { "MAIL", credentials.email },
                 { "CLAVE", credentials.password }
             };
-            return await Helpers.Sql.ExecuteScalar("[desoincl_inmueble].[SP_USUARIO_CAMBIO_CLAVE]", args) > 0;
+            var res = await Helpers.Sql.ExecuteScalar("[desoincl_inmueble].[SP_USUARIO_CAMBIO_CLAVE]", args);
+            return res > 0;
         }
     }
 }

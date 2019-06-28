@@ -19,5 +19,7 @@ namespace AdminInmuebles.Models
         {
             throw new NotImplementedException();
         }
+
+        public IList<Condo> Condos { get; set; }
     }
 }

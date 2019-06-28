@@ -76,7 +76,10 @@ namespace AdminInmuebles.Controllers
                 if (mail.StatusCode == System.Net.HttpStatusCode.Accepted)
                     return new OkResult();
                 else
-                    return new StatusCodeResult((int)mail.StatusCode);
+                {
+                    var error = await mail.Body.ReadAsStringAsync();
+                    return new ObjectResult(error) { StatusCode = (int)mail.StatusCode };
+                }
             }
             return new StatusCodeResult(304); //not modified        
         }

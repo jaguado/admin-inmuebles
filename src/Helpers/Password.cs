@@ -26,7 +26,7 @@ namespace AdminInmuebles.Helpers
         public static string CreateWithRandomLength(int min=5, int max=8)
         {
             // Create a string of characters, numbers, special characters that allowed in the password  
-            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
+            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#_-";
             Random random = new Random();
 
             // Minimum size 'min'. Max size 'max'

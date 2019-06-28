@@ -17,7 +17,7 @@ import { AuthService } from './auth.service';
 export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const token: string = this.authService && this.authService.user ? this.authService.user.authToken : null;
+        const token: string = this.authService && this.authService.user ? this.authService.user.idToken : null;
         //console.log('HttpConfigInterceptor', token, this.authService.user);
         if (token && !request.headers.has('Authorization')) {
             request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
