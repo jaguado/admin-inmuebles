@@ -67,9 +67,9 @@ export function provideConfig() {
       useFactory: provideConfig
     },
     {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: HttpConfigInterceptor, 
-      multi: true 
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
