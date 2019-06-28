@@ -40,5 +40,6 @@
     "Password": "Password",
     "Email": "Email",
     "WelcomeMessage": "<h4>Hello {{ name }}, Welcome to AdmInmuebles</h4>",
-    "WarningMessage": "Inactive user, please go to settings and complete all missing information"
+    "WarningMessage": "Inactive user, please go to settings and complete all missing information",
+    "Unauthorized": "Incorrect username or password"
 }

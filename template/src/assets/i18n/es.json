@@ -40,5 +40,6 @@
     "Password": "Contraseña",
     "Email": "Correo",
     "WelcomeMessage": "<h4>Hola {{ name }}, Bienvenido a AdmInmuebles</h4>",
-    "WarningMessage": "Usuario inactivo, debes ir a tú perfil y completar los datos faltantes"
+    "WarningMessage": "Usuario inactivo, debes ir a tú perfil y completar los datos faltantes",
+    "Unauthorized": "Usuario y/o contraseña incorrectos"
 }

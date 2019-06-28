@@ -20,7 +20,7 @@
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" *ngIf="errorMessage">
         <div fxFlexFill class="w-100 error-text" fxLayoutAlign="center center">
-          {{ errorMessage }}
+          {{ errorMessage | translate }}
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 10px">

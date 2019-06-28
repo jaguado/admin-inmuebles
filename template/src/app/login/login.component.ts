@@ -103,8 +103,8 @@ export class LoginComponent implements OnInit {
           this.userRedir();
         })
         .catch(err => {
-          console.log('checkCredentials error', err.error);
-          this.errorMessage = 'Error: ' + err.error.error;
+          console.log('checkCredentials error', err);
+          this.errorMessage = err.statusText;
         })
         .finally(()=>{
           this.lockButton = false;
