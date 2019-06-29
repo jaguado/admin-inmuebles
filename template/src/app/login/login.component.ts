@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     this.userRedir();
   }
 
-  showUsingummyData(): Boolean {
+  showUsingDummyData(): Boolean {
     return this.authService.user && this.authService.user.dummyData;
   }
 

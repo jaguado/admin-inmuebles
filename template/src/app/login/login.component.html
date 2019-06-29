@@ -72,10 +72,8 @@
               </button>
             </div>
         </div>
-        <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="showUsingummyData()" style="margin: 20px">
-          <div fxFlexFill class="" fxLayoutAlign="center">
-              <mat-label>{{ 'DummyDataLabel' | translate }}</mat-label>
-          </div>
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="showUsingDummyData()">
+          <h3 fxLayoutAlign="center">{{ 'DummyDataLabel' | translate }}</h3>
         </div>
     </form>
   </div>
