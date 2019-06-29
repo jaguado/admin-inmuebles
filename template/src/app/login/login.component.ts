@@ -57,8 +57,8 @@ export class LoginComponent implements OnInit {
         this.authService.user = new User();
         this.authService.user = Object.assign(this.authService.user, user);
         this.authService.user.state = 2; // by default initial state user
-        this.authService.loadCondos(null);
-        this.userRedir();
+        // social login creating customer on db and changing jwt for internal
+        this.login({'email': '', 'password': ''});
       }
     });
   }
@@ -94,21 +94,25 @@ export class LoginComponent implements OnInit {
       });
       return;
     } else {
-      this.lockButton = true;
-      this.authService
-        .signIn(creds)
-        .then(res => {
-          console.log('userService.checkUser', res);
-          this.userRedir();
-        })
-        .catch(err => {
-          console.log('checkCredentials error', err);
-          this.errorMessage = err.statusText;
-        })
-        .finally(() => {
-          this.lockButton = false;
-        });
+      this.login(creds);
     }
+  }
+
+  login(creds: any) {
+    this.lockButton = true;
+    this.authService
+    .signIn(creds)
+    .then(res => {
+      console.log('userService.checkUser', res);
+      this.userRedir();
+    })
+    .catch(err => {
+      console.log('checkCredentials error', err);
+      this.errorMessage = err.statusText;
+    })
+    .finally(() => {
+      this.lockButton = false;
+    });
   }
 
   onPasswordRecovery() {

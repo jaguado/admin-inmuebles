@@ -16,7 +16,7 @@ export class AuthService {
 
   public baseUrl: String = environment.baseUrl;
   public user: User = null;
-  public condos: any = [];
+  public condos: any = null;
   public selectedCondo: any = null;
 
   public showCondoSelection(): Boolean {
@@ -34,12 +34,11 @@ export class AuthService {
     return this.selectedCondo.menu.filter(m => m.enabled);
   }
 
-
-
   signIn(credentials: any) {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(result => {
+      this.cleanSession();
       this.user = new User();
       this.user.email = result.email;
       this.user.name = result.name;
@@ -83,11 +82,15 @@ export class AuthService {
     if (this.user && this.user.provider !== 'internal') {
       this.authService.signOut();
     }
-    this.user = null;
-    this.selectedCondo = null;
+    this.cleanSession();
     this.router.navigate(['/login']);
   }
 
+  cleanSession() {
+    this.user = null;
+    this.condos = null;
+    this.selectedCondo = null;
+  }
   saveCustomer(userInfo: User) {
     const payload = {
       'Rut': userInfo.rut,

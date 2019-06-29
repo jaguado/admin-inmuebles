@@ -43,6 +43,20 @@ namespace AdminInmuebles.Controllers
             if (AuthenticatedToken != null) //social auth
             {
                 customer = await _customerRepository.Get(AuthenticatedToken.Payload["email"].ToString());
+                //TODO create customer when not exists
+                if (customer == null)
+                {
+                    customer = new Models.Customer
+                    {
+                        Nombre = AuthenticatedToken.Payload["name"].ToString(),
+                        Mail = AuthenticatedToken.Payload["email"].ToString(),
+                        Tipo = 2, //social user
+                        Estado = 2, //initial state
+                        Condos = new List<Models.Condo>()
+                    };
+                    if(!await _customerRepository.CreateOrUpdate(customer))
+                        return new BadRequestObjectResult(customer); //problems creating customer on db
+                }
             }
             else
             {
@@ -59,12 +73,12 @@ namespace AdminInmuebles.Controllers
             var jwt = GetJWT(customer);
             return new OkObjectResult(new
             {
-                customer.Mail,
+                email = customer.Mail,
                 firstName = customer.Nombre,
                 idToken = jwt,
                 name = customer.Nombre,
                 photoUrl = customer.Icono,
-                provider = "internal",
+                provider = customer.Tipo == 2 ? "social" : "internal",
                 state = customer.Estado,
                 data = customer.Condos
             });
