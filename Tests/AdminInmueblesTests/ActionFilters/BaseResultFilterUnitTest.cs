@@ -19,7 +19,7 @@ namespace AdminInmueblesTests.ActionFilters
             RouteData = new RouteData(),
             ActionDescriptor = new ActionDescriptor()
         };
-        private static AdminInmuebles.Controllers.BaseController controller = new AdminInmuebles.Controllers.UserController();
+        private static AdminInmuebles.Controllers.BaseController controller = new AdminInmuebles.Controllers.CustomerController();
         private static AdminInmuebles.Filters.BaseResultFilter filter = new AdminInmuebles.Filters.BaseResultFilter();
         private static int[]  numbers = new int[] { 1, 3, 4, 9, 7, 6, 2 };
         private static ActionExecutingContext testContext = new ActionExecutingContext(actionContext, new List<IFilterMetadata>(), new Dictionary<string, object>(), controller)

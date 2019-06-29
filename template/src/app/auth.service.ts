@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User } from './shared/user';
-import { DefaultCondos, DefaultMenu } from './shared/mockdata'
-import { environment } from '../environments/environment'
+import { DefaultCondos, DefaultMenu } from './shared/mockdata';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -12,32 +12,34 @@ import { environment } from '../environments/environment'
 })
 
 export class AuthService {
+  constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
+
+  public baseUrl: String = environment.baseUrl;
   public user: User = null;
-  public condos: any = [];
+  public condos: any = null;
   public selectedCondo: any = null;
 
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
-  };
+  }
 
   public isUserActive(): boolean {
-    return this.user.state == 1;
+    return this.user.state === 1;
   }
 
   public getMenu(): any {
-    if(!this.selectedCondo){
+    if (!this.selectedCondo) {
       return [];
     }
     return this.selectedCondo.menu.filter(m => m.enabled);
   }
 
-  baseUrl: String = environment.baseUrl;
-  constructor(private http: HttpClient, public authService: SocialAuthService, private router: Router) { }
-
   signIn(credentials: any) {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(result => {
+      console.log('signIn', 'result', result);
+      this.cleanSession();
       this.user = new User();
       this.user.email = result.email;
       this.user.name = result.name;
@@ -53,26 +55,28 @@ export class AuthService {
     });
   }
 
-  loadCondos(data){
-    //load condos information from response
-    if(!data){
-      //user dummy data for new users
+  loadCondos(data) {
+    // load condos information from response or from dummy data
+    if (!data || data.length === 0) {
+      // user dummy data for new users
+      this.user.dummyData = true;
       this.condos = DefaultCondos;
-    }
-    else{
+    } else {
       this.condos = [];
       data.forEach(condo => {
-        this.condos.push( 
-          {
-            "id": condo.Rut,
-            "name": condo.RazonSocial,
-            "menu": DefaultMenu,
-            "enabled": condo.Vigencia == 1
-          });
+        if (condo) {
+          this.condos.push(
+            {
+              'id': condo.Rut,
+              'name': condo.RazonSocial,
+              'menu': DefaultMenu,
+              'enabled': condo.Vigencia === 1
+            });
+        }
       });
     }
-    //if only exists one skip selection screen
-    if(this.condos.length<2){
+    // if only exists one skip selection screen
+    if (this.condos.length < 2) {
       this.selectedCondo = this.condos[0];
     }
     console.log('loadCondos', this.condos, this.selectedCondo);
@@ -82,10 +86,29 @@ export class AuthService {
     if (this.user && this.user.provider !== 'internal') {
       this.authService.signOut();
     }
-    this.user = null;
-    this.selectedCondo = null;
+    this.cleanSession();
     this.router.navigate(['/login']);
-  }  
+  }
+
+  cleanSession() {
+    this.user = null;
+    this.condos = null;
+    this.selectedCondo = null;
+  }
+  saveCustomer(userInfo: User) {
+    const payload = {
+      'Rut': userInfo.rut,
+      'Mail': userInfo.email,
+      'Nombre': userInfo.name,
+      'Icono': userInfo.photoUrl
+    };
+    return this.http.post(this.baseUrl + 'v1/Customer', payload)
+    .toPromise<any>()
+    .then(result => {
+      console.log('save', result);
+      return;
+    });
+  }
 }
 
 export type SocialUser = User;

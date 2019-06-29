@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title [innerHTML]="welcomeMessage"></mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="showWarningMessage">
+        <button mat-button color="warn" [innerHTML]="warningMessage"></button>
+        <app-user-profile>
+        </app-user-profile>
+    </mat-card-content>
+</mat-card>
