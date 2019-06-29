@@ -29,7 +29,8 @@
     "In queue": "In queue",
     "Mail": "Mail",
     "View All": "View All",
-    "CompleteAllHighlightFields": "Complete all fields",
+    "CompleteAllHighlightFields": "Complete all highligthed fields",
+    "CompleteAllFields": "Complete all fields",
     "EnterYourEmailToContactYou": "Enter your email and will be in contact soon",
     "ThanksWillContactYou": "Thanks, will be in contact soon",
     "ChooseCondo": "Select Condo",
@@ -39,6 +40,10 @@
     "LogIn": "Log In",
     "Password": "Password",
     "Email": "Email",
-    "WelcomeMessage": "<h4>Hello {{ name }}, Welcome to AdmInmuebles</h4>",
-    "WarningMessage": "Inactive user, please go to settings and complete all missing information"
+    "WelcomeMessage": "<h4>Hello {{ name }}<br /><br />Welcome to AdmInmuebles</h4>",
+    "WarningMessage": "Inactive user, please go to settings and complete all missing information",
+    "Unauthorized": "Incorrect username or password",
+    "UserProfileHeader": "Profile",
+    "Save": "Save",
+    "DummyDataLabel": "You're using dummy data"
 }

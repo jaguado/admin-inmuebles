@@ -12,7 +12,8 @@ using System.Collections;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Authorization;
-
+using AdminInmuebles.Controllers;
+using AdminInmuebles.Extensions;
 namespace AdminInmuebles.Filters
 {
     /// <summary>
@@ -29,9 +30,50 @@ namespace AdminInmuebles.Filters
         const string tokenName = "access_token";
         private static readonly bool checkAuth = Environment.GetEnvironmentVariable("disableAuth") == null || bool.Parse(Environment.GetEnvironmentVariable("disableAuth")) == false;
 
+        private void CheckJWT(ActionExecutingContext context)
+        {
+            //FIXME enable jwt stateless validation
+            try
+            {
+                if (checkAuth && context.HttpContext.Request.Method != "OPTIONS")
+                {
+                    var anony = !context.Filters.Any(a => a is AllowAnonymousFilter);
+                    //Get access token and check state
+                    var accessToken = GetFromHeader(context, authHeader) ?? string.Empty;
+                    if (accessToken == string.Empty)
+                        accessToken = GetFromRequest(context, tokenName);
+                    else
+                        accessToken = accessToken.Replace("Bearer ", "");
+
+                    //check jwt
+                    var expDeltaDurationMinutes = 5;
+                    var jwt = accessToken.ToJwt();
+                    var validJwt = true; //TODO check jwt signature
+                    var expiredJwt = (jwt.ValidFrom == DateTime.MinValue ? false : jwt.ValidFrom.AddMinutes(-1 * expDeltaDurationMinutes) > DateTime.Now.ToUniversalTime()) || jwt.ValidTo.AddMinutes(expDeltaDurationMinutes) < DateTime.Now.ToUniversalTime();
+                    if (!anony && !validJwt || expiredJwt)
+                    {
+                        context.Result = new ContentResult()
+                        {
+                            StatusCode = StatusCodes.Status401Unauthorized,
+                            Content = "Invalid or expired token"
+                        };
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                context.Result = new ContentResult()
+                {
+                    StatusCode = StatusCodes.Status401Unauthorized,
+                    Content = "Token check failed. " + ex.Message
+                };
+            }
+        }
+
         private async Task CheckGoogleAsync(ActionExecutingContext context, string accessToken, string uid)
         {
-            if (GetFromRequest(context, "provider") == "facebook") return;
+            if (GetFromRequest(context, "provider") != "google") return;
             try
             {
                 await ValidateAccessTokenWithGoogleAsync(context, accessToken, uid);
@@ -85,7 +127,7 @@ namespace AdminInmuebles.Filters
 
         private async Task CheckFacebookAsync(ActionExecutingContext context, string accessToken, string uid)
         {
-            if (GetFromRequest(context, "provider") == "google") return;
+            if (GetFromRequest(context, "provider") != "facebook") return;
             try
             {
                 await ValidateAccessTokenWithFacebookAsync(context, accessToken, uid);
@@ -214,7 +256,7 @@ namespace AdminInmuebles.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             //remove auth when method is OPTIONS , ONLY WORKS WITH BASECONTROLLER!! 
-            if (checkAuth && context.HttpContext.Request.Method != "OPTIONS" && context.Controller as Controllers.BaseController != null)
+            if (context.HttpContext.Request.Method != "OPTIONS")
             {
                 //Get access token and check state
                 var accessToken = GetFromHeader(context, authHeader) ?? string.Empty;
@@ -227,7 +269,7 @@ namespace AdminInmuebles.Filters
                 {
                     //throw new SecurityTokenException("Access token missing");
                     // Check for authorization
-                    if (!context.Filters.Any(a=> a is AllowAnonymousFilter))
+                    if (!context.Filters.Any(a=> a is AllowAnonymousFilter) && checkAuth)
                     {
                         context.Result = new ContentResult()
                         {
@@ -239,8 +281,11 @@ namespace AdminInmuebles.Filters
                 else
                 {
                     var uid = GetFromRequest(context, uidFieldName);
+                    CheckJWT(context);
                     await CheckGoogleAsync(context, accessToken, uid);
                     await CheckFacebookAsync(context, accessToken, uid);
+                    if (context.Controller is BaseController controller)
+                        controller.AuthenticatedToken = accessToken.ToString().ToJwt();
                 }
             }
 

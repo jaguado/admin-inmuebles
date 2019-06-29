@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   defaultLanguage: 'es',
-  baseUrl: 'https://admin-inmuebles-dev.herokuapp.com/' //hardcoded for the moment to target stable dev api
+  baseUrl: 'https://admin-inmuebles-dev.herokuapp.com/' // hardcoded for the moment to target stable dev api
 };
 
 /*

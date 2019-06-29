@@ -25,53 +25,56 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService
-  ) 
-  {
+  ) {
     translate.setDefaultLang(environment.defaultLanguage);
   }
-  
-  selectCondo(condo: any){
+
+  selectCondo(condo: any) {
     console.log('selectCondo', condo);
     this.authService.selectedCondo = condo;
     this.userRedir();
   }
 
+  showUsingummyData(): Boolean {
+    return this.authService.user && this.authService.user.dummyData;
+  }
+
   showCondoSelection(): Boolean {
-    //console.log('login','showCondoSelection', this.authService.user, this.authService.showCondoSelection());
+    // console.log('login','showCondoSelection', this.authService.user, this.authService.showCondoSelection());
     return this.authService.showCondoSelection();
   }
 
-  availableCondos(): any{
+  availableCondos(): any {
     return this.authService.condos;
   }
 
-  userRedir(){
+  userRedir() {
     if (this.authService.user && !this.showCondoSelection()) {
-      console.log('userRedir', this.authService)
+      console.log('userRedir', this.authService);
       this.router.navigate(['/']);
     }
   }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
       console.log('authState', 'subscribe', user);
-      if(user){   
+      if (user) {
         this.authService.user = new User();
         this.authService.user = Object.assign(this.authService.user, user);
-        this.authService.user.state = 2; //by default initial state user
-        this.authService.loadCondos(null);
-        this.userRedir();
+        this.authService.user.state = 2; // by default initial state user
+        // social login creating customer on db and changing jwt for internal
+        this.login({'email': '', 'password': ''});
       }
     });
   }
   signInWithGoogle(): void {
-    if(!this.authService.user){
+    if (!this.authService.user) {
       this.suscribe();
       this.authService.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
     }
   }
 
   signInWithFB(): void {
-    if(!this.authService.user){
+    if (!this.authService.user) {
       this.suscribe();
       this.authService.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
     }
@@ -88,28 +91,32 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.clearFields();
-    let creds = this.loginForm.value;
+    const creds = this.loginForm.value;
     if (this.loginForm.invalid || !creds.password) {
       this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
         this.errorMessage = res;
       });
       return;
     } else {
-      this.lockButton = true;  
-      this.authService
-        .signIn(creds)
-        .then(res => {
-          console.log('userService.checkUser', res);
-          this.userRedir();
-        })
-        .catch(err => {
-          console.log('checkCredentials error', err.error);
-          this.errorMessage = 'Error: ' + err.error.error;
-        })
-        .finally(()=>{
-          this.lockButton = false;
-        });
+      this.login(creds);
     }
+  }
+
+  login(creds: any) {
+    this.lockButton = true;
+    this.authService
+    .signIn(creds)
+    .then(res => {
+      console.log('userService.checkUser', res);
+      this.userRedir();
+    })
+    .catch(err => {
+      console.log('checkCredentials error', err);
+      this.errorMessage = err.statusText;
+    })
+    .finally(() => {
+      this.lockButton = false;
+    });
   }
 
   onPasswordRecovery() {

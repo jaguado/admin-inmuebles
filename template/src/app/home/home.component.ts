@@ -1,18 +1,20 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { AuthService, SocialUser } from '../../auth.service';
-
+import { AuthService, SocialUser } from '../auth.service';
+import { environment } from './../../environments/environment';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnChanges {
-    public welcomeMessage: string = '';
-    public warningMessage: string = '';
+    public welcomeMessage: String = '';
+    public warningMessage: String = '';
     public showWarningMessage: boolean = !this.authService.isUserActive();
     public user: SocialUser = this.authService.user;
-    constructor(private authService: AuthService, private translate: TranslateService) { }
+    constructor(private authService: AuthService, private translate: TranslateService) {
+      translate.setDefaultLang(environment.defaultLanguage);
+    }
 
     ngOnInit() {
         this.LoadWelcomeMessages();
@@ -25,12 +27,13 @@ export class HomeComponent implements OnInit, OnChanges {
         console.log('Home', 'ngOnChanges', changes);
     }
 
-    LoadWelcomeMessages(){
-        this.translate.get('WelcomeMessage').toPromise<string>().then(result =>
-            this.welcomeMessage = result.replace('{{ name }}', this.user.name)   
+    LoadWelcomeMessages() {
+        this.translate.get('WelcomeMessage').toPromise<string>().then(result => {
+            this.welcomeMessage = result.replace('{{ name }}', this.user.name)
+          }
         );
         this.translate.get('WarningMessage').toPromise<string>().then(result =>
-            this.warningMessage = result 
+            this.warningMessage = result
         );
     }
 }

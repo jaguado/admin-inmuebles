@@ -20,19 +20,5 @@ namespace AdminInmuebles.Controllers
             var body = await response.Body.ReadAsStringAsync();
             return new ContentResult() { Content=body, StatusCode = (int) response.StatusCode };
         }
-
-        [HttpGet("document/{id}")]
-        [Produces(typeof(Models.Document))]
-        public IActionResult GetDocument(string id)
-        {
-            //TODO get document from db
-            return new OkObjectResult(new Models.Document());
-        }
-        [HttpPost("document")]
-        public IActionResult SaveDocument(Models.Document document)
-        {
-            //TODO save document
-            return new NoContentResult();
-        }
     } 
 }
