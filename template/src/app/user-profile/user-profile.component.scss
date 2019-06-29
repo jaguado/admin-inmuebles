@@ -1,0 +1,15 @@
+.full-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-container > * {
+  width: 100%;
+}
+
+.error-text{
+    color: red;
+}
+.success-text{
+    color: green;
+}

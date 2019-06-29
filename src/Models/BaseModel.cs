@@ -7,9 +7,9 @@ namespace AdminInmuebles.Models
 {
     public class BaseModel
     {
-        public User CreatedBy { get; set; }
+        public Customer CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public User UpdatedBy { get; set; }
+        public Customer UpdatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }
 
         public KeyValuePair<string, object> Attributes { get; set; }

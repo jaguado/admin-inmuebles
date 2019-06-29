@@ -30,7 +30,8 @@
         "NEW_RELIC_APP_NAME": "AdminInmuebles localhost",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PORT": "5001",
-        "disableAuth": "false"
+        "disableAuth": "false",
+        "SENDGRID_API_KEY": "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"
       },
       "applicationUrl": "http://localhost:60209/"
     }

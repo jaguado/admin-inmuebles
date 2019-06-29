@@ -23,12 +23,6 @@
                 -webkit-box-shadow: 0 0 0 30px white inset;
             }
         }
-        .error-text{
-            color: red;
-        }
-        .success-text{
-            color: green;
-        }
         .logo-img{
             height: 100%;
             width: 100%;
@@ -36,6 +30,12 @@
         .mx-1 {
             margin-right: .25rem!important;
             margin-left: .25rem!important;
+        }
+        .error-text{
+          color: red;
+        }
+        .success-text{
+            color: green;
         }
     }
 

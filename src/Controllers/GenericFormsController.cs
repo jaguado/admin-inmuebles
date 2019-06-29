@@ -23,7 +23,7 @@ namespace AdminInmuebles.Controllers
             try
             {
                 const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
-                var tables = await Helpers.Sql.GetData(queryMantenedores);
+                var tables = await Helpers.Sql.GetData(queryMantenedores);  
                 if (tables == null || tables.Tables[0].Rows.Count == 0)
                     return null;
                 var rows = tables.Tables[0].Select().ToList();

@@ -6,9 +6,9 @@ namespace AdminInmuebles.Models
 {
     public class Property : BaseModel
     {
-        public User Owner { get; set; }
-        public User[] Habitants { get; set; }
-        public User[] RelatedPersons { get; set; }
+        public Customer Owner { get; set; }
+        public Customer[] Habitants { get; set; }
+        public Customer[] RelatedPersons { get; set; }
         public PropertyTypes PropertyType { get; set; }
         public Address Address { get; set; }
 

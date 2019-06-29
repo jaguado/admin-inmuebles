@@ -30,6 +30,7 @@
     "Mail": "Correo",
     "View All": "Ver Todo",
     "CompleteAllHighlightFields": "Completa los campos destacados",
+    "CompleteAllFields": "Completa todos los campos",
     "EnterYourEmailToContactYou": "Ingresa tu correo y nos pondremos en contacto.",
     "ThanksWillContactYou": "Gracias, pronto te contactaremos",
     "ChooseCondo": "Elige un condominio",
@@ -39,6 +40,13 @@
     "LogIn": "Iniciar Sesión",
     "Password": "Contraseña",
     "Email": "Correo",
-    "WelcomeMessage": "<h4>Hola {{ name }}, Bienvenido a AdmInmuebles</h4>",
-    "WarningMessage": "Usuario inactivo, debes ir a tú perfil y completar los datos faltantes"
+    "WelcomeMessage": "<h4>Hola {{ name }}<br /><br />Bienvenido a AdmInmuebles</h4>",
+    "WarningMessage": "Usuario inactivo, completa tus datos faltantes para que puedas usar esta aplicación sin problemas.",
+    "Unauthorized": "Usuario y/o contraseña incorrectos",
+    "UserProfileHeader": "Perfil",
+    "RUT": "Rut",
+    "Name": "Nombre",
+    "Icon": "Icono",
+    "Save": "Guardar",
+    "DummyDataLabel": "Estas usando datos de prueba."
 }
