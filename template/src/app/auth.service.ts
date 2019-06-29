@@ -87,6 +87,21 @@ export class AuthService {
     this.selectedCondo = null;
     this.router.navigate(['/login']);
   }
+
+  saveCustomer(userInfo: User) {
+    const payload = {
+      'Rut': userInfo.rut,
+      'Mail': userInfo.email,
+      'Nombre': userInfo.name,
+      'Icono': userInfo.photoUrl
+    };
+    return this.http.post(this.baseUrl + 'v1/Customer', payload)
+    .toPromise<any>()
+    .then(result => {
+      console.log('save', result);
+      return;
+    });
+  }
 }
 
 export type SocialUser = User;

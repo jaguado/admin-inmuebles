@@ -43,7 +43,7 @@ namespace AdminInmuebles.Controllers
                 return new ForbidResult();
 
             //create customer on DB
-            var result = await _customerRepository.Create(customer);
+            var result = await _customerRepository.CreateOrUpdate(customer);
             if (result)
             {
                 customer.Password = null;

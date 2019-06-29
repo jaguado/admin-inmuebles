@@ -21,7 +21,7 @@ namespace AdminInmuebles.Repository
                 return dsResult.Tables[0].Select()[0].ToCustomer();
             return null;
         }
-        public async Task<bool> Create(Models.Customer customer)
+        public async Task<bool> CreateOrUpdate(Models.Customer customer)
         {
             var args = new Dictionary<string, string>
             {
@@ -37,7 +37,7 @@ namespace AdminInmuebles.Repository
         }
         public async Task<bool> UpdateAsync(Models.Customer customer)
         {
-            return await Create(customer);
+            return await CreateOrUpdate(customer);
         }
         public async Task<DataSet> CheckPassword(Models.Credentials credentials)
         {
