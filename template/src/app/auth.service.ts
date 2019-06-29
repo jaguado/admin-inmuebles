@@ -38,6 +38,7 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(result => {
+      console.log('signIn', 'result', result);
       this.cleanSession();
       this.user = new User();
       this.user.email = result.email;
@@ -55,20 +56,23 @@ export class AuthService {
   }
 
   loadCondos(data) {
-    // load condos information from response
-    if (!data) {
+    // load condos information from response or from dummy data
+    if (!data || data.length === 0) {
       // user dummy data for new users
+      this.user.dummyData = true;
       this.condos = DefaultCondos;
     } else {
       this.condos = [];
       data.forEach(condo => {
-        this.condos.push(
-          {
-            'id': condo.Rut,
-            'name': condo.RazonSocial,
-            'menu': DefaultMenu,
-            'enabled': condo.Vigencia === 1
-          });
+        if (condo) {
+          this.condos.push(
+            {
+              'id': condo.Rut,
+              'name': condo.RazonSocial,
+              'menu': DefaultMenu,
+              'enabled': condo.Vigencia === 1
+            });
+        }
       });
     }
     // if only exists one skip selection screen

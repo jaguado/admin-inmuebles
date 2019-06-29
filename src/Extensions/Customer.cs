@@ -34,7 +34,7 @@ namespace AdminInmuebles.Extensions
                 Icono = userData["ICONO"].StringOrEmpty(),
                 Estado = userData["ID_TIPO_ESTADO_USUARIO"].IntOrDefault(),
                 Tipo = userData["ID_TIPO_USUARIO_INGRESO"].IntOrDefault(),
-                Condos = condosData
+                Condos = condosData.Where(c=> !string.IsNullOrEmpty(c.RazonSocial)).ToList()
             };
         }
     }

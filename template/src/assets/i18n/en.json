@@ -44,5 +44,6 @@
     "WarningMessage": "Inactive user, please go to settings and complete all missing information",
     "Unauthorized": "Incorrect username or password",
     "UserProfileHeader": "Profile",
-    "Save": "Save"
+    "Save": "Save",
+    "DummyDataLabel": "You're using dummy data"
 }

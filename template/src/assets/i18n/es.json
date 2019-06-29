@@ -47,5 +47,6 @@
     "RUT": "Rut",
     "Name": "Nombre",
     "Icon": "Icono",
-    "Save": "Guardar"
+    "Save": "Guardar",
+    "DummyDataLabel": "Estas usando datos de prueba."
 }

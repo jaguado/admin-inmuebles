@@ -35,6 +35,10 @@ export class LoginComponent implements OnInit {
     this.userRedir();
   }
 
+  showUsingummyData(): Boolean {
+    return this.authService.user && this.authService.user.dummyData;
+  }
+
   showCondoSelection(): Boolean {
     // console.log('login','showCondoSelection', this.authService.user, this.authService.showCondoSelection());
     return this.authService.showCondoSelection();

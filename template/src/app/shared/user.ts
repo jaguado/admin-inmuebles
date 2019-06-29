@@ -17,4 +17,5 @@ export class User implements SocialUser {
     state: any;
     data: any;
     rut: any;
+    dummyData: boolean;
   }

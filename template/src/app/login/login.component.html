@@ -63,7 +63,7 @@
             <img class="logo-img" src="../../assets/images/logo.png" />
         </div>
         <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px">
-          <h3 fxLayoutAlign="center">{{ 'ChooseCondo' | translate }}</h3>  
+          <h3 fxLayoutAlign="center">{{ 'ChooseCondo' | translate }}</h3>
         </div>
         <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
             <div fxFlexFill class="w-100" fxLayoutAlign="center">
@@ -71,6 +71,11 @@
                   {{ item.name }}
               </button>
             </div>
+        </div>
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="showUsingummyData()" style="margin: 20px">
+          <div fxFlexFill class="" fxLayoutAlign="center">
+              <mat-label>{{ 'DummyDataLabel' | translate }}</mat-label>
+          </div>
         </div>
     </form>
   </div>
