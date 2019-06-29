@@ -39,7 +39,12 @@
     "LogIn": "Iniciar Sesión",
     "Password": "Contraseña",
     "Email": "Correo",
-    "WelcomeMessage": "<h4>Hola {{ name }}, Bienvenido a AdmInmuebles</h4>",
-    "WarningMessage": "Usuario inactivo, debes ir a tú perfil y completar los datos faltantes",
-    "Unauthorized": "Usuario y/o contraseña incorrectos"
+    "WelcomeMessage": "<h4>Hola {{ name }}<br /><br />Bienvenido a AdmInmuebles</h4>",
+    "WarningMessage": "Usuario inactivo, completa tus datos faltantes para que puedas usar esta aplicación sin problemas.",
+    "Unauthorized": "Usuario y/o contraseña incorrectos",
+    "UserProfileHeader": "Perfil",
+    "RUT": "Rut",
+    "Name": "Nombre",
+    "Icon": "Icono",
+    "Save": "Guardar"
 }

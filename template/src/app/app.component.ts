@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    constructor(private translate: TranslateService) {
+    constructor(translate: TranslateService) {
         translate.setDefaultLang(environment.defaultLanguage);
     }
 

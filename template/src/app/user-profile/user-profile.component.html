@@ -1,0 +1,16 @@
+<div class="full-container" [formGroup]="userForm">
+    <mat-form-field class="full-width-field">
+        <input matInput placeholder="{{ 'RUT' | translate }}" formControlName="rut">
+    </mat-form-field>
+    <mat-form-field class="full-width-field">
+        <input matInput placeholder="{{ 'Name' | translate }}" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="full-width-field">
+        <input matInput placeholder="{{ 'Email' | translate }}" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="full-width-field">
+        <input matInput placeholder="{{ 'Icon' | translate }}" formControlName="icon">
+    </mat-form-field>
+    <button mat-raised-button color="primary">{{ 'Save' | translate }}</button>
+</div>
+
