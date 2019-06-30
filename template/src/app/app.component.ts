@@ -13,5 +13,10 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         console.log('appcomponent.ts', 'ngOnInit');
+        // enforce https when host is different to localhost
+        if (location.hostname !== 'localhost' && location.protocol === 'http:') {
+          console.log('Https enforcement', location);
+          window.location.href = location.href.replace('http', 'https');
+        }
     }
 }
