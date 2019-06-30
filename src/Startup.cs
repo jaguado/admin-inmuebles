@@ -173,13 +173,6 @@ namespace AdminInmuebles
             {
                 context.Response.OnStarting(() =>
                 {
-                    // Enforce https
-                    if (enforceHttps && context.Request.Scheme.ToLowerInvariant().Equals("http"))
-                    {
-                        //return same path with https schema
-                        context.Response.Headers["location"] = "https://" + context.Request.Host;
-                        context.Response.StatusCode = 301;
-                    }
                     // TODO add trace considering verbose mode
                     context.Response.Headers.Add("X-Robots-Tag", "noindex");
                     //Security fixes
