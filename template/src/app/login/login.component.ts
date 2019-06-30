@@ -5,7 +5,7 @@ import { AuthService } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
-import { User } from '../shared/models';
+import { User, Condo, Menu, Credentials } from '../shared/models';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     translate.setDefaultLang(environment.defaultLanguage);
   }
 
-  selectCondo(condo: any) {
+  selectCondo(condo: Condo) {
     console.log('selectCondo', condo);
     this.authService.selectedCondo = condo;
     this.userRedir();
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     return this.authService.showCondoSelection();
   }
 
-  availableCondos(): any {
+  availableCondos(): Condo[] {
     return this.authService.condos;
   }
 
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(creds: any) {
+  login(creds: Credentials) {
     this.lockButton = true;
     this.authService
     .signIn(creds)

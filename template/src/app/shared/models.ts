@@ -42,3 +42,8 @@ export class Menu {
   link: string;
   enabled: boolean;
 }
+
+export class Credentials {
+  email: string;
+  password: string;
+}

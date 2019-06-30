@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
-import { User, Condo } from './shared/models';
+import { User, Condo, Menu, Credentials } from './shared/models';
 import { DefaultCondos, DefaultMenu } from './shared/mockdata';
 import { environment } from '../environments/environment';
 
@@ -27,14 +27,14 @@ export class AuthService {
     return this.user.state === 1;
   }
 
-  public getMenu(): any {
+  public getMenu(): Menu[] {
     if (!this.selectedCondo) {
       return [];
     }
     return this.selectedCondo.menu.filter(m => m.enabled);
   }
 
-  signIn(credentials: any) {
+  signIn(credentials: Credentials) {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(result => {
