@@ -29,11 +29,15 @@ export class HomeComponent implements OnInit, OnChanges {
 
     LoadWelcomeMessages() {
         this.translate.get('WelcomeMessage').toPromise<string>().then(result => {
-            this.welcomeMessage = result.replace('{{ name }}', this.user.name)
+            this.welcomeMessage = result.replace('{{ name }}', this.user.name);
           }
         );
         this.translate.get('WarningMessage').toPromise<string>().then(result =>
             this.warningMessage = result
         );
+    }
+
+    availableEstate() {
+      return this.authService.selectedCondo.properties;
     }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient  } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
-import { User } from './shared/user';
+import { User, Condo } from './shared/models';
 import { DefaultCondos, DefaultMenu } from './shared/mockdata';
 import { environment } from '../environments/environment';
 
@@ -16,8 +16,8 @@ export class AuthService {
 
   public baseUrl: String = environment.baseUrl;
   public user: User = null;
-  public condos: any = null;
-  public selectedCondo: any = null;
+  public condos: Condo[] = null;
+  public selectedCondo: Condo = null;
 
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
@@ -70,9 +70,10 @@ export class AuthService {
               'id': condo.Rut,
               'name': condo.RazonSocial,
               'menu': DefaultMenu,
-              'enabled': condo.Vigencia === 1
+              'enabled': condo.Vigencia === 1,
+              'properties': []
             });
-        }
+          }
       });
     }
     // if only exists one skip selection screen

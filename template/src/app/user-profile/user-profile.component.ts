@@ -3,7 +3,7 @@ import { environment } from './../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../shared/user';
+import { User } from '../shared/models';
 
 @Component({
   selector: 'app-user-profile',
@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
 
   onSave() {
     this.errorMessage = null;
-    if (this.userForm.valid){
+    if (this.userForm.valid) {
       this.lockButton = true;
       const payload = new User();
       payload.rut = this.userForm.value.rut;
@@ -49,5 +49,4 @@ export class UserProfileComponent implements OnInit {
       this.errorMessage = 'CompleteAllFields';
     }
   }
-
 }

@@ -5,7 +5,7 @@ import { AuthService } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
-import { User } from '../shared/user';
+import { User } from '../shared/models';
 
 
 @Component({

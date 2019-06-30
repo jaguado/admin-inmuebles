@@ -45,5 +45,6 @@
     "Unauthorized": "Incorrect username or password",
     "UserProfileHeader": "Profile",
     "Save": "Save",
-    "DummyDataLabel": "You're using dummy data"
+    "DummyDataLabel": "You're using dummy data",
+    "Estate": "Estate"
 }

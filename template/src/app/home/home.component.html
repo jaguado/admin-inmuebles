@@ -1,10 +1,13 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title [innerHTML]="welcomeMessage"></mat-card-title>
-    </mat-card-header>
-    <mat-card-content *ngIf="showWarningMessage">
-        <button mat-button color="warn" [innerHTML]="warningMessage"></button>
-        <app-user-profile>
-        </app-user-profile>
-    </mat-card-content>
-</mat-card>
+<div [innerHTML]="welcomeMessage"></div>
+<div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="showWarningMessage">
+    <button mat-button color="warn" [innerHTML]="warningMessage"></button>
+    <app-user-profile>
+    </app-user-profile>
+    <br />
+</div>
+<h3>{{ 'Estate' | translate }}</h3>
+<div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableEstate(); let i = index">
+    <div fxFlexFill class="w-100" fxLayoutAlign="center">
+      {{ item.alias }}
+    </div>
+ </div>

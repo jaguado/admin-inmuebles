@@ -32,7 +32,7 @@
     "CompleteAllHighlightFields": "Completa los campos destacados",
     "CompleteAllFields": "Completa todos los campos",
     "EnterYourEmailToContactYou": "Ingresa tu correo y nos pondremos en contacto.",
-    "ThanksWillContactYou": "Gracias, pronto te contactaremos",
+    "ThanksWillContactYou": "Gracias, pronto te contactaremos.",
     "ChooseCondo": "Elige un condominio",
     "NonProductionLabel": "Este no es un ambiente productivo",
     "CustomerRegister": "Quiero registrarme",
@@ -48,5 +48,6 @@
     "Name": "Nombre",
     "Icon": "Icono",
     "Save": "Guardar",
-    "DummyDataLabel": "Estas usando datos de prueba."
+    "DummyDataLabel": "Estás usando datos de prueba",
+    "Estate": "Inmuebles"
 }
