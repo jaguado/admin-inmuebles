@@ -67,7 +67,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * Google Tag Manager
 * NewRelic browsers
 * HttpInterceptor to manage authorization codes inclusion and error handling.
-* For internal communications goto https://adminmuebles.slack.com
+
 
 ### Next features
 

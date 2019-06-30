@@ -31,6 +31,12 @@ The process is fully automated based on the following branches mapping:
 > Released -> Production (https://admin-inmuebles.herokuapp.com)  
 
 
+### Notifications
+
+All internal communications are in https://adminmuebles.slack.com at the moment we have the following groups:  
+  
+* Pipelines: Here are all the GitHub notifications
+* NewRelic: WIP This group is for monitoring and alerts
 
 ### Load test
 
