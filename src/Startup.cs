@@ -35,6 +35,7 @@ namespace AdminInmuebles
         /// </summary>
         internal static bool useMemCache = Environment.GetEnvironmentVariable("useCache") != null && Environment.GetEnvironmentVariable("useCache") == "true" ? true : false; //default false
         internal static string[] corsWhitelist = Environment.GetEnvironmentVariable("CORS")?.Split(",");
+        internal static bool enforceHttps = Environment.GetEnvironmentVariable("enforceHttps") != null && Environment.GetEnvironmentVariable("enforceHttps") == "true" ? true : false; //default false
 
         public Startup(IConfiguration configuration)
         {
@@ -150,7 +151,9 @@ namespace AdminInmuebles
                 app.UseBrowserLink();
             }
             else{
+                app.UseHsts();
                 app.UseHttpsRedirection(); //Enforce HTTPS for production
+                Console.Out.WriteLineAsync("UseHttpsRedirection enabled");
             }
 
             //cors
@@ -170,27 +173,20 @@ namespace AdminInmuebles
             {
                 context.Response.OnStarting(() =>
                 {
-                    if (!env.IsProduction())
+                    // Enforce https
+                    if (enforceHttps && context.Request.Scheme.ToLowerInvariant().Equals("http"))
                     {
-                        //print request headers
-                        var msg = $"Response starting {context.Request.Method} on {context.Request.Path}.{Environment.NewLine}";
-                        Console.Out.WriteLineAsync(msg);
+                        //return same path with https schema
+                        context.Response.Headers["location"] = "https://" + context.Request.Host;
+                        context.Response.StatusCode = 301;
                     }
+                    // TODO add trace considering verbose mode
                     context.Response.Headers.Add("X-Robots-Tag", "noindex");
-
-                    //context.Response.Headers.Add("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-                    //context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Access-Control-Allow-Origin, Authorization, X-Requested-With, X-Robots-Tag, Content-Disposition, Origin");
-
                     //Security fixes
                     context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN"); //Prevent Clickjacking
                     context.Response.Headers.Add("X-Content-Type-Options", "nosniff"); //Prevent MIME type sniffing
                     context.Response.Headers.Add("Referrer-Policy", "origin"); //add referrer policy
-
-                    // Use HTTP Strict Transport Security
-                    if (context.Request.IsHttps)
-                        context.Response.Headers.Add("Strict-Transport-Security", "max-age=10886400; includeSubDomains; preload"); //Prevent Clickjacking
-
-                    //add cache headers
+                    // add cache headers
                     const int durationInSeconds = 60 * 60 * 24;
                     //context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
                     if (!context.Request.QueryString.HasValue)
@@ -198,9 +194,9 @@ namespace AdminInmuebles
                     return Task.FromResult(0);
                 });
                 await nextMiddleware();
-                //fix route for spa
+                // fix route for spa
                 if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
-                {
+                {                   
                     context.Request.Path = "/index.html";
                     context.Response.StatusCode = 200;
                     await nextMiddleware();
