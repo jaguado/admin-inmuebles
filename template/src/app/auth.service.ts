@@ -72,7 +72,7 @@ export class AuthService {
     if (this.condos.length < 2) {
       this.selectedCondo = this.condos[0];
     }
-    console.log('loadCondos', this.condos, this.selectedCondo);
+    // console.log('loadCondos', this.condos, this.selectedCondo);
   }
 
   signOut() {
@@ -98,7 +98,6 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'v1/Customer', payload)
     .toPromise<any>()
     .then(result => {
-      console.log('save', result);
       // update user state // FIXME update with db data
       this.user.state = 1;
       return result;

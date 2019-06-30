@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
 import { User, Condo, Menu, Credentials } from '../shared/models';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -30,7 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   selectCondo(condo: Condo) {
-    console.log('selectCondo', condo);
     this.authService.selectedCondo = condo;
     this.userRedir();
   }
@@ -50,13 +48,13 @@ export class LoginComponent implements OnInit {
 
   userRedir() {
     if (this.authService.user && !this.showCondoSelection()) {
-      console.log('userRedir', this.authService);
+      // console.log('userRedir', this.authService);
       this.router.navigate(['/']);
     }
   }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
-      console.log('authState', 'subscribe', user);
+      // console.log('authState', 'subscribe', user);
       if (user) {
         this.authService.user = new User();
         this.authService.user = Object.assign(this.authService.user, user);

@@ -39,12 +39,12 @@ export class UserProfileComponent implements OnInit {
       payload.photoUrl = this.userForm.value.icon;
       this.authService.saveCustomer(payload)
       .then(r => {
-        // customer updated
+        // raise event when customer is updated.
+        // In some cases this will trigger to hide the component or to refresh data cause is outdated.
         this.stateChanged.emit(this.authService.user);
-        console.log('valid form', 'saved', r);
       })
-      .catch(c => {
-        console.log('valid form', 'error', c);
+      .catch(ex => {
+        console.log('user-profile', 'onSave', 'error', ex);
       }).finally(() => {
         this.lockButton = false;
       });
