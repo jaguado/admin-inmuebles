@@ -41,15 +41,7 @@ export class AuthService {
       console.log('signIn', 'result', result);
       this.cleanSession();
       this.user = new User();
-      this.user.email = result.email;
-      this.user.name = result.name;
-      this.user.firstName = result.firstName;
-      this.user.lastName = result.lastName;
-      this.user.photoUrl = result.photoUrl;
-      this.user.id = result.id;
-      this.user.authToken = result.authToken;
-      this.user.provider = result.provider;
-      this.user.state = result.state;
+      this.user = Object.assign(this.user, result);
       this.loadCondos(result.data);
       return this.user;
     });
@@ -107,7 +99,9 @@ export class AuthService {
     .toPromise<any>()
     .then(result => {
       console.log('save', result);
-      return;
+      // update user state // FIXME update with db data
+      this.user.state = 1;
+      return result;
     });
   }
 }

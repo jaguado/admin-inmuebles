@@ -1,7 +1,7 @@
 <div [innerHTML]="welcomeMessage"></div>
 <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="showWarningMessage">
     <button mat-button color="warn" [innerHTML]="warningMessage"></button>
-    <app-user-profile>
+    <app-user-profile (stateChanged)="CheckUserStateAndShowWarning()">
     </app-user-profile>
     <br />
 </div>

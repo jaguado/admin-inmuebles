@@ -1,6 +1,6 @@
 import { AuthService } from './../auth.service';
 import { environment } from './../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../shared/models';
@@ -11,6 +11,7 @@ import { User } from '../shared/models';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
+  @Output() stateChanged: EventEmitter<any> = new EventEmitter();
   userForm: FormGroup;
   lockButton: Boolean;
   errorMessage: String;
@@ -38,6 +39,8 @@ export class UserProfileComponent implements OnInit {
       payload.photoUrl = this.userForm.value.icon;
       this.authService.saveCustomer(payload)
       .then(r => {
+        // customer updated
+        this.stateChanged.emit(this.authService.user);
         console.log('valid form', 'saved', r);
       })
       .catch(c => {
