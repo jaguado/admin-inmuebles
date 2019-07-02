@@ -108,7 +108,7 @@ namespace AdminInmuebles.Controllers
                 name = credentials.email,
                 password = Password.CreateWithRandomLength()
             };
-            var result = await _customerRepository.UpdatePassword(new Models.Credentials { email = credentials.email, password = credentials.email });
+            var result = await _customerRepository.UpdatePassword(new Models.Credentials { email = payload.name, password = payload.password });
             if (result)
             {
                 var mail = await Email.SendTransactional(destination, Email.Templates.Transactional.PasswordReset, payload);
