@@ -1,1 +1,1 @@
-web: docker-compose up
+web: service docker start && docker-compose up
