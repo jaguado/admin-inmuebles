@@ -93,6 +93,7 @@ namespace AdminInmuebles.Controllers
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody] Models.Credentials credentials)
         {
+            //TODO add some abuse prevention mechanism
             var destination = new List<SendGrid.Helpers.Mail.EmailAddress> { new SendGrid.Helpers.Mail.EmailAddress(credentials.email, credentials.email) };
             var payload = new
             {
@@ -122,6 +123,12 @@ namespace AdminInmuebles.Controllers
         [HttpPost("/newCustomer")]
         public async Task<IActionResult> NewCustomer([FromBody] Models.Credentials credentials)
         {
+            // TODO add some abuse prevention mechanism
+
+            // check if customer exists
+            if (await _customerRepository.Get(credentials.email) == null)
+                return new BadRequestObjectResult("If you continue having problemas please contact us !!");
+
             var newCustomer = new Models.Customer
             {
                 Nombre = credentials.email,
