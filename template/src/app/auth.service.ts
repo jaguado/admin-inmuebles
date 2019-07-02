@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient  } from '@angular/common/http';  // Import it up here
+import { HttpClient } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User, Condo, Menu, Credentials } from './shared/models';
 import { DefaultCondos, DefaultMenu } from './shared/mockdata';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -106,6 +107,22 @@ export class AuthService {
       this.user.state = 1;
       return result;
     });
+  }
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PublicServices {
+  constructor(private http: HttpClient, public authService: AuthService, private router: Router) { }
+
+  resetPassword(creds: Credentials): Observable<object> {
+    return this.http.post(this.authService.baseUrl + 'v1/resetPassword', creds);
+  }
+
+  createCustomer(creds: Credentials): Observable<object> {
+    return this.http.post(this.authService.baseUrl + 'v1/newCustomer', creds);
   }
 }
 

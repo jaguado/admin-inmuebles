@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService, PublicServices } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private publicServices: PublicServices
   ) {
     translate.setDefaultLang(environment.defaultLanguage);
   }
@@ -124,15 +125,35 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onPasswordRecovery() {
+  onPasswordRecovery(newCustomer: Boolean) {
     this.clearFields();
     if (this.loginForm.valid) {
       this.errorMessage = '';
       // TODO check if customer exists and start on boarding process
-      console.log('onNewCustomer', 'not implemented yet');
-      this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
-        this.successMessage = res;
-      });
+      if (newCustomer) {
+        this.publicServices.createCustomer(this.loginForm.value).subscribe(result => {
+          this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
+            this.successMessage = res;
+          });
+        }, (error: any) => {
+            console.log('createCustomer', 'error', error);
+            this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+              this.errorMessage = res;
+            });
+          }
+        );
+      } else {
+        this.publicServices.resetPassword(this.loginForm.value).subscribe(result => {
+          this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
+            this.successMessage = res;
+          });
+        }, (error: any) => {
+          console.log('resetPassword', 'error', error);
+          this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+            this.errorMessage = res;
+          });
+        });
+      }
     } else {
       this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
         this.errorMessage = res;

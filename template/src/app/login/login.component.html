@@ -25,8 +25,8 @@
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 10px">
         <div fxFlexFill class="w-100" fxLayoutAlign="center">
-            <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'CustomerRegister' | translate }}</button>
-            <button mat-button color="primary" (click)="onPasswordRecovery()">{{ 'ForgotPassword' | translate }}</button>
+            <button mat-button color="primary" (click)="onPasswordRecovery(true)">{{ 'CustomerRegister' | translate }}</button>
+            <button mat-button color="primary" (click)="onPasswordRecovery(false)">{{ 'ForgotPassword' | translate }}</button>
         </div>
       </div>
       <div fxFlex fxLayout="row" fxLayout.lt-md="column" *ngIf="successMessage">
