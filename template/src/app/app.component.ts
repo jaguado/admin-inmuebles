@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit {
     constructor(translate: TranslateService) {
-        translate.setDefaultLang(environment.defaultLanguage);
+        // translate.setDefaultLang(environment.defaultLanguage);
     }
 
     ngOnInit() {

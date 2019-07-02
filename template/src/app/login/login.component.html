@@ -47,7 +47,7 @@
       </div>
       <div fxFlex fxlayout="row" fxlayout.lt-md="column" *ngIf="NonProduction" style="margin: 20px">
         <div fxFlexFill class="w-100" fxLayoutAlign="center">
-            <mat-label>{{ 'NonProductionLabel' | translate }} !!</mat-label>
+            <mat-label [innerHTML]="'NonProductionLabel' | translate"></mat-label>
         </div>
       </div>
       <div fxFlex fxlayout="row" fxlayout.lt-md="column">
@@ -58,7 +58,7 @@
       </div>
       <div fxFlex fxlayout="row" fxlayout.lt-md="column"  style="margin: 20px" *ngIf="showServiceStatusError">
         <div fxFlexFill class="w-100 error-text" fxLayoutAlign="center">
-            <mat-label>{{ 'ServicesAlert' | translate }}</mat-label>
+            <mat-label [innerHTML]="'ServicesAlert' | translate"></mat-label>
         </div>
     </div>
     </form>
@@ -67,8 +67,13 @@
         <div fxFlex fxlayout="row" fxlayout.lt-md="column">
             <img class="logo-img" src="../../assets/images/logo.png" />
         </div>
-        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px">
-          <h3 fxLayoutAlign="center">{{ 'ChooseCondo' | translate }}</h3>
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="!showUsingDummyData()">
+          <h3 fxLayoutAlign="center" [innerHTML]=" 'ChooseCondo' | translate"></h3>
+        </div>
+        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="showUsingDummyData()">
+          <div fxFlexFill class="w-100" fxLayoutAlign="center">
+              <h3 fxLayoutAlign="center" [innerHTML]=" 'DummyDataLabel' | translate"></h3>
+          </div>
         </div>
         <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableCondos(); let i = index">
             <div fxFlexFill class="w-100" fxLayoutAlign="center">
@@ -76,9 +81,6 @@
                   {{ item.name }}
               </button>
             </div>
-        </div>
-        <div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="showUsingDummyData()">
-          <h3 fxLayoutAlign="center">{{ 'DummyDataLabel' | translate }}</h3>
         </div>
     </form>
   </div>
