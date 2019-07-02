@@ -134,7 +134,7 @@ namespace AdminInmuebles.Controllers
             // TODO add some abuse prevention mechanism
 
             // check if customer exists
-            if (await _customerRepository.Get(credentials.email) == null)
+            if (await _customerRepository.Get(credentials.email) != null)
                 return new BadRequestObjectResult("If you continue having problemas please contact us !!");
 
             var newCustomer = new Models.Customer
