@@ -51,7 +51,7 @@ namespace AdminInmuebles.Controllers
                     {
                         Nombre = AuthenticatedToken.Payload["name"].ToString(),
                         Mail = AuthenticatedToken.Payload["email"].ToString(),
-                        Tipo = 2, //social user
+                        Tipo = (int)Models.Credentials.Types.Social, //social user
                         Estado = 2, //initial state
                         Condos = new List<Models.Condo>()
                     };
@@ -79,7 +79,7 @@ namespace AdminInmuebles.Controllers
                 idToken = jwt,
                 name = customer.Nombre,
                 photoUrl = customer.Icono,
-                provider = customer.Tipo == 2 ? "social" : "internal",
+                provider = customer.Tipo == (int) Models.Credentials.Types.Social ? "social" : "internal",
                 state = customer.Estado,
                 data = customer.Condos
             });
@@ -94,6 +94,14 @@ namespace AdminInmuebles.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] Models.Credentials credentials)
         {
             //TODO add some abuse prevention mechanism
+
+            var customer = await _customerRepository.Get(credentials.email);
+            if (customer == null)
+                return new BadRequestObjectResult("If you continue having problemas please contact us!!");
+
+            if(customer.Tipo == (int)Models.Credentials.Types.Social)
+                return new BadRequestObjectResult("Invalid option, you cannot reset your password from here!!");
+
             var destination = new List<SendGrid.Helpers.Mail.EmailAddress> { new SendGrid.Helpers.Mail.EmailAddress(credentials.email, credentials.email) };
             var payload = new
             {
@@ -133,7 +141,7 @@ namespace AdminInmuebles.Controllers
             {
                 Nombre = credentials.email,
                 Mail = credentials.email,
-                Tipo = 2, //social user
+                Tipo = (int) Models.Credentials.Types.Social,
                 Estado = 2, //initial state
                 Condos = new List<Models.Condo>(),
                 Password = Password.CreateWithRandomLength()
