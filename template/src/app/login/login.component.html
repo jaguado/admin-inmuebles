@@ -56,6 +56,11 @@
               <span class="flag-icon flag-icon-us mx-1" (click)="changeLang('en')"></span>
           </div>
       </div>
+      <div fxFlex fxlayout="row" fxlayout.lt-md="column"  style="margin: 20px" *ngIf="showServiceStatusError">
+        <div fxFlexFill class="w-100 error-text" fxLayoutAlign="center">
+            <mat-label>{{ 'ServicesAlert' | translate }}</mat-label>
+        </div>
+    </div>
     </form>
     <!-- Condo selection for logged users-->
     <form [formGroup]="loginForm" class="login-form" fxFlex *ngIf="showCondoSelection()">

@@ -19,6 +19,10 @@ export class AuthService {
   public condos: Condo[] = null;
   public selectedCondo: Condo = null;
 
+  checkService() {
+    return this.http.get(this.baseUrl + 'health');
+  }
+
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
   }

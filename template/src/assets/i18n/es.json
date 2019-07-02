@@ -49,5 +49,6 @@
     "Icon": "Icono",
     "Save": "Guardar",
     "DummyDataLabel": "Estás usando datos de prueba",
-    "Estate": "Inmuebles"
+    "Estate": "Inmuebles",
+    "ServicesAlert": "Hemos detectado un problema con el servicio, favor prueba más tarde."
 }

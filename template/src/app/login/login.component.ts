@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   successMessage: String;
   NonProduction: Boolean = !environment.production;
   lockButton: Boolean = false;
+  showServiceStatusError: Boolean = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -85,6 +86,12 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: []
     });
+
+    // check services status
+    this.authService.checkService().subscribe(
+      result => this.showServiceStatusError = false,
+      error => this.showServiceStatusError = true
+    );
   }
 
   onLogin() {

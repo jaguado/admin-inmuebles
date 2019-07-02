@@ -46,5 +46,6 @@
     "UserProfileHeader": "Profile",
     "Save": "Save",
     "DummyDataLabel": "You're using dummy data",
-    "Estate": "Estate"
+    "Estate": "Estate",
+    "ServicesAlert": "We are experiencing some problemas, please check again later."
 }
