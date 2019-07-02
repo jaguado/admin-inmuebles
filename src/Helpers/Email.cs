@@ -70,6 +70,7 @@ namespace AdminInmuebles.Helpers
             public static class Transactional
             {
                 public const string PasswordReset = "d-72242796a07347eebe4d2f581470365b";
+                public const string NewCustomer = "d-c1aec7cd760a48498615f82930b72d6f";
             } 
         }
     }

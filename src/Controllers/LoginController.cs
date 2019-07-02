@@ -128,12 +128,26 @@ namespace AdminInmuebles.Controllers
                 Mail = credentials.email,
                 Tipo = 2, //social user
                 Estado = 2, //initial state
-                Condos = new List<Models.Condo>()
+                Condos = new List<Models.Condo>(),
+                Password = Password.CreateWithRandomLength()
             };
             if (!await _customerRepository.CreateOrUpdate(newCustomer))
                 return new BadRequestObjectResult(newCustomer); //problems creating customer on db
 
-            return new OkResult();
+            var destination = new List<SendGrid.Helpers.Mail.EmailAddress> { new SendGrid.Helpers.Mail.EmailAddress(newCustomer.Mail, newCustomer.Nombre) };
+            var payload = new
+            {
+                name = newCustomer.Nombre,
+                password = newCustomer.Password
+            };
+            var mail = await Email.SendTransactional(destination, Email.Templates.Transactional.NewCustomer, payload);
+            if (mail.StatusCode == System.Net.HttpStatusCode.Accepted)
+                return new OkResult();
+            else
+            {
+                var error = await mail.Body.ReadAsStringAsync();
+                return new ObjectResult(error) { StatusCode = (int)mail.StatusCode };
+            }
         }
 
 
