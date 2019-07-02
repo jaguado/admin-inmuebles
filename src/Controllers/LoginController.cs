@@ -90,7 +90,7 @@ namespace AdminInmuebles.Controllers
         /// </summary>
         /// <param name="credentials"></param>
         /// <returns></returns>
-        [HttpPost("resetPassword")]
+        [HttpPost("/v1/resetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody] Models.Credentials credentials)
         {
             //TODO add some abuse prevention mechanism
@@ -128,7 +128,7 @@ namespace AdminInmuebles.Controllers
         /// </summary>
         /// <param name="credentials"></param>
         /// <returns></returns>
-        [HttpPost("/newCustomer")]
+        [HttpPost("/v1/newCustomer")]
         public async Task<IActionResult> NewCustomer([FromBody] Models.Credentials credentials)
         {
             // TODO add some abuse prevention mechanism
