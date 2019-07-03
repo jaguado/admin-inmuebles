@@ -31,7 +31,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PORT": "5001",
         "disableAuth": "false",
-        "SENDGRID_API_KEY": "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"
+        "SENDGRID_API_KEY": ""
       },
       "applicationUrl": "http://localhost:60209/"
     }

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient  } from '@angular/common/http';  // Import it up here
+import { HttpClient } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
-import { User } from './shared/user';
+import { User, Condo, Menu, Credentials } from './shared/models';
 import { DefaultCondos, DefaultMenu } from './shared/mockdata';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -16,8 +17,12 @@ export class AuthService {
 
   public baseUrl: String = environment.baseUrl;
   public user: User = null;
-  public condos: any = null;
-  public selectedCondo: any = null;
+  public condos: Condo[] = null;
+  public selectedCondo: Condo = null;
+
+  checkService() {
+    return this.http.get(this.baseUrl + 'health');
+  }
 
   public showCondoSelection(): Boolean {
     return this.user && this.condos && !this.selectedCondo;
@@ -27,29 +32,21 @@ export class AuthService {
     return this.user.state === 1;
   }
 
-  public getMenu(): any {
+  public getMenu(): Menu[] {
     if (!this.selectedCondo) {
       return [];
     }
     return this.selectedCondo.menu.filter(m => m.enabled);
   }
 
-  signIn(credentials: any) {
+  signIn(credentials: Credentials) {
     return this.http.post(this.baseUrl + 'login', credentials)
     .toPromise<any>()
     .then(result => {
       console.log('signIn', 'result', result);
       this.cleanSession();
       this.user = new User();
-      this.user.email = result.email;
-      this.user.name = result.name;
-      this.user.firstName = result.firstName;
-      this.user.lastName = result.lastName;
-      this.user.photoUrl = result.photoUrl;
-      this.user.id = result.id;
-      this.user.authToken = result.authToken;
-      this.user.provider = result.provider;
-      this.user.state = result.state;
+      this.user = Object.assign(this.user, result);
       this.loadCondos(result.data);
       return this.user;
     });
@@ -70,16 +67,17 @@ export class AuthService {
               'id': condo.Rut,
               'name': condo.RazonSocial,
               'menu': DefaultMenu,
-              'enabled': condo.Vigencia === 1
+              'enabled': condo.Vigencia === 1,
+              'properties': []
             });
-        }
+          }
       });
     }
     // if only exists one skip selection screen
     if (this.condos.length < 2) {
       this.selectedCondo = this.condos[0];
     }
-    console.log('loadCondos', this.condos, this.selectedCondo);
+    // console.log('loadCondos', this.condos, this.selectedCondo);
   }
 
   signOut() {
@@ -105,9 +103,26 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'v1/Customer', payload)
     .toPromise<any>()
     .then(result => {
-      console.log('save', result);
-      return;
+      // update user state // FIXME update with db data
+      this.user.state = 1;
+      return result;
     });
+  }
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PublicServices {
+  constructor(private http: HttpClient, public authService: AuthService, private router: Router) { }
+
+  resetPassword(creds: Credentials): Observable<object> {
+    return this.http.post(this.authService.baseUrl + 'v1/resetPassword', creds);
+  }
+
+  createCustomer(creds: Credentials): Observable<object> {
+    return this.http.post(this.authService.baseUrl + 'v1/newCustomer', creds);
   }
 }
 

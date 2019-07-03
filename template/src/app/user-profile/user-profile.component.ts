@@ -1,9 +1,9 @@
 import { AuthService } from './../auth.service';
 import { environment } from './../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../shared/user';
+import { User } from '../shared/models';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,6 +11,7 @@ import { User } from '../shared/user';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
+  @Output() stateChanged: EventEmitter<any> = new EventEmitter();
   userForm: FormGroup;
   lockButton: Boolean;
   errorMessage: String;
@@ -29,7 +30,7 @@ export class UserProfileComponent implements OnInit {
 
   onSave() {
     this.errorMessage = null;
-    if (this.userForm.valid){
+    if (this.userForm.valid) {
       this.lockButton = true;
       const payload = new User();
       payload.rut = this.userForm.value.rut;
@@ -38,10 +39,12 @@ export class UserProfileComponent implements OnInit {
       payload.photoUrl = this.userForm.value.icon;
       this.authService.saveCustomer(payload)
       .then(r => {
-        console.log('valid form', 'saved', r);
+        // raise event when customer is updated.
+        // In some cases this will trigger to hide the component or to refresh data cause is outdated.
+        this.stateChanged.emit(this.authService.user);
       })
-      .catch(c => {
-        console.log('valid form', 'error', c);
+      .catch(ex => {
+        console.log('user-profile', 'onSave', 'error', ex);
       }).finally(() => {
         this.lockButton = false;
       });
@@ -49,5 +52,4 @@ export class UserProfileComponent implements OnInit {
       this.errorMessage = 'CompleteAllFields';
     }
   }
-
 }

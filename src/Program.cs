@@ -25,6 +25,7 @@ namespace AdminInmuebles
 
         public static IWebHost BuildWebHost(string[] args, string url) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseKestrel(options => options.AddServerHeader = false)
                 .UseStartup<Startup>()
                 .UseUrls(url)
                 .Build();

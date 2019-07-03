@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  admininmuebles:
+    image: adminmuebles
+    build:
+      context: .
+    environment:
+       - "NEW_RELIC_APP_NAME=AdminInmuebles.Docker"
+       - "NEW_RELIC_LICENSE_KEY=195cb6e62921d83376172a83bb2389a5c9bedaac"
+       - "ASPNETCORE_ENVIRONMENT=Development"
+       - "PORT=5000"
+       - "MONGODB_URI=mongodb://heroku_js8hhkss:g5q0fl2n4oskurhmlcjtssiu5@ds037518.mlab.com:37518/heroku_js8hhkss"
+       - "SQL_CONN=Data Source=50.97.128.140;Database=desoincl_adm_inmueble;Integrated Security=false;User ID=desoincl_inmueble;Password=Carito20."
+       - "CORS=http://localhost,https://aio.jamtech.cl,http://localhost:5000"
+       - "enforceHttps=true"
+    ports:
+       - "5000:5000"
+    mem_limit: 512m
+    mem_reservation: 256m
