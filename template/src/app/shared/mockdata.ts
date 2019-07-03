@@ -1,4 +1,5 @@
-export const DefaultMenu: any = [
+import { Menu, Condo } from '../shared/models';
+export const DefaultMenu: Menu[] = [
   {
     'icon': 'home',
     'label': 'Home',
@@ -49,17 +50,35 @@ export const DefaultMenu: any = [
   }
 ];
 
-export const DefaultCondos: any = [
+export const DefaultCondos: Condo[] = [
   {
     'id': 1,
     'name': 'Condominio Principal',
     'menu': DefaultMenu,
-    'enabled': true
+    'enabled': true,
+    'properties': [
+      {
+        'id': 1,
+        'alias': 'Departamento',
+        'icon': ''
+      },
+      {
+        'id': 2,
+        'alias': 'Bodega',
+        'icon': ''
+      },
+      {
+        'id': 3,
+        'alias': 'Estacionamiento',
+        'icon': ''
+      }
+    ]
   },
   {
     'id': 2,
     'name': 'Edificio Vacaciones',
     'menu': DefaultMenu,
-    'enabled': false
+    'enabled': false,
+    'properties': []
   }
 ];

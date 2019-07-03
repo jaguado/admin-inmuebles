@@ -33,5 +33,10 @@ namespace AdminInmuebles.Extensions
         {
             return value != null && !string.IsNullOrEmpty(value.ToString()) ? int.Parse(value.ToString()) : 0;
         }
+
+        public static string StringWithoutDomain(this string value)
+        {
+            return value.Substring(0, value.IndexOf('@'));
+        }
     }
 }
