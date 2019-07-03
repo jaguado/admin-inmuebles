@@ -139,7 +139,7 @@ namespace AdminInmuebles.Controllers
 
             var newCustomer = new Models.Customer
             {
-                Nombre = credentials.email,
+                Nombre = credentials.email.StringWithoutDomain(),
                 Mail = credentials.email,
                 Tipo = (int) Models.Credentials.Types.Social,
                 Estado = 2, //initial state
