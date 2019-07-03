@@ -9,5 +9,11 @@ namespace AdminInmuebles.Models
     {
         public string email { get; set; }
         public string password { get; set;  }
+
+        public enum Types
+        {
+            Social = 1,
+            System = 2
+        }
     }
 }

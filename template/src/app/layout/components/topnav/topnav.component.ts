@@ -44,7 +44,7 @@ export class TopnavComponent implements OnInit {
 
   condoInformation() {
     if (this.authService.user.dummyData) {
-      this.translate.get('DummyDataLabel').subscribe((res: string) => {
+      this.translate.get('DemoModeLabel').subscribe((res: string) => {
         this.condoInformationLabel = this.authService.selectedCondo.name + ' | ' + res;
       });
     } else {

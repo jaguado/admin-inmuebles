@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService, PublicServices } from '../auth.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
-import { User } from '../shared/user';
-
+import { User, Condo, Menu, Credentials } from '../shared/models';
 
 @Component({
   selector: 'app-login',
@@ -20,22 +19,23 @@ export class LoginComponent implements OnInit {
   successMessage: String;
   NonProduction: Boolean = !environment.production;
   lockButton: Boolean = false;
+  showServiceStatusError: Boolean = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private publicServices: PublicServices
   ) {
     translate.setDefaultLang(environment.defaultLanguage);
   }
 
-  selectCondo(condo: any) {
-    console.log('selectCondo', condo);
+  selectCondo(condo: Condo) {
     this.authService.selectedCondo = condo;
     this.userRedir();
   }
 
-  showUsingummyData(): Boolean {
+  showUsingDummyData(): Boolean {
     return this.authService.user && this.authService.user.dummyData;
   }
 
@@ -44,19 +44,19 @@ export class LoginComponent implements OnInit {
     return this.authService.showCondoSelection();
   }
 
-  availableCondos(): any {
+  availableCondos(): Condo[] {
     return this.authService.condos;
   }
 
   userRedir() {
     if (this.authService.user && !this.showCondoSelection()) {
-      console.log('userRedir', this.authService);
+      // console.log('userRedir', this.authService);
       this.router.navigate(['/']);
     }
   }
   suscribe() {
     this.authService.authService.authState.subscribe(user => {
-      console.log('authState', 'subscribe', user);
+      // console.log('authState', 'subscribe', user);
       if (user) {
         this.authService.user = new User();
         this.authService.user = Object.assign(this.authService.user, user);
@@ -87,6 +87,12 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: []
     });
+
+    // check services status
+    this.authService.checkService().subscribe(
+      result => this.showServiceStatusError = false,
+      error => this.showServiceStatusError = true
+    );
   }
 
   onLogin() {
@@ -102,7 +108,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(creds: any) {
+  login(creds: Credentials) {
     this.lockButton = true;
     this.authService
     .signIn(creds)
@@ -119,15 +125,35 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onPasswordRecovery() {
+  onPasswordRecovery(newCustomer: Boolean) {
     this.clearFields();
     if (this.loginForm.valid) {
       this.errorMessage = '';
       // TODO check if customer exists and start on boarding process
-      console.log('onNewCustomer', 'not implemented yet');
-      this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
-        this.successMessage = res;
-      });
+      if (newCustomer) {
+        this.publicServices.createCustomer(this.loginForm.value).subscribe(result => {
+          this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
+            this.successMessage = res;
+          });
+        }, (error: any) => {
+            console.log('createCustomer', 'error', error);
+            this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+              this.errorMessage = res;
+            });
+          }
+        );
+      } else {
+        this.publicServices.resetPassword(this.loginForm.value).subscribe(result => {
+          this.translate.get('ThanksWillContactYou').subscribe((res: string) => {
+            this.successMessage = res;
+          });
+        }, (error: any) => {
+          console.log('resetPassword', 'error', error);
+          this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+            this.errorMessage = res;
+          });
+        });
+      }
     } else {
       this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
         this.errorMessage = res;

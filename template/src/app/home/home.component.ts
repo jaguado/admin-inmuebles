@@ -10,7 +10,7 @@ import { environment } from './../../environments/environment';
 export class HomeComponent implements OnInit, OnChanges {
     public welcomeMessage: String = '';
     public warningMessage: String = '';
-    public showWarningMessage: boolean = !this.authService.isUserActive();
+    public showWarningMessage: boolean;
     public user: SocialUser = this.authService.user;
     constructor(private authService: AuthService, private translate: TranslateService) {
       translate.setDefaultLang(environment.defaultLanguage);
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.LoadWelcomeMessages();
+        this.CheckUserStateAndShowWarning();
         this.translate.onLangChange.subscribe((params: LangChangeEvent) => {
             this.LoadWelcomeMessages();
         });
@@ -29,11 +30,19 @@ export class HomeComponent implements OnInit, OnChanges {
 
     LoadWelcomeMessages() {
         this.translate.get('WelcomeMessage').toPromise<string>().then(result => {
-            this.welcomeMessage = result.replace('{{ name }}', this.user.name)
+            this.welcomeMessage = result.replace('{{ name }}', this.user.name);
           }
         );
         this.translate.get('WarningMessage').toPromise<string>().then(result =>
             this.warningMessage = result
         );
+    }
+
+    CheckUserStateAndShowWarning() {
+      this.showWarningMessage = !this.authService.isUserActive();
+    }
+
+    availableEstate() {
+      return !this.authService.selectedCondo.properties ? [] :  this.authService.selectedCondo.properties;
     }
 }

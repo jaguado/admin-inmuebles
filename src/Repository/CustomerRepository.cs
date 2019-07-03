@@ -33,7 +33,8 @@ namespace AdminInmuebles.Repository
                 { "ICONO", customer.Icono ?? ""},
                 { "CLAVE", customer.Password }
             };
-            return await Helpers.Sql.ExecuteScalar("[desoincl_inmueble].[SP_USUARIO_CREAR]", args) > -1;
+            var result = await Helpers.Sql.ExecuteScalar("[desoincl_inmueble].[SP_USUARIO_CREAR]", args);
+            return result > -1;
         }
         public async Task<bool> UpdateAsync(Models.Customer customer)
         {

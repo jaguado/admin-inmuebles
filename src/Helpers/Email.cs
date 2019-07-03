@@ -13,9 +13,8 @@ namespace AdminInmuebles.Helpers
         private static readonly string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? throw new ApplicationException("SENDGRID_API_KEY variable not found");
         private static readonly SendGridClient _client = new SendGridClient(_apiKey);
 
-        public static readonly EmailAddress defaultFrom = new EmailAddress("no-reply@sodein.cl", "Contacto AdmInmuebles");
-        public static readonly EmailAddress defaultTo = new EmailAddress("test@sodein.cl", "Sodein Test");
-        
+        public static readonly EmailAddress defaultFrom = new EmailAddress("contacto@adminmuebles.cl", "Contacto AdmInmuebles");
+
         public static async Task<Response> Send(SendGridMessage msg)
         {
             return await _client.SendEmailAsync(msg);
@@ -69,7 +68,8 @@ namespace AdminInmuebles.Helpers
         {
             public static class Transactional
             {
-                public const string PasswordReset = "d-72242796a07347eebe4d2f581470365b";
+                public const string PasswordReset = "d-7c06b4d454084580b9d809cd0c93a2e0";
+                public const string NewCustomer = "d-9bda9bf90bdd490eb29a204dde5de217";
             } 
         }
     }
