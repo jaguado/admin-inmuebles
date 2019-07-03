@@ -13,9 +13,8 @@ namespace AdminInmuebles.Helpers
         private static readonly string _apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? throw new ApplicationException("SENDGRID_API_KEY variable not found");
         private static readonly SendGridClient _client = new SendGridClient(_apiKey);
 
-        public static readonly EmailAddress defaultFrom = new EmailAddress("no-reply@sodein.cl", "Contacto AdmInmuebles");
-        public static readonly EmailAddress defaultTo = new EmailAddress("test@sodein.cl", "Sodein Test");
-        
+        public static readonly EmailAddress defaultFrom = new EmailAddress("contacto@adminmuebles.cl", "Contacto AdmInmuebles");
+
         public static async Task<Response> Send(SendGridMessage msg)
         {
             return await _client.SendEmailAsync(msg);
