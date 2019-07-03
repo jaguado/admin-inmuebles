@@ -141,7 +141,7 @@ namespace AdminInmuebles.Controllers
             {
                 Nombre = credentials.email.StringWithoutDomain(),
                 Mail = credentials.email,
-                Tipo = (int) Models.Credentials.Types.Social,
+                Tipo = (int) Models.Credentials.Types.System,
                 Estado = 2, //initial state
                 Condos = new List<Models.Condo>(),
                 Password = Password.CreateWithRandomLength()
