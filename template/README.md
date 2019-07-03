@@ -20,6 +20,10 @@ Include the following features:
 *   Tree-Shaking production builds.
 *   Google Tag Manager
 *   NewRelic browsers
+*   Simple Customer on boarding
+*   Multi languague
+*   Demo MODE
+  
 
 ### How to start
 
@@ -71,7 +75,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ### Next features
 
-* Customer on boarding
 * Simple home
 * User profile
-
