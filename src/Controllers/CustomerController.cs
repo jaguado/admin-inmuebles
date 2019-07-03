@@ -42,6 +42,10 @@ namespace AdminInmuebles.Controllers
             if (!loggedCustomer.Mail.ToLower().Equals(customer.Mail.ToLower()))
                 return new ForbidResult();
 
+            // if rut is present change state to active
+            if (customer.Rut > 0 && customer.Estado == 0)
+                customer.Estado = 1;
+
             //create customer on DB
             var result = await _customerRepository.CreateOrUpdate(customer);
             if (result)
