@@ -69,8 +69,8 @@ namespace AdminInmuebles.Helpers
         {
             public static class Transactional
             {
-                public const string PasswordReset = "d-72242796a07347eebe4d2f581470365b";
-                public const string NewCustomer = "d-c1aec7cd760a48498615f82930b72d6f";
+                public const string PasswordReset = "d-7c06b4d454084580b9d809cd0c93a2e0";
+                public const string NewCustomer = "d-9bda9bf90bdd490eb29a204dde5de217";
             } 
         }
     }
