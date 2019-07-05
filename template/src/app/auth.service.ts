@@ -74,7 +74,7 @@ export class AuthService {
       });
     }
     // if only exists one skip selection screen
-    if (this.condos.length < 2) {
+    if (this.condos.filter(c => c.enabled).length < 2) {
       this.selectedCondo = this.condos[0];
     }
     // console.log('loadCondos', this.condos, this.selectedCondo);

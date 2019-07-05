@@ -93,6 +93,14 @@ export class LoginComponent implements OnInit {
       result => this.showServiceStatusError = false,
       error => this.showServiceStatusError = true
     );
+
+    // automatic login for development
+    if (!environment.production && environment.authenticatedUserToken) {
+      console.log('automated login');
+      this.authService.user = new User();
+      this.authService.user.idToken = environment.authenticatedUserToken;
+      this.login({email: '', password: ''});
+    }
   }
 
   onLogin() {
