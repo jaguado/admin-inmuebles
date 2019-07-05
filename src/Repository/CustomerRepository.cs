@@ -15,7 +15,6 @@ namespace AdminInmuebles.Repository
             {
                 { "MAIL", email }
             };
-            //TODO map to entity
             var dsResult = await Helpers.Sql.Execute("[desoincl_inmueble].[SP_TRAER_USUARIO]", args);
             if (dsResult != null)
                 return dsResult.Tables[0].Select()[0].ToCustomer();

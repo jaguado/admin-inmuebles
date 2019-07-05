@@ -11,6 +11,7 @@ using AdminInmuebles.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AdminInmuebles.Controllers
@@ -44,7 +45,6 @@ namespace AdminInmuebles.Controllers
             if (AuthenticatedToken != null) //social auth
             {
                 customer = await _customerRepository.Get(AuthenticatedToken.Payload["email"].ToString());
-                //TODO create customer when not exists
                 if (customer == null)
                 {
                     customer = new Models.Customer
@@ -70,8 +70,8 @@ namespace AdminInmuebles.Controllers
             if (customer.Estado > 2)
                 return new ForbidResult(); //user disabled
 
-            //TODO return real JWT
-            var jwt = GetJWT(customer);
+            var defaultDuration = !Request.Query.TryGetValue("tokenDuration", out StringValues tokenDuration);
+            var jwt = GetJWT(customer, defaultDuration ? 5 : int.Parse(tokenDuration));
             return new OkObjectResult(new
             {
                 email = customer.Mail,
@@ -170,10 +170,9 @@ namespace AdminInmuebles.Controllers
         private static byte[] privateKey = Convert.FromBase64String("LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBNGhxeUNvdDFQMm43YkpJaUkycmRaUTdybmRscThwb0lkU296TjloeUJXeTJNaFc2CmJIV0IvRXg2VmVxdFBZa3k1RjFHT1hudFZwdmY1OGhmTTV5cmMxOE1ST0NzemRmVUVoeTZyUHkrRCtUOFkvYXgKVkQ1aFE1aG1aOWhwSTd0azJtRHRsa2g0Z1JEZ2puV0VPMU15NU9UcUIrNkZzY243d0RRUmpWS0hXdDAvWVpzZgpYclVWS0dORzl2UjY1bVFQd2NOVVpQbEkxSmN4OFBtZzE3TUwrcXp5Rzg2QXJwdnpLaFRRRnpiTDFXSWd1OEc5Ck5kSTdtalBYT2IzZG1YU1QvSFY1dlhLbmdGLzlOTGJZNXFIUHFmaVFma0Q3Q2ZUOVZTUzV3NUNWRkJVbzFwbk0KaWZuTU1zamhTcmxybUI3dW5aZXdsU3BZZnFBYm9MWXRvbElFTFFJREFRQUJBb0lCQUcySEp3WUtwbUp3c1pYWAplR2dWeFdmR0FZYzJvaU1oVU1XSkNzU2J1aWc4a0VuVTByamxkM0ZEanVOOXlpd01BVFkwcE9jRTFGN25KV0MvClpMYTR4eWtkT3ZGR3NROEo1VFpjNm1VUURmWGZKQkE4bVl4SXA0ODZEU2x5NFFPcExHTEpIMjUwYnNOKzdIaTIKSHJjcVIzWXdHZHA3eGhIbzJXWXpFdW1WdC9IZ1gvazl4Y2hPVDF3dzU1M0JnelV0RnBHaHlZak1BS3dEQXRiSQpwY2dkd3RZczdEUFBDR3NmZHA1VjI0THJjbzYyN1BpZXE3cEdoaFNheCtTYmQ3bjA4ZXpQVldxQmdZSjlnWWFFCkVvZGtnL2ZlNXc2S0dEZkFwZFFETkRWUTNlSE9kUXd1enZVdHNvNHo0ZVBrT2xza0lESmR1WUIrNWo3bkVqbmQKelQ3WVhQVUNnWUVBL2lrejRCWFdEWVgvdlpmc3JLZWg4bHNjMDNYTzRnTmFNN0hwL253bG50ajJ5ck9hODIyUQppKzUzdTFpbGVEY25mWEdJd0U0VUJKSWtaZERqM3MyNEVCbUx2My9KdSs1dFlWcDJyMGtDSnRibWE3SU5CZ1Z5ClRuZWNwaXBjQmt2V3AzMHgzU0pCK0ZDQjZYcE1wZ2M1RmlpZWlNWHZwOVM2M2paMEhTZXZPU3NDZ1lFQTQ3MkYKbFRZZE9tNlR1aWJQRi9OTGxuanh0b05mZzRoQmVsRWd4ZS9UQ29NeU9sVzNwRzJVNUhDOTZPbGc1RklpdFFpcQp6QVBnSExQSmdwY2VVeW5aNG1NeWVoUXdSenNYeGthWk5kSUx1QXUyTTQ4UDltUEN1SUVZc3IyU2ZhWThrQ1l0Cm1kRUtvdkllZEhrN0JrSXZBMmlZbGNYcm9wZ1FYelBrV3NYMFhBY0NnWUVBbno5andJa09DSVVvT3p3QTBDRnMKaURUc2Q5WTkzVUVxZUcrR1pLeVd5ZE81dGtJWTJXT1NDUXRPdS9VTUlLbTJOWlE0a2YyWjcwOCtQUWxJYmFiSwpLRlJKU3FDZjN2L0NTeGhxZXVPczFIY2NBdWlaM21iMU94TVk5TWhmeHBZb0ZlT01wYmk4U3dEdWxVTEsyZEIyCnhWcUlFcnlxcjZiTHUwVzFOVHRUUCtjQ2dZRUFrN0REb1psZmFSWnUzU2p2NHFOWUlMUThaTlZicXN4QlVsYXMKZjFEaE53OFFFcjZtQW85Q0lNZHdrVXhRRnFHaGVtK3RlL01EY3ZteE0reFdzUzRSNi92U3IxTEtZRmRWT3JOcwpCbmc2TzFmMUNBaStIRlpqNEExd2UvSHV2MmVBSFNkMUtTeGt6bmxnQUw3aDVWUWtjdnh3LzZoRUFNVEcwVWF3Cno2RlNzQjhDZ1lCUFNaOG9kK1l3di93bTZNN3p3YWRjN1NscGRUeHhWUkt2YklCQ0ZlbDFucHJCc3kyM1pTdFUKU3lPOTI4QjZoY0hScEdSVVN5V2I5UkgvK0Q2TFJsL3UyRjJIMHhXc21rYzdBZjR6d3RxUEdqWE1qTThZeGRlMwpZUWdlTjJ3cGpHdGc2aENWRnVyZzR2Unpxd3VqMGFvWkhBeFIzcTBEVkJCVWp4TUxnSG03bHc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQ==");
         private static byte[] publicKey = Convert.FromBase64String("c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEaUdySUtpM1UvYWZ0c2tpSWphdDFsRHV1ZDJXcnltZ2gxS2pNMzJISUZiTFl5RmJwc2RZSDhUSHBWNnEwOWlUTGtYVVk1ZWUxV205L255Rjh6bkt0elh3eEU0S3pOMTlRU0hMcXMvTDRQNVB4ajlyRlVQbUZEbUdabjJHa2p1MlRhWU8yV1NIaUJFT0NPZFlRN1V6TGs1T29IN29XeHlmdkFOQkdOVW9kYTNUOWhteDlldFJVb1kwYjI5SHJtWkEvQncxUmsrVWpVbHpIdythRFhzd3Y2clBJYnpvQ3VtL01xRk5BWE5zdlZZaUM3d2IwMTBqdWFNOWM1dmQyWmRKUDhkWG05Y3FlQVgvMDB0dGptb2MrcCtKQitRUHNKOVAxVkpMbkRrSlVVRlNqV21jeUorY3d5eU9GS3VXdVlIdTZkbDdDVktsaCtvQnVndGkyaVVnUXQgcXNhbmRib3g=");
 
-        private static string GetJWT(Models.Customer customer)
+        private static string GetJWT(Models.Customer customer, int tokenDuration)
         {  
-            const int defaultTokenDuration = 5;
-            var expirationDate = DateTime.Now.AddMinutes(defaultTokenDuration);
+            var expirationDate = DateTime.Now.AddMinutes(tokenDuration);
             var claims = new List<Claim>
                 {
                     new Claim("iss", "AdminInmuebles." + Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")),
