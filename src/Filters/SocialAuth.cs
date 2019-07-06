@@ -48,9 +48,7 @@ namespace AdminInmuebles.Filters
                     //check jwt
                     var expDeltaDurationMinutes = 5;
                     var jwt = accessToken.ToJwt();
-                    var validJwt = true; //TODO check jwt signature
-                    var expiredJwt = (jwt.ValidFrom == DateTime.MinValue ? false : jwt.ValidFrom.AddMinutes(-1 * expDeltaDurationMinutes) > DateTime.Now.ToUniversalTime()) || jwt.ValidTo.AddMinutes(expDeltaDurationMinutes) < DateTime.Now.ToUniversalTime();
-                    if (!anony && !validJwt || expiredJwt)
+                    if (!anony && jwt==null)
                     {
                         context.Result = new ContentResult()
                         {
@@ -206,50 +204,6 @@ namespace AdminInmuebles.Filters
             {
                 Console.Error.WriteLineAsync(ex.Message);
                 return false;
-            }
-        }
-
-        public static JwtSecurityToken ValidateAndDecode(string jwt, X509Certificate2 cert)
-        {
-            if (cert == null) return new JwtSecurityToken(jwt);
-
-            var rsaSecurityKey = cert !=null ? new RsaSecurityKey(cert.GetRSAPublicKey()) : null;
-            var validationParameters = new TokenValidationParameters
-            {
-                // Clock skew compensates for server time drift.
-                // We recommend 5 minutes or less:
-                ClockSkew = TimeSpan.FromMinutes(5),
-                RequireSignedTokens = rsaSecurityKey!=null,
-                // Ensure the token hasn't expired:
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey= rsaSecurityKey != null
-            };
-
-            if (rsaSecurityKey != null)
-                validationParameters.IssuerSigningKeys = new SecurityKey[] { rsaSecurityKey };
-            try
-            {
-                var claimsPrincipal = new JwtSecurityTokenHandler()
-                    .ValidateToken(jwt, validationParameters, out var rawValidatedToken);
-
-                return (JwtSecurityToken)rawValidatedToken;
-                // Or, you can return the ClaimsPrincipal
-                // (which has the JWT properties automatically mapped to .NET claims)
-            }
-            catch (SecurityTokenValidationException stvex)
-            {
-                // The token failed validation!
-                // TODO: Log it or display an error.
-                throw new Exception($"Token failed validation: {stvex.Message}");
-            }
-            catch (ArgumentException argex)
-            {
-                // The token was not well-formed or was invalid for some other reason.
-                // TODO: Log it or display an error.
-                throw new Exception($"Token was invalid: {argex.Message}");
             }
         }
 

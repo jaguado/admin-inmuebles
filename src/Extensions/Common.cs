@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AdminInmuebles.Controllers;
+using AdminInmuebles.Filters;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -15,14 +17,7 @@ namespace AdminInmuebles.Extensions
         /// <returns></returns>
         public static JwtSecurityToken ToJwt(this string jwt)
         {
-            try
-            {
-                return new JwtSecurityTokenHandler().ReadJwtToken(jwt);
-            }
-            catch
-            {
-                return null;
-            }
+            return Helpers.Jwt.ValidateAndDecode(jwt);
         }
 
         public static string StringOrEmpty(this object value)
