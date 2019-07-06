@@ -5,9 +5,28 @@
   </app-user-profile>
   <br />
 </div>
+<br />
 <h3>{{ 'Estate' | translate }}</h3>
-<div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableEstate(); let i = index">
-  <div fxFlexFill class="w-100" fxLayoutAlign="center">
-    {{ item.alias }}
-  </div>
-</div>
+<mat-card *ngFor="let item of availableEstate(); let i = index" style="margin: 10px">
+    <mat-card-content>
+        <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+            <div [fxFlex]="30">
+                <div fxFlex fxLayout="row" fxLayoutAlign="center">
+                    {{ item.alias }}
+                </div>
+                <div fxFlex fxLayout="row" fxLayoutAlign="center end">
+                  <img [src]="item.icon" class="icon">
+                </div>
+            </div>
+            <div [fxFlex]="70">
+                <div fxFlex fxLayout="row">
+                    <canvas width="200" height="70" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+                <div fxFlex fxLayout="row" fxLayoutAlign="center">
+                    <button mat-raised-button color="primary" (click)="Pay()">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

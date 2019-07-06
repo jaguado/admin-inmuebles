@@ -16,37 +16,37 @@ export const DefaultMenu: Menu[] = [
     'icon': 'bar_chart',
     'label': 'Charts',
     'link': '/charts',
-    'enabled': false
+    'enabled': true
   },
   {
     'icon': 'table_chart',
     'label': 'Tables',
     'link': '/tables',
-    'enabled': false
+    'enabled': true
   },
   {
     'icon': 'input',
     'label': 'Forms',
     'link': '/forms',
-    'enabled': false
+    'enabled': true
   },
   {
     'icon': 'grid_on',
     'label': 'Grid',
     'link': '/grid',
-    'enabled': false
+    'enabled': true
   },
   {
     'icon': 'code',
     'label': 'Components',
     'link': '/components',
-    'enabled': false
+    'enabled': true
   },
   {
     'icon': 'insert_drive_file',
     'label': 'Blank page',
     'link': '/blank-page',
-    'enabled': false
+    'enabled': true
   }
 ];
 
@@ -60,17 +60,17 @@ export const DefaultCondos: Condo[] = [
       {
         'id': 1,
         'alias': 'Departamento',
-        'icon': ''
+        'icon': '/assets/images/icons/apartment.svg'
       },
       {
         'id': 2,
-        'alias': 'Bodega',
-        'icon': ''
+        'alias': 'Casa',
+        'icon': '/assets/images/icons/small-house.svg'
       },
       {
         'id': 3,
-        'alias': 'Estacionamiento',
-        'icon': ''
+        'alias': 'Minimarket',
+        'icon': '/assets/images/icons/shop-house.svg'
       }
     ]
   },
