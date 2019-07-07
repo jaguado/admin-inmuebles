@@ -72,8 +72,9 @@ namespace AdminInmuebles.Controllers
             if (customer.Estado > 2)
                 return new ForbidResult(); //user disabled
 
-            var defaultDuration = !Request.Query.TryGetValue("tokenDuration", out StringValues tokenDuration);
-            var jwt = Jwt.Create(customer, defaultDuration ? 5 : int.Parse(tokenDuration));
+            var defaultDuration = !Request.Query.TryGetValue("tokenDuration", out StringValues customTokenDuration);
+            var tokenDuration = defaultDuration ? 5 : int.Parse(customTokenDuration);
+            var jwt = Jwt.Create(customer, tokenDuration);
             return new OkObjectResult(new
             {
                 email = customer.Mail,
@@ -83,7 +84,8 @@ namespace AdminInmuebles.Controllers
                 photoUrl = customer.Icono,
                 provider = customer.Tipo == (int) Models.Credentials.Types.Social ? "social" : "internal",
                 state = customer.Estado,
-                data = customer.Condos
+                data = customer.Condos,
+                validTo = DateTime.Now.AddMinutes(tokenDuration).ToUniversalTime().ToString()
             });
         }
 

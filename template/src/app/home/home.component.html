@@ -11,8 +11,8 @@
     <mat-card-content>
         <div fxFlex fxLayout="row" fxLayout.lt-md="column">
             <div [fxFlex]="30">
-                <div fxFlex fxLayout="row" fxLayoutAlign="center">
-                    {{ item.alias }}
+                <div fxFlex fxLayout="row" fxLayoutAlign="center" style="margin: 10px">
+                    <h3>{{ item.alias }}</h3>
                 </div>
                 <div fxFlex fxLayout="row" fxLayoutAlign="center end">
                   <img [src]="item.icon" class="icon">
@@ -20,11 +20,11 @@
             </div>
             <div [fxFlex]="70">
                 <div fxFlex fxLayout="row">
-                    <canvas width="200" height="70" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    <canvas width="200" height="70" baseChart [datasets]="item.chartData" [labels]="item.chartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                    [chartType]="barChartType"></canvas>
                 </div>
                 <div fxFlex fxLayout="row" fxLayoutAlign="center">
-                    <button mat-raised-button color="primary" (click)="Pay()">Pagar</button>
+                    <button mat-raised-button color="primary" (click)="pay(item)">Pagar</button>
                 </div>
             </div>
         </div>

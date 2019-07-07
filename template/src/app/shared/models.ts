@@ -26,6 +26,8 @@ export class Property {
   alias?: string;
   location?: string;
   zone?: string;
+  chartLabels?: any[];
+  chartData?: any[];
 }
 
 export class Condo {

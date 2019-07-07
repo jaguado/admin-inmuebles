@@ -15,9 +15,9 @@ namespace AdminInmuebles.Extensions
         /// </summary>
         /// <param name="jwt"></param>
         /// <returns></returns>
-        public static JwtSecurityToken ToJwt(this string jwt)
+        public static JwtSecurityToken ToJwt(this string jwt, bool skipSignatureValidation=false)
         {
-            return Helpers.Jwt.ValidateAndDecode(jwt);
+            return Helpers.Jwt.ValidateAndDecode(jwt, skipSignatureValidation);
         }
 
         public static string StringOrEmpty(this object value)

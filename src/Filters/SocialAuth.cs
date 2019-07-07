@@ -28,11 +28,13 @@ namespace AdminInmuebles.Filters
         const string uidFieldName = "forUser";
         const string authHeader = "Authorization";
         const string tokenName = "access_token";
+        const string providerHeader = "provider";
         private static readonly bool checkAuth = Environment.GetEnvironmentVariable("disableAuth") == null || bool.Parse(Environment.GetEnvironmentVariable("disableAuth")) == false;
 
-        private void CheckJWT(ActionExecutingContext context)
+        private bool CheckJWT(ActionExecutingContext context)
         {
-            //FIXME enable jwt stateless validation
+            var provider = GetFromHeader(context, providerHeader);
+            if (provider != null && provider != "internal" && provider != "social") return false;
             try
             {
                 if (checkAuth && context.HttpContext.Request.Method != "OPTIONS")
@@ -67,11 +69,12 @@ namespace AdminInmuebles.Filters
                     Content = "Token check failed. " + ex.Message
                 };
             }
+            return true;
         }
 
-        private async Task CheckGoogleAsync(ActionExecutingContext context, string accessToken, string uid)
+        private async Task<bool> CheckGoogleAsync(ActionExecutingContext context, string accessToken, string uid)
         {
-            if (GetFromRequest(context, "provider") != "google") return;
+            if (GetFromHeader(context, providerHeader) != "google") return false;
             try
             {
                 await ValidateAccessTokenWithGoogleAsync(context, accessToken, uid);
@@ -84,13 +87,13 @@ namespace AdminInmuebles.Filters
                     Content = "GoogleAuth failed. " + ex.Message
                 };
             }
+            return true;
         }
 
         private static async Task ValidateAccessTokenWithGoogleAsync(ActionExecutingContext context, string token, string uid)
         {
-            //check if token is valid FIXME validate without call google api
-
-            const string baseUrl = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=";
+            //check if token is valid 
+            const string baseUrl = "https://oauth2.googleapis.com/tokeninfo?id_token=";
             using (var response = await Helpers.Net.GetResponse(baseUrl + token))
             {
                 if (!response.IsSuccessStatusCode)
@@ -99,33 +102,12 @@ namespace AdminInmuebles.Filters
                         StatusCode = StatusCodes.Status401Unauthorized,
                         Content = "Invalid access token"
                     };
-                else
-                {
-                    var googleResult = response.Content.ReadAsStringAsync().Result;
-                    var result = JsonConvert.DeserializeObject<dynamic>(googleResult, Startup.jsonSettings);
-                    // validate parameter uid against google uid
-                    if (!string.IsNullOrEmpty(uid))
-                    {
-                        if (uid != result.id.ToString())
-                            context.Result = new ContentResult()
-                            {
-                                StatusCode = StatusCodes.Status401Unauthorized,
-                                Content = "Invalid user id"
-                            };
-                    }
-                    else
-                    {
-                        //add user info to request
-                        context.ActionArguments[uidFieldName] = result.id.ToString();
-                        context.ActionArguments["userInfo"] = googleResult;
-                    }
-                }
             }
         }
 
-        private async Task CheckFacebookAsync(ActionExecutingContext context, string accessToken, string uid)
+        private async Task<bool> CheckFacebookAsync(ActionExecutingContext context, string accessToken, string uid)
         {
-            if (GetFromRequest(context, "provider") != "facebook") return;
+            if (GetFromHeader(context, providerHeader) != "facebook") return false;
             try
             {
                 await ValidateAccessTokenWithFacebookAsync(context, accessToken, uid);
@@ -138,6 +120,7 @@ namespace AdminInmuebles.Filters
                     Content = "FacebookAuth failed. " + ex.Message
                 };
             }
+            return true;
         }
 
         private static async Task ValidateAccessTokenWithFacebookAsync(ActionExecutingContext context, string token, string uid)
@@ -151,28 +134,6 @@ namespace AdminInmuebles.Filters
                         StatusCode = StatusCodes.Status401Unauthorized,
                         Content = "Invalid access token"
                     };
-                else
-                {
-                    var facebookResult = response.Content.ReadAsStringAsync().Result;
-                    var result = JsonConvert.DeserializeObject<dynamic>(facebookResult, Startup.jsonSettings);
-
-                    // validate parameter uid against google uid
-                    if (!string.IsNullOrEmpty(uid))
-                    {
-                        if (uid != result.id.ToString())
-                            context.Result = new ContentResult()
-                            {
-                                StatusCode = StatusCodes.Status401Unauthorized,
-                                Content = "Invalid user id"
-                            };
-                    }
-                    else
-                    {
-                        //add user info to request
-                        context.ActionArguments[uidFieldName] = result.id.ToString();
-                        context.ActionArguments["userInfo"] = facebookResult;
-                    }
-                }
             }
         }
 
@@ -209,7 +170,7 @@ namespace AdminInmuebles.Filters
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            //remove auth when method is OPTIONS , ONLY WORKS WITH BASECONTROLLER!! 
+            //remove auth when method is OPTIONS 
             if (context.HttpContext.Request.Method != "OPTIONS")
             {
                 //Get access token and check state
@@ -235,11 +196,11 @@ namespace AdminInmuebles.Filters
                 else
                 {
                     var uid = GetFromRequest(context, uidFieldName);
-                    CheckJWT(context);
-                    await CheckGoogleAsync(context, accessToken, uid);
-                    await CheckFacebookAsync(context, accessToken, uid);
+                    var jwt = CheckJWT(context);
+                    var google = await CheckGoogleAsync(context, accessToken, uid);
+                    var facebook = await CheckFacebookAsync(context, accessToken, uid);
                     if (context.Controller is BaseController controller)
-                        controller.AuthenticatedToken = accessToken.ToString().ToJwt();
+                        controller.AuthenticatedToken = accessToken.ToString().ToJwt(!jwt);
                 }
             }
 

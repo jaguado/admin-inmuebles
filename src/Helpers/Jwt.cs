@@ -33,9 +33,9 @@ namespace AdminInmuebles.Helpers
                 signingCredentials: Creds));
         }
 
-        public static JwtSecurityToken ValidateAndDecode(string jwt)
+        public static JwtSecurityToken ValidateAndDecode(string jwt, bool skipSignatureValidation=false)
         {
-            if (Creds == null) return new JwtSecurityToken(jwt);
+            if (Creds == null || skipSignatureValidation) return new JwtSecurityToken(jwt);
 
             var validationParameters = new TokenValidationParameters
             {

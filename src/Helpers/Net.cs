@@ -102,7 +102,7 @@ namespace AdminInmuebles.Helpers
             }
         }
 
-        public static async Task<HttpResponseMessage> GetResponse(string tempUrl, Uri customReferrer = null, int timeoutInSeconds=0, string userAgent="", string cookie="")
+        public static async Task<HttpResponseMessage> GetResponse(string tempUrl, Uri customReferrer = null, int timeoutInSeconds=0, string userAgent="", string cookie="", string authorization="")
         {
             var handler = new HttpClientHandler()
             {
@@ -118,6 +118,8 @@ namespace AdminInmuebles.Helpers
                     client.DefaultRequestHeaders.Add("User-Agent", userAgent);
                 if (cookie != string.Empty)
                     client.DefaultRequestHeaders.Add("Cookie", cookie);
+                if (authorization != string.Empty)
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + authorization);
                 return await client.GetAsync(tempUrl);
             }
         }
