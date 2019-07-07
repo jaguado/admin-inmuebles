@@ -12,10 +12,11 @@ namespace AdminInmuebles.Helpers
 {
     public static class Jwt
     {
+        private static readonly bool _skipJwtSignatureValidation = Environment.GetEnvironmentVariable("disableJwtCheck") == null || bool.Parse(Environment.GetEnvironmentVariable("disableJwtCheck")) == false;
         private static readonly string _certPath = Environment.GetEnvironmentVariable("JwtCertificatePath") ?? @"Certs/adminmuebles.pfx";
         private static readonly byte[] _rawCert = System.IO.File.Exists(_certPath) ? System.IO.File.ReadAllBytes(_certPath) : System.Text.ASCIIEncoding.Default.GetBytes(_certPath);
-        internal static X509Certificate2 Cert = new X509Certificate2(_rawCert, Environment.GetEnvironmentVariable("JwtCertificatePassword") ?? "AdmInmuebles.2019");
-        internal static X509SigningCredentials Creds = new X509SigningCredentials(Cert, "RS256");
+        internal static X509Certificate2 Cert = !_skipJwtSignatureValidation ? new X509Certificate2(_rawCert, Environment.GetEnvironmentVariable("JwtCertificatePassword") ?? "AdmInmuebles.2019") : null;
+        internal static X509SigningCredentials Creds = !_skipJwtSignatureValidation ? new X509SigningCredentials(Cert, "RS256") : null;
         public static string Create(Models.Customer customer, int tokenDuration)
         {
             var expirationDate = DateTime.Now.AddMinutes(tokenDuration);
@@ -35,7 +36,7 @@ namespace AdminInmuebles.Helpers
 
         public static JwtSecurityToken ValidateAndDecode(string jwt, bool skipSignatureValidation=false)
         {
-            if (Creds == null || skipSignatureValidation) return new JwtSecurityToken(jwt);
+            if (Creds == null || skipSignatureValidation || _skipJwtSignatureValidation) return new JwtSecurityToken(jwt);
 
             var validationParameters = new TokenValidationParameters
             {
@@ -49,7 +50,7 @@ namespace AdminInmuebles.Helpers
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = Creds.Key
+                IssuerSigningKey = Creds?.Key
             };
 
             try

@@ -30,8 +30,7 @@ namespace AdminInmuebles.Filters
         const string tokenName = "access_token";
         const string providerHeader = "provider";
         private static readonly bool checkAuth = Environment.GetEnvironmentVariable("disableAuth") == null || bool.Parse(Environment.GetEnvironmentVariable("disableAuth")) == false;
-        private static readonly bool skipJwtSignatureValidation = Environment.GetEnvironmentVariable("disableJwtCheck") == null || bool.Parse(Environment.GetEnvironmentVariable("disableJwtCheck")) == false;
-
+        
         private bool CheckJWT(ActionExecutingContext context)
         {
             var provider = GetFromHeader(context, providerHeader);
@@ -50,7 +49,7 @@ namespace AdminInmuebles.Filters
 
                     //check jwt
                     var expDeltaDurationMinutes = 5;
-                    var jwt = accessToken.ToJwt(skipJwtSignatureValidation);
+                    var jwt = accessToken.ToJwt();
                     if (!anony && jwt==null)
                     {
                         context.Result = new ContentResult()
