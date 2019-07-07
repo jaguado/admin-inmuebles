@@ -93,6 +93,14 @@ export class LoginComponent implements OnInit {
       result => this.showServiceStatusError = false,
       error => this.showServiceStatusError = true
     );
+
+    // automatic login for development
+    if (!environment.production && environment.authenticatedUserToken) {
+      console.log('automated login');
+      this.authService.user = new User();
+      this.authService.user.idToken = environment.authenticatedUserToken;
+      this.login({email: '', password: ''});
+    }
   }
 
   onLogin() {
@@ -102,10 +110,10 @@ export class LoginComponent implements OnInit {
       this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
         this.errorMessage = res;
       });
-      return;
     } else {
       this.login(creds);
     }
+    return false;
   }
 
   login(creds: Credentials) {

@@ -1,13 +1,45 @@
-<div [innerHTML]="welcomeMessage"></div>
-<div fxFlex fxlayout="row" fxlayout.lt-md="column" style="margin: 10px 20px" *ngIf="showWarningMessage">
+<div fxFlex fxLayout="row">
+  <div [fxFlex]="70">
+    <div [innerHTML]="welcomeMessage"></div>
+    <h4>TODO Poner una introducción explicando las funcionalidades disponibles considerando el perfil.</h4>
+  </div>
+  <div [fxFlex]="30">
+    <div fxFlex fxLayout="row" fxLayoutAlign="end">
+      <img class="logo-roof" src="../../assets/images/roof.png" />
+    </div>
+  </div>
+</div>
+<div fxFlex fxlayout="row" *ngIf="showWarningMessage">
   <button mat-button color="warn" [innerHTML]="warningMessage"></button>
   <app-user-profile (stateChanged)="CheckUserStateAndShowWarning()">
   </app-user-profile>
   <br />
 </div>
-<h3>{{ 'Estate' | translate }}</h3>
-<div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 30px" *ngFor="let item of availableEstate(); let i = index">
-  <div fxFlexFill class="w-100" fxLayoutAlign="center">
-    {{ item.alias }}
-  </div>
+<div fxFlex fxlayout="row">
+    <h3 *ngIf="availableEstate().length > 0">{{ 'Estate' | translate }}</h3>
+    <h3 *ngIf="availableEstate().length == 0">{{ 'NoEstate' | translate }}</h3>
 </div>
+
+<mat-card *ngFor="let item of availableEstate(); let i = index" style="margin-bottom: 15px;">
+    <mat-card-header>
+      <mat-card-title>{{ item.alias }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxFlex fxLayout="row">
+            <div [fxFlex]="30">
+                <div fxFlex fxLayout="row" fxLayoutAlign="center center">
+                  <img [src]="item.icon" class="icon">
+                </div>
+            </div>
+            <div [fxFlex]="70">
+                <div fxFlex fxLayout="row" fxLayoutAlign="center">
+                    <canvas class="small-chart" baseChart [datasets]="item.chartData" [labels]="item.chartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                    [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+                <!--<div fxFlex fxLayout="row" fxLayoutAlign="center">
+                    <button mat-raised-button color="primary" (click)="pay(item)">Pagar</button>
+                </div>-->
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

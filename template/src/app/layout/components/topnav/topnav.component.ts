@@ -10,7 +10,7 @@ import { AuthService } from '../../../auth.service';
 })
 export class TopnavComponent implements OnInit {
   public pushRightClass: string;
-  public condoInformationLabel: string;
+  public condoInformationLabel: string = this.authService.selectedCondo ? this.authService.selectedCondo.name : '';
   constructor(public router: Router, private translate: TranslateService, private authService: AuthService) {
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
@@ -21,7 +21,6 @@ export class TopnavComponent implements OnInit {
 
   ngOnInit() {
     this.pushRightClass = 'push-right';
-    this.condoInformation();
   }
 
   isToggled(): boolean {
@@ -40,15 +39,5 @@ export class TopnavComponent implements OnInit {
 
   signOut(): void {
     this.authService.signOut();
-  }
-
-  condoInformation() {
-    if (this.authService.user.dummyData) {
-      this.translate.get('DemoModeLabel').subscribe((res: string) => {
-        this.condoInformationLabel = this.authService.selectedCondo.name + ' | ' + res;
-      });
-    } else {
-      this.condoInformationLabel = this.authService.selectedCondo.name;
-    }
   }
 }

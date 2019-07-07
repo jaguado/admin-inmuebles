@@ -2,3 +2,9 @@
 @import 'main';
 @import 'utils';
 @import 'responsive';
+@import 'config';
+
+// Here we can override template colors
+.mat-toolbar.mat-primary {
+  background-color: $primary-color !important;
+ }
