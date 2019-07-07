@@ -110,10 +110,10 @@ export class LoginComponent implements OnInit {
       this.translate.get('CompleteAllHighlightFields').subscribe((res: string) => {
         this.errorMessage = res;
       });
-      return;
     } else {
       this.login(creds);
     }
+    return false;
   }
 
   login(creds: Credentials) {

@@ -91,13 +91,13 @@ export const DefaultCondos: Condo[] = [
     'name': 'Condominio Principal',
     'menu': DefaultMenu,
     'enabled': true,
-    'properties': DefaultProperties
+    'properties': DefaultProperties.filter(p => p.id > 1)
   },
   {
     'id': 2,
     'name': 'Edificio Vacaciones',
     'menu': DefaultMenu,
-    'enabled': false,
-    'properties': DefaultProperties
+    'enabled': true,
+    'properties': DefaultProperties.filter(p => p.id === 1)
   }
 ];
