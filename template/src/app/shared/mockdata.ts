@@ -61,30 +61,30 @@ export const DefaultCondos: Condo[] = [
         'id': 1,
         'alias': 'Departamento',
         'icon': '/assets/images/icons/apartment.svg',
-        'chartLabels': ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+        'chartLabels': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
         'chartData': [
-          { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-          { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+          { data: [50000, 79000, 80000, 81000, 56000, 55000, 40000], label: 'Deuda' },
+          { data: [28000, 79000, 80000, 50000, 56000, 55000, 0], label: 'Pago' }
         ]
       },
       {
         'id': 2,
         'alias': 'Casa',
         'icon': '/assets/images/icons/small-house.svg',
-        'chartLabels': ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+        'chartLabels': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
         'chartData': [
-          { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-          { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+          { data: [50000, 79000, 80000, 81000, 56000, 55000, 40000], label: 'Deuda' },
+          { data: [58000, 59000, 40000, 100000, 56000, 55000, 0], label: 'Pago' }
         ]
       },
       {
         'id': 3,
         'alias': 'Minimarket',
         'icon': '/assets/images/icons/shop-house.svg',
-        'chartLabels': ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+        'chartLabels': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
         'chartData': [
-          { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-          { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+          { data: [200000, 79000, 80000, 81000, 56000, 55000, 400000], label: 'Deuda' },
+          { data: [280000, 79000, 800000, 50000, 56000, 55000, 500000], label: 'Pago' }
         ]
       }
     ]

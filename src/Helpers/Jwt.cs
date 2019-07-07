@@ -15,8 +15,8 @@ namespace AdminInmuebles.Helpers
         private static readonly bool _checkJwtSignature = Environment.GetEnvironmentVariable("disableJwtCheck") == null || bool.Parse(Environment.GetEnvironmentVariable("disableJwtCheck")) == false;
         private static readonly string _certPath = Environment.GetEnvironmentVariable("JwtCertificatePath") ?? @"Certs/adminmuebles.pfx";
         private static readonly byte[] _rawCert = System.IO.File.Exists(_certPath) ? System.IO.File.ReadAllBytes(_certPath) : System.Text.ASCIIEncoding.Default.GetBytes(_certPath);
-        internal static X509Certificate2 Cert = !_checkJwtSignature ? new X509Certificate2(_rawCert, Environment.GetEnvironmentVariable("JwtCertificatePassword") ?? "AdmInmuebles.2019") : null;
-        internal static X509SigningCredentials Creds = !_checkJwtSignature ? new X509SigningCredentials(Cert, "RS256") : null;
+        internal static X509Certificate2 Cert = _checkJwtSignature ? new X509Certificate2(_rawCert, Environment.GetEnvironmentVariable("JwtCertificatePassword") ?? "AdmInmuebles.2019") : null;
+        internal static X509SigningCredentials Creds = _checkJwtSignature ? new X509SigningCredentials(Cert, "RS256") : null;
         public static string Create(Models.Customer customer, int tokenDuration)
         {
             var expirationDate = DateTime.Now.AddMinutes(tokenDuration);
