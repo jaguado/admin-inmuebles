@@ -50,6 +50,7 @@
     "Save": "Guardar",
     "DummyDataLabel": "No tienes información real aún.<br /><br />¿Quieres ingresar en modo de pruebas?",
     "Estate": "Tus Inmuebles",
+    "NoEstate": "No hay inmuebles disponibles.",
     "ServicesAlert": "Hemos detectado un problema con el servicio, favor prueba más tarde.",
     "DemoModeLabel": "MODO DEMO"
 }
