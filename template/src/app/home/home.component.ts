@@ -64,4 +64,12 @@ export class HomeComponent implements OnInit, OnChanges {
     pay(property: Property) {
       console.log('TODO implement payment', property);
     }
+
+    public chartClicked(e: any): void {
+      console.log(e);
+    }
+
+    public chartHovered(e: any): void {
+        console.log(e);
+    }
 }
