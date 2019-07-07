@@ -46,6 +46,7 @@ namespace AdminInmuebles.Controllers
             Models.Customer customer;
             if (AuthenticatedToken != null) //social auth
             {
+                NewRelic.Api.Agent.NewRelic.AddCustomParameter("credentials.email", AuthenticatedToken.Payload["email"].ToString());
                 customer = await _customerRepository.Get(AuthenticatedToken.Payload["email"].ToString());
                 if (customer == null)
                 {
@@ -63,6 +64,7 @@ namespace AdminInmuebles.Controllers
             }
             else
             {
+                NewRelic.Api.Agent.NewRelic.AddCustomParameter("credentials.email", credentials.email);
                 var getUserInfo = await _customerRepository.CheckPassword(credentials);
                 if ((getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0))
                     return new UnauthorizedResult();
@@ -98,7 +100,8 @@ namespace AdminInmuebles.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] Models.Credentials credentials)
         {
             //TODO add some abuse prevention mechanism
-
+            //report user to newrelic
+            NewRelic.Api.Agent.NewRelic.AddCustomParameter("credentials.email", credentials.email);
             var customer = await _customerRepository.Get(credentials.email);
             if (customer == null)
                 return new BadRequestObjectResult("If you continue having problemas please contact us!!");
@@ -135,6 +138,7 @@ namespace AdminInmuebles.Controllers
         [HttpPost("/v1/newCustomer")]
         public async Task<IActionResult> NewCustomer([FromBody] Models.Credentials credentials)
         {
+            NewRelic.Api.Agent.NewRelic.AddCustomParameter("credentials.email", credentials.email);
             // TODO add some abuse prevention mechanism
 
             // check if customer exists

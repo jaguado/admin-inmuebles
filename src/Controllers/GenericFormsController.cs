@@ -40,6 +40,7 @@ namespace AdminInmuebles.Controllers
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
                 return StatusCode(500, ex.Message);
             }
@@ -69,6 +70,7 @@ namespace AdminInmuebles.Controllers
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
                 return StatusCode(500, ex.Message);
             }

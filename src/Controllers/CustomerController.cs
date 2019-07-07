@@ -23,6 +23,7 @@ namespace AdminInmuebles.Controllers
             if (loggedCustomer == null)
                 return new UnauthorizedResult();
 
+            NewRelic.Api.Agent.NewRelic.AddCustomParameter("customer.email", loggedCustomer.Mail);
             //complete customer data
             var result = await _customerRepository.Get(loggedCustomer.Mail);
             if (result == null)
@@ -32,8 +33,9 @@ namespace AdminInmuebles.Controllers
         [HttpPost()]
         [Produces(typeof(Models.Customer))]
         public async Task<IActionResult> Create([FromBody] Models.Customer customer)
-        { 
-            if(customer==null)
+        {
+            NewRelic.Api.Agent.NewRelic.AddCustomParameter("customer.email", customer.Mail);
+            if (customer==null)
                 return new BadRequestResult();
             var loggedCustomer = getLoggedCustomer();
             if (loggedCustomer == null)
@@ -62,6 +64,7 @@ namespace AdminInmuebles.Controllers
             if (AuthenticatedToken == null || !AuthenticatedToken.Payload.ContainsKey("email"))
                 return null;
 
+            NewRelic.Api.Agent.NewRelic.AddCustomParameter("customer.email", AuthenticatedToken.Payload["email"].ToString());
             return new Models.Customer
             {
                 Mail = AuthenticatedToken.Payload["email"].ToString(),

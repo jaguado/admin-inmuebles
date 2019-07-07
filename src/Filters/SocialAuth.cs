@@ -63,6 +63,7 @@ namespace AdminInmuebles.Filters
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 context.Result = new ContentResult()
                 {
                     StatusCode = StatusCodes.Status401Unauthorized,
@@ -81,6 +82,7 @@ namespace AdminInmuebles.Filters
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 context.Result = new ContentResult()
                 {
                     StatusCode = StatusCodes.Status401Unauthorized,
@@ -114,6 +116,7 @@ namespace AdminInmuebles.Filters
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 context.Result = new ContentResult()
                 {
                     StatusCode = StatusCodes.Status401Unauthorized,
@@ -163,6 +166,7 @@ namespace AdminInmuebles.Filters
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 Console.Error.WriteLineAsync(ex.Message);
                 return false;
             }

@@ -64,12 +64,14 @@ namespace AdminInmuebles.Helpers
             }
             catch (SecurityTokenValidationException stvex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(stvex);
                 // The token failed validation!
                 // TODO: Log it or display an error.
                 // throw new Exception($"Token failed validation: {stvex.Message}");
             }
             catch (ArgumentException argex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(argex);
                 // The token was not well-formed or was invalid for some other reason.
                 // TODO: Log it or display an error.
                 // throw new Exception($"Token was invalid: {argex.Message}");
