@@ -1,0 +1,26 @@
+@import '../../styles/config';
+
+.icon {
+  max-height: 50%;
+  max-width: 50%;
+  margin: 20px;
+}
+
+.small-chart {
+  max-height: 200px;
+  max-width: 500px;
+}
+
+.logo-roof {
+  max-width: 90%;
+  max-height: 90%;
+  margin-top: 20px;
+}
+
+
+mat-card-title {
+  color: $primary-color;
+}
+.title {
+  color: $primary-color;
+}

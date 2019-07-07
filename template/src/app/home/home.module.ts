@@ -11,7 +11,7 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { HttpClient } from '@angular/common/http';
 
 export const createTranslateLoader = (http: HttpClient) => {
@@ -27,6 +27,7 @@ export const createTranslateLoader = (http: HttpClient) => {
 @NgModule({
     imports: [
         CommonModule,
+        Ng2Charts,
         HomeRoutingModule,
         MatGridListModule,
         StatModule,
@@ -38,7 +39,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         MatFormFieldModule,
         MatInputModule,
         FlexLayoutModule.withConfig({addFlexToParent: false}),
-        TranslateModule.forRoot({
+        TranslateModule.forChild({
           loader: {
             provide: TranslateLoader,
             useFactory: createTranslateLoader,

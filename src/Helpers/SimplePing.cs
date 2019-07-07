@@ -53,8 +53,9 @@ namespace AdminInmuebles.Helpers
                     return timer.ElapsedMilliseconds;
                 }
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 Console.WriteLine("No response from remote host");
                 return -1;
             }

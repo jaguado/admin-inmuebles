@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';  // Import it up here
 import { AuthService as SocialAuthService, SocialUser } from 'angularx-social-login';
 import { User, Condo, Menu, Credentials } from './shared/models';
-import { DefaultCondos, DefaultMenu } from './shared/mockdata';
+import { DefaultCondos, DefaultMenu, DefaultProperties } from './shared/mockdata';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -68,13 +68,13 @@ export class AuthService {
               'name': condo.RazonSocial,
               'menu': DefaultMenu,
               'enabled': condo.Vigencia === 1,
-              'properties': []
+              'properties': DefaultProperties // TODO replace with real data
             });
           }
       });
     }
     // if only exists one skip selection screen
-    if (this.condos.length < 2) {
+    if (this.condos.filter(c => c.enabled).length < 2) {
       this.selectedCondo = this.condos[0];
     }
     // console.log('loadCondos', this.condos, this.selectedCondo);

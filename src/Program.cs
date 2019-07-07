@@ -19,6 +19,7 @@ namespace AdminInmuebles
         public static void Main(string[] args)
         {
             var url = "http://*:" + Environment.GetEnvironmentVariable("PORT") ?? throw new ApplicationException("'PORT' variable must be defined");
+            NewRelic.Api.Agent.NewRelic.StartAgent();
             Console.WriteLine("Starting web server on " + url);
             BuildWebHost(args, url).Run();
         }

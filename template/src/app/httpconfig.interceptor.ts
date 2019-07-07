@@ -21,7 +21,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         // console.log('HttpConfigInterceptor', token, this.authService.user);
         if (token && !request.headers.has('Authorization')) {
             request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
-            // request = request.clone({ params: request.params.set('provider', this.authService.user.provider.toLowerCase()) });
+            if (this.authService.user.provider) {
+              request = request.clone({ headers: request.headers.set('Provider', this.authService.user.provider.toLowerCase()) });
+            }
         }
 
         if (!request.headers.has('Content-Type')) {
@@ -46,7 +48,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     status: error.status
                 };
                 // this.errorDialogService.openDialog(data);
-                console.log('HttpConfigInterceptor', 'error', error, data);
+                console.log('HttpConfigInterceptor', 'error', error, data, request);
                 return throwError(error);
             }));
     }

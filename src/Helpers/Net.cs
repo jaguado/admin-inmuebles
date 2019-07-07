@@ -62,8 +62,9 @@ namespace AdminInmuebles.Helpers
                             timer.Stop();
                             return connectTask.IsCompletedSuccessfully && tcp.Connected ? timer.ElapsedMilliseconds : -1;
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                             return -1;
                         }
                     }
@@ -102,7 +103,7 @@ namespace AdminInmuebles.Helpers
             }
         }
 
-        public static async Task<HttpResponseMessage> GetResponse(string tempUrl, Uri customReferrer = null, int timeoutInSeconds=0, string userAgent="", string cookie="")
+        public static async Task<HttpResponseMessage> GetResponse(string tempUrl, Uri customReferrer = null, int timeoutInSeconds=0, string userAgent="", string cookie="", string authorization="")
         {
             var handler = new HttpClientHandler()
             {
@@ -118,6 +119,8 @@ namespace AdminInmuebles.Helpers
                     client.DefaultRequestHeaders.Add("User-Agent", userAgent);
                 if (cookie != string.Empty)
                     client.DefaultRequestHeaders.Add("Cookie", cookie);
+                if (authorization != string.Empty)
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + authorization);
                 return await client.GetAsync(tempUrl);
             }
         }
@@ -186,8 +189,9 @@ namespace AdminInmuebles.Helpers
                     return (response.StatusCode == HttpStatusCode.OK);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 //Any exception will returns false.
                 return false;
             }
@@ -212,8 +216,9 @@ namespace AdminInmuebles.Helpers
                     return (response.StatusCode == HttpStatusCode.OK);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 //Any exception will returns false.
                 return false;
             }

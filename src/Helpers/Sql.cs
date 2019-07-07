@@ -32,6 +32,7 @@ namespace AdminInmuebles.Helpers
             }
             catch(Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 Console.WriteLine("Error on 'Sql.GetData': {0}", ex.ToString());
                 return null;
             }
@@ -64,6 +65,7 @@ namespace AdminInmuebles.Helpers
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 Console.WriteLine("Error on 'Sql.Execute': {0}", ex.ToString());
                 return null;
             }
@@ -93,6 +95,7 @@ namespace AdminInmuebles.Helpers
             }
             catch (Exception ex)
             {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 Console.WriteLine("Error on 'Sql.Execute': {0}", ex.ToString());
                 return -1;
             }
