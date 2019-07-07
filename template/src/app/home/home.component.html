@@ -16,8 +16,8 @@
   <br />
 </div>
 <br />
-<h3>{{ 'Estate' | translate }}</h3>
-<mat-card *ngFor="let item of availableEstate(); let i = index" style="margin: 10px">
+<h3 class="primary"><b>{{ 'Estate' | translate }}</b></h3>
+<mat-card *ngFor="let item of availableEstate(); let i = index" style="margin: 15px">
     <mat-card-header>
       <mat-card-title>{{ item.alias }}</mat-card-title>
     </mat-card-header>

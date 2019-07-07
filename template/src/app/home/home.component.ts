@@ -10,9 +10,7 @@ import { Property } from '../shared/models';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnChanges {
-    constructor(private authService: AuthService, private translate: TranslateService) {
-      translate.setDefaultLang(environment.defaultLanguage);
-    }
+    constructor(private authService: AuthService, private translate: TranslateService) { }
     public welcomeMessage: String = '';
     public warningMessage: String = '';
     public showWarningMessage: boolean;
@@ -32,6 +30,7 @@ export class HomeComponent implements OnInit, OnChanges {
         this.LoadWelcomeMessages();
         this.CheckUserStateAndShowWarning();
         this.translate.onLangChange.subscribe((params: LangChangeEvent) => {
+            console.log('onLangChange', params);
             this.LoadWelcomeMessages();
         });
 

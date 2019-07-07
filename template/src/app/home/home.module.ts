@@ -39,7 +39,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         MatFormFieldModule,
         MatInputModule,
         FlexLayoutModule.withConfig({addFlexToParent: false}),
-        TranslateModule.forRoot({
+        TranslateModule.forChild({
           loader: {
             provide: TranslateLoader,
             useFactory: createTranslateLoader,
