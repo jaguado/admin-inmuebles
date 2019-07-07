@@ -1,4 +1,6 @@
+import { environment } from './../../environments/environment';
 import { Menu, Condo } from '../shared/models';
+
 export const DefaultMenu: Menu[] = [
   {
     'icon': 'home',
@@ -10,43 +12,43 @@ export const DefaultMenu: Menu[] = [
     'icon': 'dashboard',
     'label': 'Dashboard',
     'link': '/dashboard',
-    'enabled': false
+    'enabled': !environment.production
   },
   {
     'icon': 'bar_chart',
     'label': 'Charts',
     'link': '/charts',
-    'enabled': true
+    'enabled': !environment.production
   },
   {
     'icon': 'table_chart',
     'label': 'Tables',
     'link': '/tables',
-    'enabled': true
+    'enabled': !environment.production
   },
   {
     'icon': 'input',
     'label': 'Forms',
     'link': '/forms',
-    'enabled': true
+    'enabled': !environment.production
   },
   {
     'icon': 'grid_on',
     'label': 'Grid',
     'link': '/grid',
-    'enabled': true
+    'enabled': !environment.production
   },
   {
     'icon': 'code',
     'label': 'Components',
     'link': '/components',
-    'enabled': true
+    'enabled': !environment.production
   },
   {
     'icon': 'insert_drive_file',
     'label': 'Blank page',
     'link': '/blank-page',
-    'enabled': true
+    'enabled': !environment.production
   }
 ];
 
