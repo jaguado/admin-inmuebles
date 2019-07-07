@@ -145,7 +145,7 @@ export class LoginComponent implements OnInit {
           });
         }, (error: any) => {
             console.log('createCustomer', 'error', error);
-            this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+            this.translate.get('InvalidOperation').subscribe((res: string) => {
               this.errorMessage = res;
             });
           }
@@ -157,7 +157,7 @@ export class LoginComponent implements OnInit {
           });
         }, (error: any) => {
           console.log('resetPassword', 'error', error);
-          this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+          this.translate.get('InvalidOperation').subscribe((res: string) => {
             this.errorMessage = res;
           });
         });
