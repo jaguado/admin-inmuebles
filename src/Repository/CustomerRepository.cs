@@ -17,7 +17,7 @@ namespace AdminInmuebles.Repository
             };
             var dsResult = await Helpers.Sql.Execute("[desoincl_inmueble].[SP_TRAER_USUARIO]", args);
             if (dsResult != null)
-                return dsResult.Tables[0].Select()[0].ToCustomer();
+                return dsResult.Tables[0].Select().ToCustomer();
             return null;
         }
         public async Task<bool> CreateOrUpdate(Models.Customer customer)

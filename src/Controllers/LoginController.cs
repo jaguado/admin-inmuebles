@@ -68,7 +68,7 @@ namespace AdminInmuebles.Controllers
                 var getUserInfo = await _customerRepository.CheckPassword(credentials);
                 if ((getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0))
                     return new UnauthorizedResult();
-                customer = getUserInfo.Tables[0].Select()[0].ToCustomer();
+                customer = getUserInfo.Tables[0].Select().ToCustomer();
             }
 
             if (customer.Estado > 2)
