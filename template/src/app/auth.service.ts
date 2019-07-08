@@ -40,29 +40,29 @@ export class AuthService {
   }
 
   getFilteredMenu(menu: Menu[], condo: any): Menu[] {
+    if (!menu) { return []; }
     return menu.filter(m => m.enabled)
                .filter(m => !m.requireAdminRole || this.isAdmin(condo));
   }
 
   isAdmin(condo: any): boolean {
-    return condo && condo.Roles ? condo.Roles && condo.Roles.some((s: string) => this.adminRoles.includes(s))
-                                : condo.roles && condo.roles.some((s: string) => this.adminRoles.includes(s));
+    if (!condo) { return false; }
+    return condo.Roles ? condo.Roles && condo.Roles.some((s: string) => this.adminRoles.includes(s))
+                       : condo.roles && condo.roles.some((s: string) => this.adminRoles.includes(s));
   }
 
-  signIn(credentials: Credentials) {
-    return this.http.post(this.baseUrl + 'login', credentials)
-    .toPromise<any>()
-    .then(result => {
-      console.log('signIn', 'result', result);
-      this.cleanSession();
-      this.user = new User();
-      this.user = Object.assign(this.user, result);
-      this.loadCondos(result.data);
-      return this.user;
-    });
+  async signIn(credentials: Credentials) {
+    const result = await this.http.post(this.baseUrl + 'login', credentials)
+      .toPromise<any>();
+    console.log('signIn', 'result', result);
+    this.cleanSession();
+    this.user = new User();
+    this.user = Object.assign(this.user, result);
+    this.loadCondos(result.data);
+    return this.user;
   }
 
-  loadCondos(data) {
+  loadCondos(data: any) {
     // load condos information from response or from dummy data
     if (!data || data.length === 0) {
       // user dummy data for new users
@@ -70,7 +70,7 @@ export class AuthService {
       this.condos = DefaultCondos;
     } else {
       this.condos = [];
-      data.forEach(condo => {
+      data.forEach((condo: any) => {
         if (condo) {
           this.condos.push(
             {
@@ -104,20 +104,19 @@ export class AuthService {
     this.condos = null;
     this.selectedCondo = null;
   }
-  saveCustomer(userInfo: User) {
+
+  async saveCustomer(userInfo: User) {
     const payload = {
       'Rut': userInfo.rut,
       'Mail': userInfo.email,
       'Nombre': userInfo.name,
       'Icono': userInfo.photoUrl
     };
-    return this.http.post(this.baseUrl + 'v1/Customer', payload)
-    .toPromise<any>()
-    .then(result => {
-      // update user state // FIXME update with db data
-      this.user.state = 1;
-      return result;
-    });
+    const result = await this.http.post(this.baseUrl + 'v1/Customer', payload)
+      .toPromise<any>();
+    // update user state // FIXME update with db data
+    this.user.state = 1;
+    return result;
   }
 }
 
