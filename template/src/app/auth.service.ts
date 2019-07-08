@@ -19,7 +19,7 @@ export class AuthService {
   public user: User = null;
   public condos: Condo[] = null;
   public selectedCondo: Condo = null;
-
+  private adminRoles: string[] = ['Admin', 'God'];
   checkService() {
     return this.http.get(this.baseUrl + 'health');
   }
@@ -66,9 +66,10 @@ export class AuthService {
             {
               'id': condo.Rut,
               'name': condo.RazonSocial,
-              'menu': DefaultMenu,
+              'menu': this.getFilteredMenu(DefaultMenu, condo),
               'enabled': condo.Vigencia === 1,
-              'properties': DefaultProperties // TODO replace with real data
+              'properties': DefaultProperties, // TODO replace with real data
+              'roles': condo.Roles
             });
           }
       });
@@ -78,6 +79,11 @@ export class AuthService {
       this.selectedCondo = this.condos[0];
     }
     // console.log('loadCondos', this.condos, this.selectedCondo);
+  }
+
+  getFilteredMenu(menu: Menu[], condo: any): Menu[] {
+    return menu.filter(m => m.enabled)
+               .filter(m => !m.requireAdminRole || (condo.Roles && condo.Roles.some((r: string) => this.adminRoles.includes(r))));
   }
 
   signOut() {

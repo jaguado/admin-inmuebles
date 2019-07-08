@@ -9,6 +9,13 @@ export const DefaultMenu: Menu[] = [
     'enabled': true
   },
   {
+    'icon': 'code',
+    'label': 'Admin',
+    'link': '/admin',
+    'enabled': true,
+    'requireAdminRole': true
+  },
+  {
     'icon': 'dashboard',
     'label': 'Dashboard',
     'link': '/dashboard',
@@ -91,13 +98,15 @@ export const DefaultCondos: Condo[] = [
     'name': 'Condominio Principal',
     'menu': DefaultMenu,
     'enabled': true,
-    'properties': DefaultProperties.filter(p => p.id > 1)
+    'properties': DefaultProperties.filter(p => p.id > 1),
+    'roles': []
   },
   {
     'id': 2,
     'name': 'Edificio Vacaciones',
     'menu': DefaultMenu,
     'enabled': true,
-    'properties': DefaultProperties.filter(p => p.id === 1)
+    'properties': DefaultProperties.filter(p => p.id === 1),
+    'roles': []
   }
 ];
