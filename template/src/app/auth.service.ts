@@ -36,7 +36,17 @@ export class AuthService {
     if (!this.selectedCondo) {
       return [];
     }
-    return this.selectedCondo.menu.filter(m => m.enabled);
+    return this.getFilteredMenu(this.selectedCondo.menu, this.selectedCondo);
+  }
+
+  getFilteredMenu(menu: Menu[], condo: any): Menu[] {
+    return menu.filter(m => m.enabled)
+               .filter(m => !m.requireAdminRole || this.isAdmin(condo));
+  }
+
+  isAdmin(condo: any): boolean {
+    return condo && condo.Roles ? condo.Roles && condo.Roles.some((s: string) => this.adminRoles.includes(s))
+                                : condo.roles && condo.roles.some((s: string) => this.adminRoles.includes(s));
   }
 
   signIn(credentials: Credentials) {
@@ -79,11 +89,6 @@ export class AuthService {
       this.selectedCondo = this.condos[0];
     }
     // console.log('loadCondos', this.condos, this.selectedCondo);
-  }
-
-  getFilteredMenu(menu: Menu[], condo: any): Menu[] {
-    return menu.filter(m => m.enabled)
-               .filter(m => !m.requireAdminRole || (condo.Roles && condo.Roles.some((r: string) => this.adminRoles.includes(r))));
   }
 
   signOut() {
