@@ -17,9 +17,9 @@ namespace AdminInmuebles.Helpers
         private static readonly byte[] _rawCert = System.IO.File.Exists(_certPath) ? System.IO.File.ReadAllBytes(_certPath) : System.Text.ASCIIEncoding.Default.GetBytes(_certPath);
         internal static X509Certificate2 Cert = _checkJwtSignature ? new X509Certificate2(_rawCert, Environment.GetEnvironmentVariable("JwtCertificatePassword") ?? "AdmInmuebles.2019") : null;
         internal static X509SigningCredentials Creds = _checkJwtSignature ? new X509SigningCredentials(Cert, "RS256") : null;
-        public static string Create(Models.Customer customer, int tokenDuration)
+        public static string Create(Models.Customer customer, double tokenDuration)
         {
-            var expirationDate = DateTime.Now.AddMinutes(tokenDuration);
+            var expirationDate = tokenDuration == 0 ? DateTime.MaxValue : DateTime.Now.AddMinutes(tokenDuration);
             var roles = customer.Condos.SelectMany(c => c.Roles).Distinct().Select(r => r.ToString());
             var claims = new List<Claim>
                 {

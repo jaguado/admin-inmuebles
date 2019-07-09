@@ -81,6 +81,28 @@ namespace AdminInmuebles.Controllers
             }
         }
 
+        [HttpGet("{tableName}/data")]
+        public async Task<IActionResult> GetTableData(string tableName, int maxRowCount = 50)
+        {
+            try
+            {
+                if (!IsAdminAtLeast())
+                    return new UnauthorizedObjectResult("'Admin' role required");
+                var filter = maxRowCount > 0 ? $"TOP {maxRowCount}" : "";
+                var queryTabla = $"SELECT {filter} * FROM {tableName}";
+                var tables = await Helpers.Sql.GetData(queryTabla);
+                if (tables == null || tables.Tables[0].Rows.Count == 0)
+                    return new NotFoundResult();
+                return new OkObjectResult(tables.Tables[0]);
+            }
+            catch (Exception ex)
+            {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
+                await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost("{tableName}")]
         public async Task<IActionResult> AddData(string tableName)
         {

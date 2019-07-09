@@ -75,7 +75,7 @@ namespace AdminInmuebles.Controllers
                 return new ForbidResult(); //user disabled
 
             var defaultDuration = !Request.Query.TryGetValue("tokenDuration", out StringValues customTokenDuration);
-            var tokenDuration = defaultDuration ? 5 : int.Parse(customTokenDuration);
+            var tokenDuration = defaultDuration ? 5 : double.Parse(customTokenDuration);
             var jwt = Jwt.Create(customer, tokenDuration);
             return new OkObjectResult(new
             {
@@ -87,7 +87,7 @@ namespace AdminInmuebles.Controllers
                 provider = customer.Tipo == (int) Models.Credentials.Types.Social ? "social" : "internal",
                 state = customer.Estado,
                 data = customer.Condos,
-                validTo = DateTime.Now.AddMinutes(tokenDuration).ToUniversalTime().ToString()
+                validTo = tokenDuration == 0 ? DateTime.MaxValue.ToUniversalTime().ToString() : DateTime.Now.AddMinutes(tokenDuration).ToUniversalTime().ToString()
             });
         }
 
