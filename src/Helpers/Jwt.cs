@@ -20,12 +20,14 @@ namespace AdminInmuebles.Helpers
         public static string Create(Models.Customer customer, int tokenDuration)
         {
             var expirationDate = DateTime.Now.AddMinutes(tokenDuration);
+            var roles = customer.Condos.SelectMany(c => c.Roles).Distinct().Select(r => r.ToString());
             var claims = new List<Claim>
                 {
                     new Claim("iss", $"AdmInmuebles.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}"),
                     new Claim("email", customer.Mail),
                     new Claim("name", customer.Nombre),
-                    new Claim("data", JsonConvert.SerializeObject(customer))
+                    new Claim("data", JsonConvert.SerializeObject(customer)),
+                    new Claim("roles", JsonConvert.SerializeObject(roles))
                 };
             //TODO add cert signing
             return new JwtSecurityTokenHandler().WriteToken(new JwtSecurityToken(

@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace AdminInmuebles.Controllers
 {
-
+    /// <summary>
+    /// This controller allows to manage all the types tables so only admin or superior roles have access
+    /// </summary>
     [Route("v1/[controller]")]
-    [AllowAnonymous]
     public class GenericFormsController : BaseController
     {
         [HttpGet()]
@@ -22,6 +23,8 @@ namespace AdminInmuebles.Controllers
         {
             try
             {
+                if (!IsAdminAtLeast())
+                    return new UnauthorizedObjectResult("'Admin' role required");
                 const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
                 var tables = await Helpers.Sql.GetData(queryMantenedores);  
                 if (tables == null || tables.Tables[0].Rows.Count == 0)
@@ -52,6 +55,8 @@ namespace AdminInmuebles.Controllers
         {
             try
             {
+                if (!IsAdminAtLeast())
+                    return new UnauthorizedObjectResult("'Admin' role required");
                 var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
                 var tables = await Helpers.Sql.GetData(queryTabla);
                 if (tables == null || tables.Tables[0].Rows.Count == 0)
@@ -79,7 +84,10 @@ namespace AdminInmuebles.Controllers
         [HttpPost("{tableName}")]
         public async Task<IActionResult> AddData(string tableName)
         {
-            if(!Request.HasFormContentType)
+            if (!IsAdminAtLeast())
+                return new UnauthorizedObjectResult("'Admin' role required");
+
+            if (!Request.HasFormContentType)
                 return StatusCode(500, "Request has not FormContentType");
 
             var payload = await Request.ReadFormAsync();
@@ -97,6 +105,9 @@ namespace AdminInmuebles.Controllers
         [HttpPut("{nombre}")]
         public async Task<IActionResult> UpdateData(string nombre)
         {
+            if (!IsAdminAtLeast())
+                return new UnauthorizedObjectResult("'Admin' role required");
+
             if (!Request.HasFormContentType)
                 return StatusCode(500, "Request has not FormContentType");
 
