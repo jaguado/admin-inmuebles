@@ -36,27 +36,27 @@ namespace AdminInmuebles.Helpers
                 signingCredentials: Creds));
         }
 
-        public static JwtSecurityToken ValidateAndDecode(string jwt, bool skipSignatureValidation=false)
+        public static JwtSecurityToken ValidateAndDecode(string jwt, bool skipSignatureValidation=false, bool skipExpirationValidation = false)
         {
-            if (Creds == null || skipSignatureValidation || !_checkJwtSignature) return new JwtSecurityToken(jwt);
-
+            var checkToken = !skipSignatureValidation && Creds != null;
             var validationParameters = new TokenValidationParameters
             {
                 // Clock skew compensates for server time drift.
                 // We recommend 5 minutes or less:
                 ClockSkew = TimeSpan.FromMinutes(5),
-                RequireSignedTokens = true,
+                RequireSignedTokens = checkToken,
                 // Ensure the token hasn't expired:
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
+                RequireExpirationTime = !skipExpirationValidation,
+                ValidateLifetime = !skipExpirationValidation,
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = Creds?.Key
+                ValidateIssuerSigningKey = checkToken,
+                IssuerSigningKey = checkToken ? Creds?.Key : null
             };
 
             try
             {
+                if (!_checkJwtSignature) return new JwtSecurityToken(jwt);
                 var claimsPrincipal = new JwtSecurityTokenHandler()
                     .ValidateToken(jwt, validationParameters, out var rawValidatedToken);
 

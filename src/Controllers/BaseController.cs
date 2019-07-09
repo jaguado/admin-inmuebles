@@ -52,7 +52,9 @@ namespace AdminInmuebles.Controllers
                 && AuthenticatedToken.Payload["roles"] is string data
                 && JsonConvert.DeserializeObject<string[]>(data) is string[] roles)
                     return roles != null && roles.Any(r => r == Models.Customer.Roles.Admin.ToString() || r == Models.Customer.Roles.God.ToString());
-            return false;
+            else
+                return false;
         }
+
     }
 }
