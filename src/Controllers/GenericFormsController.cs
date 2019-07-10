@@ -34,9 +34,9 @@ namespace AdminInmuebles.Controllers
                 {
                     return new Models.Tabla
                     {
-                        BD = row["TABLE_CATALOG"].ToString(),
-                        Esquema = row["TABLE_SCHEMA"].ToString(),
-                        Nombre = row["TABLE_NAME"].ToString()
+                        BD = row["TABLE_CATALOG"].StringOrEmpty(),
+                        Esquema = row["TABLE_SCHEMA"].StringOrEmpty(),
+                        Nombre = row["TABLE_NAME"].StringOrEmpty()
                     };
                 }).ToList();
                 return new OkObjectResult(output);
@@ -66,11 +66,11 @@ namespace AdminInmuebles.Controllers
                 {
                     return new Models.Campo
                     {
-                        Nombre = row["COLUMN_NAME"].ToString(),
-                        Tipo = row["TYPE_NAME"].ToString(),
-                        Opcional = row["NULLABLE"] != null && row["NULLABLE"].ToString() == "1",
-                        Largo = int.Parse(row["LENGTH"].ToString()),
-                        Precision = int.Parse(row["PRECISION"].ToString())
+                        Nombre = row["COLUMN_NAME"].StringOrEmpty(),
+                        Tipo = row["TYPE_NAME"].StringOrEmpty(),
+                        Opcional = row["NULLABLE"] != null && row["NULLABLE"].StringOrEmpty() == "1",
+                        Largo = row["LENGTH"].IntOrDefault(),
+                        Precision = row["PRECISION"].IntOrDefault()
                     };
                 });
                 return new OkObjectResult(output);
