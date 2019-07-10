@@ -67,5 +67,30 @@ namespace AdminInmueblesTests
             var result = await controller.GetTableDetail("TIPO_CARGO_COMITE") as UnauthorizedObjectResult;
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public async Task GetTableData()
+        {
+            AppTests.LoadTestVariables();
+            var controller = new AdminInmuebles.Controllers.GenericFormsController()
+            {
+                AuthenticatedToken = _validJwt.ToJwt(true, true)
+            };
+            var result = await controller.GetTableData("TIPO_USUARIO_ROL") as OkObjectResult;
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Value);
+        }
+
+        [TestMethod]
+        public async Task GetTableDataWithoutValidAuth()
+        {
+            AppTests.LoadTestVariables();
+            var controller = new AdminInmuebles.Controllers.GenericFormsController()
+            {
+                AuthenticatedToken = _validJwtWithoutAdmin.ToJwt(true, true)
+            };
+            var result = await controller.GetTableData("TIPO_USUARIO_ROL") as UnauthorizedObjectResult;
+            Assert.IsNotNull(result);
+        }
     }
 }
