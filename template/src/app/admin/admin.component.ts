@@ -70,6 +70,7 @@ export class AdminComponent implements OnInit {
   }
 
   loadTables() {
+    this.dataSourceTables = null;
     this.http.get(environment.baseUrl + 'v1/GenericForms')
     .toPromise()
     .then((res: Table[]) => {
@@ -90,6 +91,7 @@ export class AdminComponent implements OnInit {
   }
 
   loadColumns() {
+    this.dataSourceColumns = null;
     this.http.get(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre)
     .toPromise()
     .then((res: Columns[]) => {
@@ -112,6 +114,7 @@ export class AdminComponent implements OnInit {
   loadData() {
     this.dataColumns = [];
     this.dataDisplayedColumns = [];
+    this.dataSourceData = null;
     this.http.get(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre + '/data')
     .toPromise()
     .then((res: any[]) => {
@@ -129,7 +132,11 @@ export class AdminComponent implements OnInit {
       }
     })
     .catch(err => {
-      console.log('loadData error', err);
+      if(err.status !== 404) {
+        console.log('loadData error', err);
+      } else {
+        console.log('no data found on table', this.selectedTable.Nombre);
+      }
     })
     .finally(() => {
     });

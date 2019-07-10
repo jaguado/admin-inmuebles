@@ -48,7 +48,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     status: error.status
                 };
                 // this.errorDialogService.openDialog(data);
-                console.log('HttpConfigInterceptor', 'error', error, data, request);
+                if(error.status !== 404) {
+                  console.log('HttpConfigInterceptor', 'error', error, data, request);
+                }
                 return throwError(error);
             }));
     }
