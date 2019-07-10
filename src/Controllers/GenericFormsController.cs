@@ -57,8 +57,8 @@ namespace AdminInmuebles.Controllers
             {
                 if (!IsAdminAtLeast())
                     return new UnauthorizedObjectResult("'Admin' role required");
-                var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
-                var tables = await Helpers.Sql.GetData(queryTabla);
+                var spColumnas = $"sp_Columns '{tableName}'";
+                var tables = await Helpers.Sql.GetData(spColumnas);
                 if (tables == null || tables.Tables[0].Rows.Count == 0)
                     return new NotFoundResult();
                 var rows = tables.Tables[0].Select().ToList();
@@ -67,8 +67,10 @@ namespace AdminInmuebles.Controllers
                     return new Models.Campo
                     {
                         Nombre = row["COLUMN_NAME"].ToString(),
-                        Tipo = row["DATA_TYPE"].ToString(),
-                        Opcional = row["DATA_TYPE"] != null && row["DATA_TYPE"].ToString() == "NO"
+                        Tipo = row["TYPE_NAME"].ToString(),
+                        Opcional = row["NULLABLE"] != null && row["NULLABLE"].ToString() == "1",
+                        Largo = int.Parse(row["LENGTH"].ToString()),
+                        Precision = int.Parse(row["PRECISION"].ToString())
                     };
                 });
                 return new OkObjectResult(output);
