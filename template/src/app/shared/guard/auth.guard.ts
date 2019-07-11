@@ -11,6 +11,7 @@ export class AuthGuard implements CanActivate {
     canActivate() {
         console.log('auth.guard.ts', 'canActivate');
         if (this.authService.user && !this.authService.showCondoSelection()) {
+            // TODO check if user have permissions to access current page
             return true;
         }
         this.authService.signOut();

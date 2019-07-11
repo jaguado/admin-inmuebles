@@ -44,5 +44,17 @@ namespace AdminInmuebles.Controllers
 
         //TODO Return validated jwt object
         public JwtSecurityToken AuthenticatedToken { get; set; }
+
+        internal bool IsAdminAtLeast()
+        {
+            if (AuthenticatedToken != null &&
+                AuthenticatedToken.Payload.ContainsKey("roles")
+                && AuthenticatedToken.Payload["roles"] is string data
+                && JsonConvert.DeserializeObject<string[]>(data) is string[] roles)
+                    return roles != null && roles.Any(r => r == Models.Customer.Roles.Admin.ToString() || r == Models.Customer.Roles.God.ToString());
+            else
+                return false;
+        }
+
     }
 }

@@ -9,46 +9,76 @@ export const DefaultMenu: Menu[] = [
     'enabled': true
   },
   {
+    'icon': 'build',
+    'label': 'Admin',
+    'link': null,
+    'enabled': true,
+    'requireAdminRole': true,
+    'childMenus': [
+      {
+        'icon': 'grid_on',
+        'label': 'Tables',
+        'link': '/admin',
+        'enabled': true,
+        'requireAdminRole': true
+      },
+      {
+        'icon': 'person',
+        'label': 'Users',
+        'link': '/admin-users',
+        'enabled': true,
+        'requireAdminRole': true
+      },
+      {
+        'icon': 'location_city',
+        'label': 'Condos',
+        'link': '/admin-condos',
+        'enabled': true,
+        'requireAdminRole': true
+      }
+    ]
+  },
+  {
     'icon': 'dashboard',
     'label': 'Dashboard',
     'link': '/dashboard',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'bar_chart',
     'label': 'Charts',
     'link': '/charts',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'table_chart',
     'label': 'Tables',
     'link': '/tables',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'input',
     'label': 'Forms',
     'link': '/forms',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'grid_on',
     'label': 'Grid',
     'link': '/grid',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'code',
     'label': 'Components',
     'link': '/components',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'insert_drive_file',
     'label': 'Blank page',
     'link': '/blank-page',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   }
 ];
 
@@ -91,13 +121,15 @@ export const DefaultCondos: Condo[] = [
     'name': 'Condominio Principal',
     'menu': DefaultMenu,
     'enabled': true,
-    'properties': DefaultProperties.filter(p => p.id > 1)
+    'properties': DefaultProperties.filter(p => p.id > 1),
+    'roles': []
   },
   {
     'id': 2,
     'name': 'Edificio Vacaciones',
     'menu': DefaultMenu,
     'enabled': true,
-    'properties': DefaultProperties.filter(p => p.id === 1)
+    'properties': DefaultProperties.filter(p => p.id === 1),
+    'roles': []
   }
 ];

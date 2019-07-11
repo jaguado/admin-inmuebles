@@ -49,9 +49,18 @@ export class LoginComponent implements OnInit {
   }
 
   userRedir() {
-    if (this.authService.user && !this.showCondoSelection()) {
-      // console.log('userRedir', this.authService);
-      this.router.navigate(['/']);
+    if (this.authService.user) {
+      // check if automatic redirection is configured
+      if (!environment.production && environment.authenticatedUserSelectedCondoIndex != null) {
+        this.authService.selectedCondo = this.availableCondos()[environment.authenticatedUserSelectedCondoIndex];
+      }
+      if (!this.showCondoSelection()) {
+        if (!environment.production && environment.authenticatedUserinitialRoute) {
+          this.router.navigate([environment.authenticatedUserinitialRoute]);
+        } else {
+          this.router.navigate(['/']);
+        }
+      }
     }
   }
   suscribe() {
@@ -145,7 +154,7 @@ export class LoginComponent implements OnInit {
           });
         }, (error: any) => {
             console.log('createCustomer', 'error', error);
-            this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+            this.translate.get('InvalidOperation').subscribe((res: string) => {
               this.errorMessage = res;
             });
           }
@@ -157,7 +166,7 @@ export class LoginComponent implements OnInit {
           });
         }, (error: any) => {
           console.log('resetPassword', 'error', error);
-          this.translate.get('EnterYourEmailToContactYou').subscribe((res: string) => {
+          this.translate.get('InvalidOperation').subscribe((res: string) => {
             this.errorMessage = res;
           });
         });

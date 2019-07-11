@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace AdminInmuebles.Controllers
 {
-
+    /// <summary>
+    /// This controller allows to manage all the types tables so only admin or superior roles have access
+    /// </summary>
     [Route("v1/[controller]")]
-    [AllowAnonymous]
     public class GenericFormsController : BaseController
     {
         [HttpGet()]
@@ -22,6 +23,8 @@ namespace AdminInmuebles.Controllers
         {
             try
             {
+                if (!IsAdminAtLeast())
+                    return new UnauthorizedObjectResult("'Admin' role required");
                 const string queryMantenedores = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME like 'TIPO_%'";
                 var tables = await Helpers.Sql.GetData(queryMantenedores);  
                 if (tables == null || tables.Tables[0].Rows.Count == 0)
@@ -31,9 +34,9 @@ namespace AdminInmuebles.Controllers
                 {
                     return new Models.Tabla
                     {
-                        BD = row["TABLE_CATALOG"].ToString(),
-                        Esquema = row["TABLE_SCHEMA"].ToString(),
-                        Nombre = row["TABLE_NAME"].ToString()
+                        BD = row["TABLE_CATALOG"].StringOrEmpty(),
+                        Esquema = row["TABLE_SCHEMA"].StringOrEmpty(),
+                        Nombre = row["TABLE_NAME"].StringOrEmpty()
                     };
                 }).ToList();
                 return new OkObjectResult(output);
@@ -52,8 +55,10 @@ namespace AdminInmuebles.Controllers
         {
             try
             {
-                var queryTabla = $"SELECT * FROM INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = '{tableName}'";
-                var tables = await Helpers.Sql.GetData(queryTabla);
+                if (!IsAdminAtLeast())
+                    return new UnauthorizedObjectResult("'Admin' role required");
+                var spColumnas = $"sp_Columns '{tableName}'";
+                var tables = await Helpers.Sql.GetData(spColumnas);
                 if (tables == null || tables.Tables[0].Rows.Count == 0)
                     return new NotFoundResult();
                 var rows = tables.Tables[0].Select().ToList();
@@ -61,9 +66,11 @@ namespace AdminInmuebles.Controllers
                 {
                     return new Models.Campo
                     {
-                        Nombre = row["COLUMN_NAME"].ToString(),
-                        Tipo = row["DATA_TYPE"].ToString(),
-                        Opcional = row["DATA_TYPE"] != null && row["DATA_TYPE"].ToString() == "NO"
+                        Nombre = row["COLUMN_NAME"].StringOrEmpty(),
+                        Tipo = row["TYPE_NAME"].StringOrEmpty(),
+                        Opcional = row["NULLABLE"] != null && row["NULLABLE"].StringOrEmpty() == "1",
+                        Largo = row["LENGTH"].IntOrDefault(),
+                        Precision = row["PRECISION"].IntOrDefault()
                     };
                 });
                 return new OkObjectResult(output);
@@ -76,10 +83,35 @@ namespace AdminInmuebles.Controllers
             }
         }
 
+        [HttpGet("{tableName}/data")]
+        public async Task<IActionResult> GetTableData(string tableName, int maxRowCount = 50)
+        {
+            try
+            {
+                if (!IsAdminAtLeast())
+                    return new UnauthorizedObjectResult("'Admin' role required");
+                var filter = maxRowCount > 0 ? $"TOP {maxRowCount}" : "";
+                var queryTabla = $"SELECT {filter} * FROM {tableName}";
+                var tables = await Helpers.Sql.GetData(queryTabla);
+                if (tables == null || tables.Tables[0].Rows.Count == 0)
+                    return new NotFoundResult();
+                return new OkObjectResult(tables.Tables[0]);
+            }
+            catch (Exception ex)
+            {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
+                await Console.Error.WriteLineAsync($"{ex.Message} / {ex.StackTrace}");
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost("{tableName}")]
         public async Task<IActionResult> AddData(string tableName)
         {
-            if(!Request.HasFormContentType)
+            if (!IsAdminAtLeast())
+                return new UnauthorizedObjectResult("'Admin' role required");
+
+            if (!Request.HasFormContentType)
                 return StatusCode(500, "Request has not FormContentType");
 
             var payload = await Request.ReadFormAsync();
@@ -97,6 +129,9 @@ namespace AdminInmuebles.Controllers
         [HttpPut("{nombre}")]
         public async Task<IActionResult> UpdateData(string nombre)
         {
+            if (!IsAdminAtLeast())
+                return new UnauthorizedObjectResult("'Admin' role required");
+
             if (!Request.HasFormContentType)
                 return StatusCode(500, "Request has not FormContentType");
 

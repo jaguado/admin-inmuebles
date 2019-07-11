@@ -20,6 +20,13 @@ namespace AdminInmuebles.Models
             throw new NotImplementedException();
         }
 
-        public IList<Condo> Condos { get; set; }
+        public List<Condo> Condos { get; set; }
+
+        public enum Roles
+        {
+            God = 1,
+            User = 2,
+            Admin = 7
+        }
     }
 }

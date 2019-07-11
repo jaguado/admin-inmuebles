@@ -12,18 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-
 import { HttpConfigInterceptor} from './httpconfig.interceptor';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
-  /* for development
-    return new TranslateHttpLoader(
-        http,
-        '/start-javascript/sb-admin-material/master/dist/assets/i18n/',
-        '.json'
-    );*/
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 };
 

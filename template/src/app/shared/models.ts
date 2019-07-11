@@ -18,6 +18,7 @@ export class User implements SocialUser {
   data: any;
   rut: any;
   dummyData: boolean;
+  isAdmin: boolean;
 }
 
 export class Property {
@@ -36,6 +37,7 @@ export class Condo {
   name: string;
   menu: Menu[];
   enabled: boolean;
+  roles: string[];
 }
 
 export class Menu {
@@ -43,6 +45,8 @@ export class Menu {
   label: string;
   link: string;
   enabled: boolean;
+  requireAdminRole ? = false;
+  childMenus ?: Menu[] = [];
 }
 
 export class Credentials {

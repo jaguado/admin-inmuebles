@@ -21,15 +21,15 @@
         <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #profile="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="goto('/profile')">
             <mat-icon>person</mat-icon>
             <span>{{ 'Profile' | translate }}</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="goto('/inbox')">
             <mat-icon>inbox</mat-icon>
             <span>{{ 'Inbox' | translate }}</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="goto('/settings')">
             <mat-icon>settings</mat-icon>
             <span>{{ 'Settings' | translate }}</span>
         </button>

@@ -1,7 +1,16 @@
 <div id="sidebar">
     <mat-nav-list>
-        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="item.link" *ngFor="let item of getMenu(); let i = index">
+        <div class="nested-menu" *ngFor="let item of getMenu(); let i = index">
+          <a mat-list-item (click)="addExpandClass(item.label)" [routerLinkActive]="'active'" [routerLink]="item.link">
             <mat-icon class="sidenav-icon">{{ item.icon }}</mat-icon> {{ item.label | translate }}
-        </a>
+          </a>
+          <ul class="nested submenu" [class.expand]="showMenu === item.label">
+            <li *ngFor="let childItem of item.childMenus; let x = index">
+                <a mat-list-item [routerLinkActive]="'active'" [routerLink]="childItem.link">
+                  <mat-icon class="sidenav-icon">{{ childItem.icon }}</mat-icon> {{ childItem.label | translate }}
+                </a>
+            </li>
+          </ul>
+        </div>
     </mat-nav-list>
 </div>
