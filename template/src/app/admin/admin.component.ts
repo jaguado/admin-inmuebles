@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
     this.loadData();
   }
 
-  goBack(){
+  goBack() {
     this.selectedTable = null;
     this.currentView = View.Tables;
   }
@@ -80,7 +80,6 @@ export class AdminComponent implements OnInit {
           row.Position = ++int;
         });
       }
-      console.log('loadTables', res);
       this.dataSourceTables = new MatTableDataSource(res);
     })
     .catch(err => {
@@ -101,7 +100,6 @@ export class AdminComponent implements OnInit {
           row.Position = ++int;
         });
       }
-      console.log('loadColumns', res);
       this.dataSourceColumns = new MatTableDataSource(res);
     })
     .catch(err => {
@@ -121,7 +119,6 @@ export class AdminComponent implements OnInit {
       if (res) {
         if (res.length > 0) {
           const firstRow = res[0];
-          console.log('loadData', 'firstRow', firstRow);
           Object.keys(firstRow).forEach(p => {
             this.dataColumns.push({ Name: p});
           });
@@ -132,7 +129,7 @@ export class AdminComponent implements OnInit {
       }
     })
     .catch(err => {
-      if(err.status !== 404) {
+      if (err.status !== 404) {
         console.log('loadData error', err);
       } else {
         console.log('no data found on table', this.selectedTable.Nombre);

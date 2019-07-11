@@ -15,12 +15,6 @@ import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { HttpClient } from '@angular/common/http';
 
 export const createTranslateLoader = (http: HttpClient) => {
-  /* for development
-    return new TranslateHttpLoader(
-        http,
-        '/start-javascript/sb-admin-material/master/dist/assets/i18n/',
-        '.json'
-    );*/
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 };
 

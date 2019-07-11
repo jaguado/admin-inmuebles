@@ -19,43 +19,43 @@ export const DefaultMenu: Menu[] = [
     'icon': 'dashboard',
     'label': 'Dashboard',
     'link': '/dashboard',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'bar_chart',
     'label': 'Charts',
     'link': '/charts',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'table_chart',
     'label': 'Tables',
     'link': '/tables',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'input',
     'label': 'Forms',
     'link': '/forms',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'grid_on',
     'label': 'Grid',
     'link': '/grid',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'code',
     'label': 'Components',
     'link': '/components',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   },
   {
     'icon': 'insert_drive_file',
     'label': 'Blank page',
     'link': '/blank-page',
-    'enabled': !environment.production
+    'enabled': environment.enableTemplateMenus
   }
 ];
 

@@ -46,9 +46,16 @@
     "Unauthorized": "Incorrect username or password",
     "UserProfileHeader": "Profile",
     "Save": "Save",
+    "Schema": "Schema",
+    "ViewColumns": "View structure",
+    "ViewData": "View Data",
+    "Type": "Type",
+    "TableStructure": "Structure of table",
     "DummyDataLabel": "You don't have real data.<br /><br />Do you want to enter on DEMO MODE?",
     "Estate": "Estate",
     "NoEstate": "No estate available.",
     "ServicesAlert": "We are experiencing some problemas, please check again later.",
-    "DemoModeLabel": "DEMO MODE"
+    "DemoModeLabel": "DEMO MODE",
+    "GenericManatainerTitle": "Generic Table Mantainer",
+    "TableDataTitle": "Data of table"
 }
