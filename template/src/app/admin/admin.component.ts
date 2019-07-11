@@ -17,6 +17,7 @@ export interface Columns {
   Tipo: string;
   Largo: number;
   Precision: number;
+  IsIdentity ?: boolean;
 }
 
 export interface DataColumn {
@@ -98,6 +99,7 @@ export class AdminComponent implements OnInit {
         let int = 0;
         res.forEach(row => {
           row.Position = ++int;
+          row.IsIdentity = row.Tipo.includes('identity');
         });
       }
       this.dataSourceColumns = new MatTableDataSource(res);
