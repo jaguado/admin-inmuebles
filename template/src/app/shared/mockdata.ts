@@ -9,11 +9,20 @@ export const DefaultMenu: Menu[] = [
     'enabled': true
   },
   {
-    'icon': 'code',
+    'icon': 'build',
     'label': 'Admin',
-    'link': '/admin',
+    'link': null,
     'enabled': true,
-    'requireAdminRole': true
+    'requireAdminRole': true,
+    'childMenus': [
+      {
+        'icon': 'grid_on',
+        'label': 'Tables',
+        'link': '/admin',
+        'enabled': true,
+        'requireAdminRole': true
+      }
+    ]
   },
   {
     'icon': 'dashboard',

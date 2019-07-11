@@ -46,6 +46,7 @@ export class Menu {
   link: string;
   enabled: boolean;
   requireAdminRole ? = false;
+  childMenus ?: Menu[] = [];
 }
 
 export class Credentials {
