@@ -21,6 +21,20 @@ export const DefaultMenu: Menu[] = [
         'link': '/admin',
         'enabled': true,
         'requireAdminRole': true
+      },
+      {
+        'icon': 'person',
+        'label': 'Users',
+        'link': '/admin-users',
+        'enabled': true,
+        'requireAdminRole': true
+      },
+      {
+        'icon': 'location_city',
+        'label': 'Condos',
+        'link': '/admin-condos',
+        'enabled': true,
+        'requireAdminRole': true
       }
     ]
   },
