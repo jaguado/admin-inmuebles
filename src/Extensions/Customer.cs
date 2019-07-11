@@ -8,7 +8,7 @@ namespace AdminInmuebles.Extensions
 {
     public static class Customer
     {
-        public static Models.Customer ToCustomer(this DataRow userData)
+        private static Models.Customer ToCustomer(this DataRow userData)
         {
             //check obligatory fields
             if (userData["RUT"] == null)
@@ -19,10 +19,12 @@ namespace AdminInmuebles.Extensions
             {
                 condosData.Add(new Models.Condo
                 {
+                    Id = row["ID_CONDOMINIO"].IntOrDefault(),
                     Rut = row["RUT"].IntOrDefault(),
                     RazonSocial = row["RAZON_SOCIAL"].StringOrEmpty(),
                     Tipo = row["ID_TIPO_CONDOMINIO"].IntOrDefault(),
-                    Vigencia = row["VIGENTE"].IntOrDefault()
+                    Vigencia = row["VIGENTE"].IntOrDefault(),
+                    Roles = new List<Models.Customer.Roles> {(Models.Customer.Roles) row["Role"].IntOrDefault() }
                 });
             });
 
@@ -36,6 +38,25 @@ namespace AdminInmuebles.Extensions
                 Tipo = userData["ID_TIPO_USUARIO_INGRESO"].IntOrDefault(),
                 Condos = condosData.Where(c=> !string.IsNullOrEmpty(c.RazonSocial)).ToList()
             };
+        }
+
+        public static Models.Customer ToCustomer(this DataRow[] userData)
+        {
+            var results = userData.Select(dr => dr.ToCustomer()).ToList();
+            var resultantCustomer = results.First();
+            resultantCustomer.Condos = new List<Models.Condo>();
+            results.ForEach(customer =>
+            {
+                customer.Condos.ForEach(condo =>
+                {
+                    var currentCondo = resultantCustomer.Condos.FirstOrDefault(c => c.Id == condo.Id);
+                    if (currentCondo != null)
+                        currentCondo.Roles.AddRange(condo.Roles.Where(r => !currentCondo.Roles.Any(r1 => r1 == r)));
+                    else
+                        resultantCustomer.Condos.Add(condo);
+                });     
+            });
+            return resultantCustomer;
         }
     }
 }

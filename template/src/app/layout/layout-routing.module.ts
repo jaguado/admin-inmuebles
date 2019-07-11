@@ -2,6 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
+import { HomeComponent } from '../home/home.component';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { AdminComponent } from '../admin/admin.component';
+import { AdminUsersComponent  } from '../admin-users/admin-users.component';
+import { AdminCondosComponent  } from '../admin-condos/admin-condos.component';
+import { InboxComponent } from '../inbox/inbox.component';
+import { SettingsComponent } from '../settings/settings.component';
 
 const routes: Routes = [
     {
@@ -14,7 +21,31 @@ const routes: Routes = [
             },
             {
                 path: 'home',
-                loadChildren: '../home/home.module#HomeModule'
+                component: HomeComponent
+            },
+            {
+                path: 'profile',
+                component: UserProfileComponent
+            },
+            {
+                path: 'inbox',
+                component: InboxComponent
+            },
+            {
+                path: 'settings',
+                component: SettingsComponent
+            },
+            {
+                path: 'admin',
+                component: AdminComponent
+            },
+            {
+                path: 'admin-users',
+                component: AdminUsersComponent
+            },
+            {
+                path: 'admin-condos',
+                component: AdminCondosComponent
             },
             {
                 path: 'dashboard',
