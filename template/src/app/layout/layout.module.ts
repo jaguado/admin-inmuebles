@@ -25,6 +25,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SettingsComponent } from '../settings/settings.component';
+import { InboxComponent } from '../inbox/inbox.component';
 
 @NgModule({
     imports: [
@@ -53,7 +55,9 @@ import { ReactiveFormsModule } from '@angular/forms';
       AdminComponent,
       AdminUsersComponent,
       AdminCondosComponent,
-      UserProfileComponent
+      UserProfileComponent,
+      SettingsComponent,
+      InboxComponent
     ]
 })
 export class LayoutModule {}
