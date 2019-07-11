@@ -19,7 +19,7 @@ export class AuthService {
   public user: User = null;
   public condos: Condo[] = null;
   public selectedCondo: Condo = null;
-
+  private adminRoles: string[] = ['Admin', 'God'];
   checkService() {
     return this.http.get(this.baseUrl + 'health');
   }
@@ -36,23 +36,33 @@ export class AuthService {
     if (!this.selectedCondo) {
       return [];
     }
-    return this.selectedCondo.menu.filter(m => m.enabled);
+    return this.getFilteredMenu(this.selectedCondo.menu, this.selectedCondo);
   }
 
-  signIn(credentials: Credentials) {
-    return this.http.post(this.baseUrl + 'login', credentials)
-    .toPromise<any>()
-    .then(result => {
-      console.log('signIn', 'result', result);
-      this.cleanSession();
-      this.user = new User();
-      this.user = Object.assign(this.user, result);
-      this.loadCondos(result.data);
-      return this.user;
-    });
+  getFilteredMenu(menu: Menu[], condo: any): Menu[] {
+    if (!menu) { return []; }
+    return menu.filter(m => m.enabled)
+               .filter(m => !m.requireAdminRole || this.isAdmin(condo));
   }
 
-  loadCondos(data) {
+  isAdmin(condo: any): boolean {
+    if (!condo) { return false; }
+    return condo.Roles ? condo.Roles && condo.Roles.some((s: string) => this.adminRoles.includes(s))
+                       : condo.roles && condo.roles.some((s: string) => this.adminRoles.includes(s));
+  }
+
+  async signIn(credentials: Credentials) {
+    const result = await this.http.post(this.baseUrl + 'login', credentials)
+      .toPromise<any>();
+    console.log('signIn', 'result', result);
+    this.cleanSession();
+    this.user = new User();
+    this.user = Object.assign(this.user, result);
+    this.loadCondos(result.data);
+    return this.user;
+  }
+
+  loadCondos(data: any) {
     // load condos information from response or from dummy data
     if (!data || data.length === 0) {
       // user dummy data for new users
@@ -60,15 +70,16 @@ export class AuthService {
       this.condos = DefaultCondos;
     } else {
       this.condos = [];
-      data.forEach(condo => {
+      data.forEach((condo: any) => {
         if (condo) {
           this.condos.push(
             {
               'id': condo.Rut,
               'name': condo.RazonSocial,
-              'menu': DefaultMenu,
+              'menu': this.getFilteredMenu(DefaultMenu, condo),
               'enabled': condo.Vigencia === 1,
-              'properties': DefaultProperties // TODO replace with real data
+              'properties': DefaultProperties, // TODO replace with real data
+              'roles': condo.Roles
             });
           }
       });
@@ -93,20 +104,19 @@ export class AuthService {
     this.condos = null;
     this.selectedCondo = null;
   }
-  saveCustomer(userInfo: User) {
+
+  async saveCustomer(userInfo: User) {
     const payload = {
       'Rut': userInfo.rut,
       'Mail': userInfo.email,
       'Nombre': userInfo.name,
       'Icono': userInfo.photoUrl
     };
-    return this.http.post(this.baseUrl + 'v1/Customer', payload)
-    .toPromise<any>()
-    .then(result => {
-      // update user state // FIXME update with db data
-      this.user.state = 1;
-      return result;
-    });
+    const result = await this.http.post(this.baseUrl + 'v1/Customer', payload)
+      .toPromise<any>();
+    // update user state // FIXME update with db data
+    this.user.state = 1;
+    return result;
   }
 }
 

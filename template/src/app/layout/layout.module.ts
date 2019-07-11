@@ -7,7 +7,9 @@ import {
     MatListModule,
     MatMenuModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatTableModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -15,6 +17,16 @@ import { TopnavComponent } from './components/topnav/topnav.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from '../home/home.component';
+import { AdminComponent } from '../admin/admin.component';
+import { AdminUsersComponent  } from '../admin-users/admin-users.component';
+import { AdminCondosComponent } from '../admin-condos/admin-condos.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { ChartsModule as Ng2Charts } from 'ng2-charts';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SettingsComponent } from '../settings/settings.component';
+import { InboxComponent } from '../inbox/inbox.component';
 
 @NgModule({
     imports: [
@@ -27,8 +39,25 @@ import { NavComponent } from './nav/nav.component';
         MatInputModule,
         MatMenuModule,
         MatListModule,
-        TranslateModule
+        MatCardModule,
+        MatTableModule,
+        TranslateModule,
+        Ng2Charts,
+        ReactiveFormsModule,
+        FlexLayoutModule.withConfig({addFlexToParent: false})
     ],
-    declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
+    declarations: [
+      LayoutComponent,
+      NavComponent,
+      TopnavComponent,
+      SidebarComponent,
+      HomeComponent,
+      AdminComponent,
+      AdminUsersComponent,
+      AdminCondosComponent,
+      UserProfileComponent,
+      SettingsComponent,
+      InboxComponent
+    ]
 })
 export class LayoutModule {}

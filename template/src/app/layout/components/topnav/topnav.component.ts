@@ -40,4 +40,8 @@ export class TopnavComponent implements OnInit {
   signOut(): void {
     this.authService.signOut();
   }
+
+  goto(route: string) {
+    this.router.navigate([route]);
+  }
 }

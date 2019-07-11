@@ -5,10 +5,15 @@
 export const environment = {
   production: false,
   defaultLanguage: 'es',
-  baseUrl: 'https://admin-inmuebles-dev.herokuapp.com/', // http://localhost:5001/', // hardcoded for the moment to target stable dev api
+  baseUrl: 'https://admin-inmuebles-dev.herokuapp.com/', // 'http://localhost:5001/' hardcoded for the moment to target stable dev api
 // tslint:disable-next-line: max-line-length
-  authenticatedUserToken: null
+  authenticatedUserToken: null,
+  authenticatedUserSelectedCondoIndex: null,
+  authenticatedUserinitialRoute: null,
+  enableTemplateMenus: false
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

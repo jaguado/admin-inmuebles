@@ -56,7 +56,8 @@ namespace AdminInmuebles.Helpers
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = storedProcedure;
                 cmd.CommandType = CommandType.StoredProcedure;
-                args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
+                if(args != null)
+                    args.ToList().ForEach(arg => cmd.Parameters.AddWithValue(arg.Key, arg.Value));
                 var result = new DataSet();
                 new SqlDataAdapter(cmd).Fill(result);
                 if (result == null || result.Tables.Count == 0 || result.Tables[0].Rows.Count == 0)

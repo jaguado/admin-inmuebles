@@ -68,14 +68,14 @@ namespace AdminInmuebles.Controllers
                 var getUserInfo = await _customerRepository.CheckPassword(credentials);
                 if ((getUserInfo == null || getUserInfo.Tables.Count == 0 || getUserInfo.Tables[0].Rows.Count == 0))
                     return new UnauthorizedResult();
-                customer = getUserInfo.Tables[0].Select()[0].ToCustomer();
+                customer = getUserInfo.Tables[0].Select().ToCustomer();
             }
 
             if (customer.Estado > 2)
                 return new ForbidResult(); //user disabled
 
             var defaultDuration = !Request.Query.TryGetValue("tokenDuration", out StringValues customTokenDuration);
-            var tokenDuration = defaultDuration ? 5 : int.Parse(customTokenDuration);
+            var tokenDuration = defaultDuration ? 5 : double.Parse(customTokenDuration);
             var jwt = Jwt.Create(customer, tokenDuration);
             return new OkObjectResult(new
             {
@@ -87,7 +87,7 @@ namespace AdminInmuebles.Controllers
                 provider = customer.Tipo == (int) Models.Credentials.Types.Social ? "social" : "internal",
                 state = customer.Estado,
                 data = customer.Condos,
-                validTo = DateTime.Now.AddMinutes(tokenDuration).ToUniversalTime().ToString()
+                validTo = tokenDuration == 0 ? DateTime.MaxValue.ToUniversalTime().ToString() : DateTime.Now.AddMinutes(tokenDuration).ToUniversalTime().ToString()
             });
         }
 

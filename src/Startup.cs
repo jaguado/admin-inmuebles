@@ -175,13 +175,13 @@ namespace AdminInmuebles
                 {
                     // TODO add trace considering verbose mode
                     context.Response.Headers.Add("X-Robots-Tag", "noindex");
-                    //Security fixes
-                    context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN"); //Prevent Clickjacking
+                    // Security fixes
+                    // FIXME add clickjackig prevention without breaking faceboo.   // context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN"); //Prevent Clickjacking
                     context.Response.Headers.Add("X-Content-Type-Options", "nosniff"); //Prevent MIME type sniffing
                     context.Response.Headers.Add("Referrer-Policy", "origin"); //add referrer policy
                     // add cache headers
                     const int durationInSeconds = 60 * 60 * 24;
-                    //context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+                    // context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
                     if (!context.Request.QueryString.HasValue)
                         context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=" + durationInSeconds;
                     return Task.FromResult(0);

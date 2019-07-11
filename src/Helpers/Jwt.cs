@@ -17,15 +17,17 @@ namespace AdminInmuebles.Helpers
         private static readonly byte[] _rawCert = System.IO.File.Exists(_certPath) ? System.IO.File.ReadAllBytes(_certPath) : System.Text.ASCIIEncoding.Default.GetBytes(_certPath);
         internal static X509Certificate2 Cert = _checkJwtSignature ? new X509Certificate2(_rawCert, Environment.GetEnvironmentVariable("JwtCertificatePassword") ?? "AdmInmuebles.2019") : null;
         internal static X509SigningCredentials Creds = _checkJwtSignature ? new X509SigningCredentials(Cert, "RS256") : null;
-        public static string Create(Models.Customer customer, int tokenDuration)
+        public static string Create(Models.Customer customer, double tokenDuration)
         {
-            var expirationDate = DateTime.Now.AddMinutes(tokenDuration);
+            var expirationDate = tokenDuration == 0 ? DateTime.MaxValue : DateTime.Now.AddMinutes(tokenDuration);
+            var roles = customer.Condos.SelectMany(c => c.Roles).Distinct().Select(r => r.ToString());
             var claims = new List<Claim>
                 {
                     new Claim("iss", $"AdmInmuebles.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}"),
                     new Claim("email", customer.Mail),
                     new Claim("name", customer.Nombre),
-                    new Claim("data", JsonConvert.SerializeObject(customer))
+                    new Claim("data", JsonConvert.SerializeObject(customer)),
+                    new Claim("roles", JsonConvert.SerializeObject(roles))
                 };
             //TODO add cert signing
             return new JwtSecurityTokenHandler().WriteToken(new JwtSecurityToken(
@@ -34,27 +36,27 @@ namespace AdminInmuebles.Helpers
                 signingCredentials: Creds));
         }
 
-        public static JwtSecurityToken ValidateAndDecode(string jwt, bool skipSignatureValidation=false)
+        public static JwtSecurityToken ValidateAndDecode(string jwt, bool skipSignatureValidation=false, bool skipExpirationValidation = false)
         {
-            if (Creds == null || skipSignatureValidation || !_checkJwtSignature) return new JwtSecurityToken(jwt);
-
+            var checkToken = !skipSignatureValidation && Creds != null;
             var validationParameters = new TokenValidationParameters
             {
                 // Clock skew compensates for server time drift.
                 // We recommend 5 minutes or less:
                 ClockSkew = TimeSpan.FromMinutes(5),
-                RequireSignedTokens = true,
+                RequireSignedTokens = checkToken,
                 // Ensure the token hasn't expired:
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
+                RequireExpirationTime = !skipExpirationValidation,
+                ValidateLifetime = !skipExpirationValidation,
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = Creds?.Key
+                ValidateIssuerSigningKey = checkToken,
+                IssuerSigningKey = checkToken ? Creds?.Key : null
             };
 
             try
             {
+                if (!_checkJwtSignature) return new JwtSecurityToken(jwt);
                 var claimsPrincipal = new JwtSecurityTokenHandler()
                     .ValidateToken(jwt, validationParameters, out var rawValidatedToken);
 
