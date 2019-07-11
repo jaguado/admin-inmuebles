@@ -3,6 +3,8 @@
     "Dashboard": "Dashboard",
     "Charts": "Charts",
     "Tables": "Tables",
+    "Users": "Users",
+    "Condos": "Condos",
     "Forms": "Forms",
     "Material Grid": "Material Grid",
     "Material Component": "Material Component",
@@ -57,5 +59,6 @@
     "ServicesAlert": "We are experiencing some problemas, please check again later.",
     "DemoModeLabel": "DEMO MODE",
     "GenericManatainerTitle": "Generic Table Mantainer",
-    "TableDataTitle": "Data of table"
+    "TableDataTitle": "Data of table",
+    "Admin": "Manage"
 }

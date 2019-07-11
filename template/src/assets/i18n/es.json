@@ -3,6 +3,8 @@
     "Dashboard": "Panel",
     "Charts": "Graficos",
     "Tables": "Tablas",
+    "Users": "Usuarios",
+    "Condos": "Condominios",
     "Forms": "Formularios",
     "Material Grid": "Grilla Material",
     "Material Component": "Componente Material",
@@ -60,5 +62,6 @@
     "ServicesAlert": "Hemos detectado un problema con el servicio, favor prueba más tarde.",
     "DemoModeLabel": "MODO DEMO",
     "GenericManatainerTitle": "Mantenedor Generico de Tablas",
-    "TableDataTitle": "Datos tabla"
+    "TableDataTitle": "Datos tabla",
+    "Admin": "Administrar"
 }
