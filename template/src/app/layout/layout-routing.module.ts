@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
+import { HomeComponent } from '../home/home.component';
+import { AdminComponent } from '../admin/admin.component';
+import { AdminUsersComponent  } from '../admin-users/admin-users.component';
+import { AdminCondosComponent  } from '../admin-condos/admin-condos.component';
 
 const routes: Routes = [
     {
@@ -14,11 +18,19 @@ const routes: Routes = [
             },
             {
                 path: 'home',
-                loadChildren: '../home/home.module#HomeModule'
+                component: HomeComponent
             },
             {
                 path: 'admin',
-                loadChildren: '../admin/admin.module#AdminModule'
+                component: AdminComponent
+            },
+            {
+                path: 'admin-users',
+                component: AdminUsersComponent
+            },
+            {
+              path: 'admin-condos',
+              component: AdminCondosComponent
             },
             {
                 path: 'dashboard',

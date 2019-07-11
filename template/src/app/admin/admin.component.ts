@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { HttpClient } from '@angular/common/http';  // Import it up here
-import { AuthService } from '../auth.service';
 import { environment } from '../../environments/environment';
 
 export interface Table {
