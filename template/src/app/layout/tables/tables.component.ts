@@ -30,6 +30,7 @@ export class TablesComponent implements OnInit {
     }
 
     applyFilter(filterValue: string) {
+        if (!filterValue) { return; }
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSource.filter = filterValue;

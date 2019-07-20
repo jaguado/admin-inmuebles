@@ -9,7 +9,8 @@ import {
     MatSidenavModule,
     MatToolbarModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -42,6 +43,7 @@ import { InboxComponent } from '../inbox/inbox.component';
         MatCardModule,
         MatTableModule,
         TranslateModule,
+        MatFormFieldModule,
         Ng2Charts,
         ReactiveFormsModule,
         FlexLayoutModule.withConfig({addFlexToParent: false})
