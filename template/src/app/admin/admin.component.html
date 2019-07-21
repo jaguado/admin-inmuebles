@@ -80,9 +80,13 @@
                     <td mat-cell *matCellDef="let element">
                       <label *ngIf="this.currentView === 3 || column.IsIdentity ">{{ element[column.Nombre] }}</label>
                       <mat-form-field *ngIf="this.currentView === 4 && !column.IsIdentity" floatLabel="never">
-                          <textarea matInput>{{ element[column.Nombre] }}</textarea>
+                          <textarea matInput (keyup)="element[column.Nombre] = $event.target.value">{{ element[column.Nombre] }}</textarea>
                       </mat-form-field>
                     </td>
+                  </ng-container>
+                  <ng-container matColumnDef="update">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'Refresh' | translate }}</th>
+                      <td mat-cell  *matCellDef="let element"><mat-icon (click)="update(element)">save</mat-icon></td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="dataDisplayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: dataDisplayedColumns;"></tr>

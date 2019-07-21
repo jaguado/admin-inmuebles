@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
@@ -132,6 +133,7 @@ export class AdminComponent implements OnInit {
         });
         this.dataColumns = res;
         this.dataDisplayedColumns = !this.dataColumns ? [] : this.dataColumns.map(col => col.Nombre);
+        this.dataDisplayedColumns.push('update');
       }
       this.dataSourceColumns = new MatTableDataSource(res);
     })
@@ -183,5 +185,20 @@ export class AdminComponent implements OnInit {
     } catch (ex) {
       console.log('applyFilterException', ex);
     }
+  }
+
+  update(row: any) {
+    row._columns = this.dataColumns;
+    console.log('TODO update', row);
+    this.http.put(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre, row)
+        .toPromise()
+        .then((res: any[]) => {
+          this.loadData();
+        })
+        .catch(err => {
+          console.log('update error', err);
+        })
+        .finally(() => {
+        });
   }
 }

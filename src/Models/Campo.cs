@@ -13,5 +13,7 @@ namespace AdminInmuebles.Models
 
         public int Largo { get; set; }
         public int Precision { get; set; }
+
+        public bool IsIdentity { get; set; }
     }
 }

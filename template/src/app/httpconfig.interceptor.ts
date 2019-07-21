@@ -30,6 +30,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
         }
 
+        if (!request.headers.has('Cache-Control')) {
+          request = request.clone({ headers: request.headers.set('Cache-Control', 'no-cache') });
+        }
+
         request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
 
         /* Enable this for request interception and error handling */
