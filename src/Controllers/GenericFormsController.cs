@@ -107,33 +107,14 @@ namespace AdminInmuebles.Controllers
             }
         }
 
+      
+
         [HttpPost("{tableName}")]
-        public async Task<IActionResult> AddData(string tableName)
-        {
-            if (!IsAdminAtLeast())
-                return new UnauthorizedObjectResult("'Admin' role required");
-
-            if (!Request.HasFormContentType)
-                return StatusCode(500, "Request has not FormContentType");
-
-            var payload = await Request.ReadFormAsync();
-            Console.WriteLine($"AddData payload:");
-            payload.Keys.ToList().ForEach(key =>
-            {
-                if(payload.TryGetValue(key, out StringValues value))
-                    Console.WriteLine($"{key}: {value}");
-                else
-                    Console.WriteLine($"{key}:  error getting value");
-            });
-            return new OkObjectResult(payload.Keys);
-        }
-
         [HttpPut("{tableName}")]
-        public async Task<IActionResult> UpdateData(string tableName)
+        public async Task<IActionResult> AddUpdateData(string tableName)
         {
             if (!IsAdminAtLeast())
                 return new UnauthorizedObjectResult("'Admin' role required");
-
 
             if (!Request.HasFormContentType)
             {
@@ -145,34 +126,57 @@ namespace AdminInmuebles.Controllers
                     var columns = JsonConvert.DeserializeObject<Models.Campo[]>(obj["_columns"].ToString());
                     if (columns != null && columns.Any())
                     {
-                        //TODO create update query
-                        var index = 0;
-                        var query = $"UPDATE {tableName} SET ";
-                        columns.Where(c => !c.IsIdentity).ToList().ForEach(column =>
-                        {
-                            if (index > 0)
-                                query += ", ";
-                            query += $"{column.Nombre} = '{obj[column.Nombre]}'";
-                            index++;
-                        });
-                        index = 0;
-                        query += " WHERE ";
-                        columns.Where(c => c.IsIdentity).ToList().ForEach(column =>
-                        {
-                            if (index > 0)
-                                query += " and ";
-                            query += $"{column.Nombre} = {obj[column.Nombre]}";
-                            index++;
-                        });
-                        //TODO exec query
-                        var tables = await Helpers.Sql.GetData(query);
-                        return new OkResult();
+                        var query = obj["_IsNew"] != null && obj["_IsNew"].Value<bool>() ? columns.ToCreate(tableName, obj) : columns.ToUpdate(tableName, obj);
+                        var result = await Helpers.Sql.Execute(query);
+                        if (result > 0)
+                            return new OkResult();
+                        else
+                            return new BadRequestResult();
                     }
                 }
             }
 
             var payload = await Request.ReadFormAsync();
-            Console.WriteLine($"UpdateData payload:");
+            Console.WriteLine($"AddUpdateData payload:");
+            payload.Keys.ToList().ForEach(key =>
+            {
+                if (payload.TryGetValue(key, out StringValues value))
+                    Console.WriteLine($"{key}: {value}");
+                else
+                    Console.WriteLine($"{key}:  error getting value");
+            });
+            throw new NotImplementedException("FormContentType not implemented");
+        }
+
+
+        [HttpDelete("{tableName}")]
+        public async Task<IActionResult> DeleteData(string tableName)
+        {
+            if (!IsAdminAtLeast())
+                return new UnauthorizedObjectResult("'Admin' role required");
+
+            if (!Request.HasFormContentType)
+            {
+                // json
+                var body = await new StreamReader(Request.Body).ReadToEndAsync();
+                var obj = JsonConvert.DeserializeObject(body) as JObject;
+                if (obj["_columns"] != null)
+                {
+                    var columns = JsonConvert.DeserializeObject<Models.Campo[]>(obj["_columns"].ToString());
+                    if (columns != null && columns.Any())
+                    {
+                        var query = columns.ToDelete(tableName, obj);
+                        var result = await Helpers.Sql.ExecuteNonQuery(query);
+                        if (result>0)
+                            return new OkResult();
+                        else
+                            return new BadRequestResult();
+                    }
+                }
+            }
+
+            var payload = await Request.ReadFormAsync();
+            Console.WriteLine($"DeleteData payload:");
             payload.Keys.ToList().ForEach(key =>
             {
                 if (payload.TryGetValue(key, out StringValues value))

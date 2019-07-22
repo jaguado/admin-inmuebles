@@ -30,11 +30,39 @@ namespace AdminInmuebles.Helpers
                 new SqlDataAdapter(cmd).Fill(result);
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NewRelic.Api.Agent.NewRelic.NoticeError(ex);
                 Console.WriteLine("Error on 'Sql.GetData': {0}", ex.ToString());
                 return null;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                    conn.Dispose();
+                }
+            }
+        }
+
+        public static async Task<int> Execute(string query)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = await GetConnection();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                return await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
+                Console.WriteLine("Error on 'Sql.GetData': {0}", ex.ToString());
+                return -1;
             }
             finally
             {
@@ -108,7 +136,36 @@ namespace AdminInmuebles.Helpers
                         conn.Close();
                     conn.Dispose();
                 }
-            } 
+            }
+        }
+
+        public static async Task<int> ExecuteNonQuery(string text)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = await GetConnection();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = text;
+                cmd.CommandType = CommandType.Text;
+                var result = await cmd.ExecuteNonQueryAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                NewRelic.Api.Agent.NewRelic.NoticeError(ex);
+                Console.WriteLine("Error on 'Sql.Execute': {0}", ex.ToString());
+                return -1;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                    conn.Dispose();
+                }
+            }
         }
     }
 }

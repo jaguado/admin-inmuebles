@@ -78,19 +78,24 @@
                   <ng-container *ngFor="let column of dataColumns" matColumnDef="{{ column.Nombre }}">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.Nombre }}</th>
                     <td mat-cell *matCellDef="let element">
-                      <label *ngIf="this.currentView === 3 || column.IsIdentity ">{{ element[column.Nombre] }}</label>
+                      <label *ngIf="(this.currentView === 3 || column.IsIdentity) && element[column.Nombre]">{{ element[column.Nombre] }}</label>
+                      <mat-icon *ngIf="(this.currentView === 3 || column.IsIdentity) && !element[column.Nombre]">fiber_new</mat-icon>
                       <mat-form-field *ngIf="this.currentView === 4 && !column.IsIdentity" floatLabel="never">
                           <textarea matInput (keyup)="element[column.Nombre] = $event.target.value">{{ element[column.Nombre] }}</textarea>
                       </mat-form-field>
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="update">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'Refresh' | translate }}</th>
-                      <td mat-cell  *matCellDef="let element"><mat-icon (click)="update(element)">save</mat-icon></td>
+                      <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+                      <td mat-cell *matCellDef="let element">
+                        <mat-icon *ngIf="element._IsNew" (click)="updateOrCreate(element)">create_new_folder</mat-icon>
+                        <mat-icon *ngIf="!element._IsNew" (click)="updateOrCreate(element)">save</mat-icon>
+                        <mat-icon *ngIf="!element._IsNew" (click)="delete(element)">delete</mat-icon>
+                      </td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="dataDisplayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: dataDisplayedColumns;"></tr>
-                </table>
+              </table>
           </mat-card-content>
           <mat-card-footer>
             	<mat-icon (click)="goBack()">replay</mat-icon>

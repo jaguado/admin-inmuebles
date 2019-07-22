@@ -2,7 +2,7 @@ import { element } from 'protractor';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { HttpClient } from '@angular/common/http';  // Import it up here
+import { HttpClient, HttpHeaders } from '@angular/common/http';  // Import it up here
 import { environment } from '../../environments/environment';
 
 export interface Table {
@@ -147,6 +147,13 @@ export class AdminComponent implements OnInit {
           .then((res: any[]) => {
             if (res) {
               console.log('loadData', res);
+
+              // TODO add empty row to new fields creation
+              if  (res.length > 0) {
+                const emptyObj = Object.create(Object.getPrototypeOf(res[0]));
+                emptyObj._IsNew = true;
+                res.push(emptyObj);
+              }
               this.dataSourceData = new MatTableDataSource(res);
             }
           })
@@ -166,7 +173,7 @@ export class AdminComponent implements OnInit {
     try {
         if (!filterValue) {
           this.filterValue = '';
-        };
+        }
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSourceData.filter = filterValue;
@@ -187,16 +194,50 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  update(row: any) {
+  updateOrCreate(row: any) {
     row._columns = this.dataColumns;
-    console.log('TODO update', row);
-    this.http.put(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre, row)
+    console.log('updateOrCreate', row, row._IsNew);
+    if (row._IsNew) {
+      this.http.post(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre, row)
         .toPromise()
         .then((res: any[]) => {
           this.loadData();
         })
         .catch(err => {
-          console.log('update error', err);
+          console.log('create error', err);
+        })
+        .finally(() => {
+        });
+    } else {
+      this.http.put(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre, row)
+          .toPromise()
+          .then((res: any[]) => {
+            this.loadData();
+          })
+          .catch(err => {
+            console.log('update error', err);
+          })
+          .finally(() => {
+          });
+    }
+  }
+
+  delete(row: any) {
+    row._columns = this.dataColumns;
+    console.log('delete', row);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: row
+    };
+    this.http.delete(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre, options)
+        .toPromise()
+        .then(res => {
+          this.loadData();
+        })
+        .catch(err => {
+          console.log('delete error', err);
         })
         .finally(() => {
         });
