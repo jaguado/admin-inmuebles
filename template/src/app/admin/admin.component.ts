@@ -1,9 +1,9 @@
 import { element } from 'protractor';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';  // Import it up here
 import { environment } from '../../environments/environment';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 export interface Table {
   Position ?: number;
@@ -42,6 +42,9 @@ export class AdminComponent implements OnInit {
   filterValue = '';
 
   constructor(private http: HttpClient) { }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
     this.currentView = View.Tables;
@@ -87,6 +90,8 @@ export class AdminComponent implements OnInit {
         });
       }
       this.dataSourceTables = new MatTableDataSource(res);
+      this.dataSourceTables.paginator = this.paginator;
+      this.dataSourceTables.sort = this.sort;
     })
     .catch(err => {
       console.log('loadTables error', err);
@@ -106,6 +111,8 @@ export class AdminComponent implements OnInit {
         });
       }
       this.dataSourceColumns = new MatTableDataSource(res);
+      this.dataSourceColumns.paginator = this.paginator;
+      this.dataSourceColumns.sort = this.sort;
     })
     .catch(err => {
       console.log('loadColumns error', err);
@@ -138,25 +145,31 @@ export class AdminComponent implements OnInit {
         }
       }
       this.dataSourceColumns = new MatTableDataSource(res);
+      this.dataSourceColumns.paginator = this.paginator;
+      this.dataSourceColumns.sort = this.sort;
     })
     .catch(err => {
       console.log('loadColumns error', err);
     })
     .finally(() => {
       // load data
+      let result = [];
       this.http.get(environment.baseUrl + 'v1/GenericForms/' + this.selectedTable.Nombre + '/data')
           .toPromise()
           .then((res: any[]) => {
             if (res) {
               console.log('loadData', res);
-
               // TODO add empty row to new fields creation
-              if  (res.length > 0) {
-                const emptyObj = Object.create(Object.getPrototypeOf(res[0]));
-                emptyObj._IsNew = true;
-                res.push(emptyObj);
+              if  (this.currentView === View.Edit) {
+                const newEmptyObj = {};
+                this.dataColumns.forEach((col: Columns) => {
+                  newEmptyObj[col.Nombre] = null;
+                });
+                // const emptyObj = Object.create(Object.getPrototypeOf(res[0]));
+                newEmptyObj['_IsNew'] = true;
+                res.push(newEmptyObj);
               }
-              this.dataSourceData = new MatTableDataSource(res);
+              result = res;
             }
           })
           .catch(err => {
@@ -167,6 +180,9 @@ export class AdminComponent implements OnInit {
             }
           })
           .finally(() => {
+              this.dataSourceData = new MatTableDataSource(result);
+              this.dataSourceData.paginator = this.paginator;
+              this.dataSourceData.sort = this.sort;
           });
     });
   }

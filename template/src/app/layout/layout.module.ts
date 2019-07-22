@@ -10,7 +10,8 @@ import {
     MatToolbarModule,
     MatCardModule,
     MatTableModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatPaginatorModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -42,6 +43,7 @@ import { InboxComponent } from '../inbox/inbox.component';
         MatListModule,
         MatCardModule,
         MatTableModule,
+        MatPaginatorModule,
         TranslateModule,
         MatFormFieldModule,
         Ng2Charts,
