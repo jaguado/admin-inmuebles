@@ -56,7 +56,7 @@ namespace AdminInmuebles.Helpers
 
             try
             {
-                if (!_checkJwtSignature) return new JwtSecurityToken(jwt);
+                if (!_checkJwtSignature || !checkToken) return new JwtSecurityToken(jwt);
                 var claimsPrincipal = new JwtSecurityTokenHandler()
                     .ValidateToken(jwt, validationParameters, out var rawValidatedToken);
 
