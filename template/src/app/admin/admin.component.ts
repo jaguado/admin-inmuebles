@@ -133,7 +133,9 @@ export class AdminComponent implements OnInit {
         });
         this.dataColumns = res;
         this.dataDisplayedColumns = !this.dataColumns ? [] : this.dataColumns.map(col => col.Nombre);
-        this.dataDisplayedColumns.push('update');
+        if (this.currentView === View.Edit) {
+          this.dataDisplayedColumns.push('update');
+        }
       }
       this.dataSourceColumns = new MatTableDataSource(res);
     })
