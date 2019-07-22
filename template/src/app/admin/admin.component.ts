@@ -159,16 +159,6 @@ export class AdminComponent implements OnInit {
           .then((res: any[]) => {
             if (res) {
               console.log('loadData', res);
-              // TODO add empty row to new fields creation
-              if  (this.currentView === View.Edit) {
-                const newEmptyObj = {};
-                this.dataColumns.forEach((col: Columns) => {
-                  newEmptyObj[col.Nombre] = null;
-                });
-                // const emptyObj = Object.create(Object.getPrototypeOf(res[0]));
-                newEmptyObj['_IsNew'] = true;
-                res.push(newEmptyObj);
-              }
               result = res;
             }
           })
@@ -180,6 +170,15 @@ export class AdminComponent implements OnInit {
             }
           })
           .finally(() => {
+              // add empty row to new fields creation
+              if  (this.currentView === View.Edit) {
+                const newEmptyObj = {};
+                this.dataColumns.forEach((col: Columns) => {
+                  newEmptyObj[col.Nombre] = null;
+                });
+                newEmptyObj['_IsNew'] = true;
+                result.push(newEmptyObj);
+              }
               this.dataSourceData = new MatTableDataSource(result);
               this.dataSourceData.paginator = this.paginator;
               this.dataSourceData.sort = this.sort;
