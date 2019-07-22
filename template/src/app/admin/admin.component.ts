@@ -121,7 +121,7 @@ export class AdminComponent implements OnInit {
 
   loadData() {
     this.dataDisplayedColumns = [];
-    this.dataSourceData = null;
+    this.dataSourceData = new MatTableDataSource();
     // load columns to identify fields types
     this.getColumns().then((res: Columns[]) => {
       console.log('loadData', 'getColumns', res);
