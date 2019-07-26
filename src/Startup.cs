@@ -188,7 +188,7 @@ namespace AdminInmuebles
                 });
                 await nextMiddleware();
                 // fix route for spa
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value) && context.Response.ContentType == null)
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value) && context.Request.ContentType == null)
                 {
                     context.Request.Path = "/index.html";
                     context.Response.StatusCode = 200;

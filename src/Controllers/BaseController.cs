@@ -53,7 +53,7 @@ namespace AdminInmuebles.Controllers
                 && JsonConvert.DeserializeObject<string[]>(data) is string[] roles)
                     return roles != null && roles.Any(r => r == Models.Customer.Roles.Admin.ToString() || r == Models.Customer.Roles.God.ToString());
             else
-                return false;
+                return !SocialAuth.checkAuth;
         }
 
     }

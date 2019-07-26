@@ -29,7 +29,7 @@ namespace AdminInmuebles.Filters
         const string authHeader = "Authorization";
         const string tokenName = "access_token";
         const string providerHeader = "provider";
-        private static readonly bool checkAuth = Environment.GetEnvironmentVariable("disableAuth") == null || bool.Parse(Environment.GetEnvironmentVariable("disableAuth")) == false;
+        public static readonly bool checkAuth = Environment.GetEnvironmentVariable("disableAuth") == null || bool.Parse(Environment.GetEnvironmentVariable("disableAuth")) == false;
         
         private bool CheckJWT(ActionExecutingContext context)
         {
