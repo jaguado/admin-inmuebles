@@ -5,7 +5,7 @@
           </mat-card-header>
           <mat-card-content>
               <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" value="{{ filterValue }}">
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Filter' | translate }}" value="{{ filterValue }}">
               </mat-form-field>
             <table mat-table [dataSource]="dataSourceTables" class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="position">

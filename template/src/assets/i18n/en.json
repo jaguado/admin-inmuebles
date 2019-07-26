@@ -61,5 +61,6 @@
     "GenericManatainerTitle": "Generic Table Mantainer",
     "TableDataTitle": "Data of table",
     "Admin": "Manage",
-    "UnderConstruction": "Sorry, this feature is not ready yet, come back later."
+    "UnderConstruction": "Sorry, this feature is not ready yet, come back later.",
+    "Filter": "Filter"
 }
