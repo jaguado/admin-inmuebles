@@ -186,15 +186,14 @@ namespace AdminInmuebles
                         context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=" + durationInSeconds;
                     return Task.FromResult(0);
                 });
+                await nextMiddleware();
                 // fix route for spa
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value) && context.Response.ContentType == null)
                 {
                     context.Request.Path = "/index.html";
                     context.Response.StatusCode = 200;
-                    // await nextMiddleware();
-                }
-                await nextMiddleware();
-                
+                    await nextMiddleware();
+                }          
             });
 
 
